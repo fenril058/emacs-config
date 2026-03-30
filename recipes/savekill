@@ -1,0 +1,3 @@
+(savekill :fetcher github
+          :repo "fenril058/savekill"
+          :branch "develop")

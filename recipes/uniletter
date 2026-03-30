@@ -1,0 +1,2 @@
+(uniletter :fetcher github
+           :repo "zonuexe/uniletter.el")

@@ -1,0 +1,3 @@
+(sequential-command :fetcher github
+                    :repo "fenril058/sequential-command"
+                    :branch "develop")

@@ -1,0 +1,2 @@
+(twist :fetcher github
+       :repo "emacs-twist/twist.el")

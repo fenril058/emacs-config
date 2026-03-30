@@ -1,0 +1,3 @@
+(calfw :fetcher github
+       :repo "fenril058/emacs-calfw"
+       :branch "enable-cl-lib-and-lexical-binding-etc")

@@ -1,0 +1,2 @@
+(wkr-mode :fetcher github
+          :repo "fenril058/wkr-mode")

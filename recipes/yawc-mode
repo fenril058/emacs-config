@@ -1,0 +1,2 @@
+(yawc-mode :fetcher github
+           :repo "fenril058/yawc-mode")

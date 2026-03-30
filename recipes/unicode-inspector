@@ -1,0 +1,2 @@
+(unicode-inspector :fetcher github
+                   :repo "zonuexe/unicode-inspector.el")

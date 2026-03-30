@@ -1,0 +1,2073 @@
+* An Emacs Configuration
+
+#+begin_src emacs-lisp
+  ;;;; -*- lexical-binding: t; no-byte-compile: t; -*-
+
+  ;;; Optimize native compilation
+  (with-eval-after-load 'comp-run
+    (setopt native-comp-async-jobs-number 8)
+    (setopt native-comp-speed 2))         ; if 3, puni-splice doesn't work.
+
+  ;;; custom-file
+  (setopt custom-file (locate-user-emacs-file "custom.el"))
+
+  ;;; Conditional-case maacros
+  (defmacro when-wsl (&rest body)
+    (when (and (string= system-type "gnu/linux")
+               (string-match "microsoft" (shell-command-to-string "uname -r")))
+      `(progn ,@body)))
+
+  (defmacro when-system-name (name &rest body)
+    "If NAME equals `system-name', then execute BODY."
+    (declare (indent defun))
+    (when (string= (system-name) name)
+      `(progn ,@body)))
+
+#+end_src
+
+
+** Setup.el
+
+#+begin_quote
+  [[https://codeberg.org/pkal/setup.el][setup.el]] provides a macro to ease repetitive configuration patterns in Emacs. This is done by providing context sensitive local macros, that expand to regular, pure EmacsLisp.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (require 'setup)
+    (require 'cl-lib)
+
+    ;; https://www.emacswiki.org/emacs/SetupEl#h5o-4
+    (defmacro defsetup (name signature &rest body)
+      "Shorthand for `setup-define'.
+  NAME is the name of the local macro.  SIGNATURE is used as the
+  argument list for FN.  If BODY starts with a string, use this as
+  the value for :documentation.  Any following keywords are passed
+  as OPTS to `setup-define'."
+      (declare (debug defun))
+      (let (opts)
+        (when (stringp (car body))
+          (setq opts (nconc (list :documentation (pop body))
+                            opts)))
+        (while (keywordp (car body))
+          (let* ((prop (pop body))
+                 (val `',(pop body)))
+            (setq opts (nconc (list prop val) opts))))
+        `(setup-define ,name
+           (cl-function (lambda ,signature ,@body))
+           ,@opts)))
+
+    (defsetup :package (package)
+              "Fake installation of PACKAGE."
+              :repeatable t
+              :shorthand cadr))
+#+end_src
+
+*** :auto-insert
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup
+     :auto-insert (&rest entries)
+     "Add ENTRIES to `auto-insert-alist'."
+     `(with-eval-after-load 'autoinsert
+        (dolist (entry (reverse ',entries))
+          (add-to-list 'auto-insert-alist entry)))))
+#+end_src
+
+*** :defer
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup :defer (seconds &optional func)
+                        "Call a function at N seconds after init."
+                        `(add-hook 'after-init-hook
+                                   (lambda ()
+                                     (run-with-timer ,seconds nil
+                                                     ,(or func (setup-get 'hook)))))))
+#+end_src
+
+*** :global-keymap
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup
+     :global-keymap (key command)
+     "Use `keymap-global-set' to define global keybindings."
+     :repeatable t
+     `(keymap-global-set ,key ,command)))
+#+end_src
+
+*** :keymap
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup
+     :keymap (key command)
+     "Use `keymap-set' to define keybindings."
+     :after-loaded t
+     :repeatable t
+     `(keymap-set ,(setup-get 'map) ,key ,command)))
+#+end_src
+
+*** :keymap-unset
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup
+     :keymap-unset (key)
+     "Use `keymap-unset' to define keybindings."
+     :after-loaded t
+     :repeatable t
+     `(keymap-unset ,(setup-get 'map) ,key)))
+#+end_src
+
+*** :nixpkgs
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup :nixpkgs (&rest nixpkgs)
+                        "Fake installation of packages from NIXPKGS for executables."))
+#+end_src
+
+*** other keywords
+#+begin_src emacs-lisp
+  (eval-and-compile
+    (setup-define :opt
+      (lambda (&rest pairs)
+        `(setopt ,@pairs))
+      :documentation "Set the option NAME to VAL using `setopt'."
+      :after-loaded t)
+
+    (setup-define :override-map
+      (lambda (key command)
+        `(define-key overriding-minor-mode-map ,key ,command))
+      :documentation "Bind KEY to COMMAND in `overriding-minor-mode-map'."
+      :debug '(form sexp)
+      :ensure '(kbd func)
+      :repeatable t)
+
+    (setup-define :blackout
+      (lambda (modes)
+        `(blackout ',modes))
+      :after-loaded t
+      :repeatable t)
+
+    (setup-define :foreach
+      (lambda (list &rest body)
+        `(progn ,@(mapcar
+                   (lambda (elem)
+                     (macroexpand-all
+                      (if (cadr body) `(progn ,@body) (car body))
+                      `((,'\, . (lambda (&rest body) `',(funcall `(lambda (it) ,@body) ',elem))))))
+                   (eval list))))
+      :documentation "Eval BODY for each elements in LIST. The current element can
+  be referred with `,it'. Originally define in another `seup.el' by zk-phi."))
+
+#+end_src
+
+** emacsclient
+#+begin_src emacs-lisp
+  ;;; for emacs client
+  (setup server
+    (defun server--init ()
+      (require 'server)
+      (unless (server-running-p) (server-start)))
+    (:with-hook after-init-hook
+      (:hook server--init)))
+#+end_src
+
+** editing remotefile
+#+begin_src emacs-lisp
+  (setup tramp
+    (:when-loaded
+      (add-to-list 'backup-directory-alist  (cons tramp-file-name-regexp nil))
+      (add-to-list 'tramp-default-proxies-alist '(nil "\\`root\\'" "/ssh:%h:"))
+      (add-to-list 'tramp-default-proxies-alist '("localhost" nil nil) )
+      (add-to-list 'tramp-default-proxies-alist (list (regexp-quote (system-name)) nil nil))
+      (setq vc-ignore-dir-regexp
+            (format "\\(%s\\)\\|\\(%s\\)"
+                    vc-ignore-dir-regexp
+                    tramp-file-name-regexp))))
+
+  (setup tramp-sh
+    (:when-loaded (cl-pushnew 'tramp-own-remote-path tramp-remote-path)))
+#+end_src
+
+** keymap
+#+begin_src emacs-lisp
+  (setup overriding-minor-mode
+    (defvar overriding-minor-mode-map
+      (make-sparse-keymap)
+      "Keymap for `overriding-minor-mode'.")
+    (define-minor-mode overriding-minor-mode
+      "The minor mode for force keybinding.
+    The mode must be tuend on as soon as possible to get priority of the
+    keybinding.  I use it to conflict keybind in org-mode etc."
+      :init-value t
+      :lighter ""
+      :keymap overriding-minor-mode-map))
+
+  (setup (:package key-chord)
+    (:hook-into after-init-hook))
+#+end_src
+
+*** basic keybind
+#+begin_src emacs-lisp
+  (keyboard-translate ?\C-h ?\C-?)
+
+  (setup key
+    (:global-keymap "M-n" scroll-down-line
+                    "M-p" scroll-up-line))
+
+  ;; show character name when `C-x ='
+  (setopt what-cursor-show-names t)
+#+end_src
+
+*** ffap
+#+begin_src emacs-lisp
+  (setup builtin
+    (ffap-bindings)
+    (find-function-setup-keys)
+    (:with-mode global-auto-revert-mode
+      (:hook-into after-init-hook))
+    (:with-mode delete-selection-mode
+      (:hook-into after-init-hook)))
+#+end_src
+
+*** duplicate-thing
+#+begin_src emacs-lisp
+  (setup (:package duplicate-thing)
+    (:global-keymap "C-c d" 'duplicate-thing))
+#+end_src
+
+*** fcopy
+#+begin_quote
+Funny Copy, set past point HERE then search copy text.
+https://github.com/ataka/fcopy/tree/e355f6ec889d8ecbdb096019c2dc660b1cec4941
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package fcopy)
+    (:global-keymap "C-c k" 'fcopy))
+#+end_src
+
+*** iedit
+#+begin_quote
+Edit multiple occurrences in the same way simultaneously.
+https://github.com/victorhge/iedit/tree/main
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package iedit)
+    (:global "C-=" iedit-mode)
+    (setq iedit-toggle-key-default (kbd "C-="))) ; type warning
+#+end_src
+
+*** wgrep
+#+begin_src emacs-lisp
+  (setup wgrep
+    (:opt wgrep-enable-key "r"
+          wgrep-auto-save-buffer t))
+#+end_src
+
+*** yadmacro
+#+begin_quote
+Yet another dmacro
+[[https://github.com/fenril058/yadmacro]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package yadmacro)
+    (:global-keymap "<f9>" yadmacro))
+#+end_src
+
+*** Sequential command
+#+begin_src emacs-lisp
+  (setup (:package sequential-command)
+    (:also-load sequential-command-config)
+    (:when-loaded
+      (setopt seq-cmd-home-prefer-back-to-indentation t
+              seq-cmd-end-prefer-end-of-code t))
+    (:with-hook after-init-hook
+      (:hook sequential-command-setup-keys)))
+
+  (setup (:package key-combo)
+    (:opt key-combo-common-mode-hooks '(c-mode-common-hook
+                                        c-ts-base-mode-hook
+                                        rustic-mode-hook
+                                        ruby-mode-hook
+                                        ruby-ts-mode-hook
+                                        python-ts-mode-hook
+                                        go-ts-mode-hook
+                                        js-mode-hook
+                                        js-ts-mode-hook)
+          key-combo-global-default  nil
+          key-combo-org-default nil
+          key-combo-lisp-default '(("."  . (key-combo-execute-original))
+                                   (". SPC" . " . ")
+                                   ("SPC"  . (key-combo-execute-original))
+                                   ("SPC ." . " . ")
+                                   (","  . (key-combo-execute-original))
+                                   (",@" . " ,@") ;; for macro
+                                   ("="  . ("= " "eq " "equal "))
+                                   (">=" . ">= ")))
+    (defvar key-combo-rust-default
+      '(("::"  .  nil)
+        ("*" . ("*" "**" "***"))
+        ("&" . ("&" "&&" "&&&"))))
+    (:when-loaded
+      (key-combo-load-default)
+      (key-combo-define-hook '(rustic-mode-hook)
+                             'key-combo-rust-load-default
+                             key-combo-rust-default))
+    (setup c-ts-mode
+      (:when-loaded
+        (key-combo-define c-ts-base-mode-map "." '("." "->" ".."))))
+    (setup org
+      (:when-loaded
+        (key-combo-define org-mode-map "\\(" "\\(`!!'\\)")
+        (key-combo-define org-mode-map "\\[" "\\[`!!'\\]")
+        (key-combo-define org-mode-map "\\{" "\\{`!!'\\}"))))
+#+end_src
+
+*** which-key
+#+begin_src emacs-lisp
+  (setup (:package which-key)
+    (:opt which-key-lighter "")
+    (:hook-into after-init-hook)
+    (:when-loaded
+      (setopt which-key-side-window-max-height 0.6
+              which-key-idle-delay 0.6)
+      (which-key-setup-side-window-bottom)))
+#+end_src
+
+** Japanese
+#+begin_src emacs-lisp
+  (setopt system-time-locale "ja_JP.utf8")
+
+  (setup mule-cmds
+    (set-language-environment "Japanese")
+    (prefer-coding-system 'utf-8-unix)
+    (set-cursor-color "indian red")
+    (defun set-cursor-color-slateblue2 ()
+      (set-cursor-color "SlateBlue2"))
+    (defun set-cursor-color-indianred ()
+      (set-cursor-color "indian red"))
+    (:with-hook input-method-activate-hook
+      (:hook set-cursor-color-slateblue2))
+    (:with-hook input-method-deactivate-hook
+      (:hook set-cursor-color-indianred)))
+
+  (setup (:package mozc)
+    (setopt default-input-method "japanese-mozc")
+    (:opt mozc-helper-program-name "mozc_emacs_helper.sh")
+    (:when-loaded
+      (defun toggle-input-method--hack (func &rest args)
+        "Input method function in key-chord.el not to be nil."
+        (let ((imf input-method-function))
+          (apply func args)
+          (setq input-method-function imf)))
+      (advice-add 'toggle-input-method :around #'toggle-input-method--hack))
+    (when window-system
+      (:also-load mozc-cand-posframe)
+      (:when-loaded (setopt mozc-candidate-style 'posframe))))
+#+end_src
+
+** magit
+#+begin_src emacs-lisp
+  (setup (:package magit)
+    (:when-loaded
+      (magit-add-section-hook 'magit-status-sections-hook
+                              'magit-insert-modules
+                              'magit-insert-stashes
+                              'append)))
+#+end_src
+
+** Twist
+#+begin_quote
+Hot-reload packages with twist
+[[https://github.com/emacs-twist/twist.el]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package twist)
+    (:status personal
+      (add-hook 'emacs-startup-hook #'twist-watch-mode)
+      (:global-keymap "<f12> e R" #'twist-update)))
+#+end_src
+
+*** nix3
+#+begin_quote
+Frontend to experimental commands of Nix
+[[https://github.com/emacs-twist/nix3.el]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package nix3)
+    (:set nix3-flake-remote-wait 20
+          nix3-registry-list-completion-options (list :add-to-registry t
+                                                      :require-match nil))
+
+    (defun akirak/nix3-flake-maybe-update-from-pins ()
+      "Generate flake.lock from the pins."
+      (when (not (file-exists-p "flake.lock"))
+        (akirak/nix3-flake-update-from-pins)))
+
+    (defun akirak/nix3-flake-update-from-pins ()
+      (interactive)
+      (if (file-exists-p "flake.nix")
+          (make-process :buffer "*nix flake update*"
+                        :name "nix-flake-update"
+                        :command
+                        (list "nix" "flake" "update" "--flake" "."
+                              "--commit-lock-file"
+                              "--inputs-from" "github:akirak/flake-pins")
+                        :sentinel
+                        (lambda (proc event)
+                          (if (string= event "finished\n")
+                              (message "Successfully updated flake.lock")
+                            (when (> (process-exit-status proc)
+                                     0)
+                              (message "Failed to update flake.lock: %s"
+                                       (with-current-buffer "*nix flake update*"
+                                         (buffer-string)))))))
+        (user-error "There is no flake.nix in default-directory")))
+
+    (:when-loaded
+      (add-hook 'nix3-flake-new-hook #'akirak/nix3-flake-maybe-update-from-pins
+                90)
+      (add-hook 'nix3-flake-init-hook #'akirak/nix3-flake-maybe-update-from-pins
+                90))
+
+    (:global-keymap "C-c n" #'nix3-transient
+                    "M-g M-f" #'nix3-flake-edit
+                    "<f12> n l" #'nix3-registry-list
+                    "<f12> n n" #'nix3-flake-show-url))
+#+end_src
+
+*** magit-nix3
+#+begin_quote
+Nix3.el integration for Magit
+[[https://github.com/emacs-twist/nix3.el]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package magit-nix3)
+    (with-eval-after-load 'magit-diff
+      (magit-nix3-flake-lock-mode t)))
+#+end_src
+
+
+** appearance
+
+#+begin_src emacs-lisp
+  ;; regionを可視化
+  (setup simple (transient-mark-mode 1))
+
+  ;; バッファ内のキーワードをいい感じに強調する
+  (setup hi-lock)
+
+  ;; 指定行に線を表示
+  (setup display-fill-column-indicator
+    (:hook-into emacs-lisp-mode
+                python-mode
+                bat-mode))
+
+  (setup whitespace
+    (:blackout whitespace-mode)
+    (:when-loaded
+      (setopt whitespace-style '(face
+                                 tabs
+                                 trailing
+                                 space-before-tab
+                                 space-after-tab
+                                 tab-mark))
+      (custom-set-faces
+       '(whitespace-tab ((((background dark))
+                          :underline t
+                          :background unspecified
+                          :foreground "Darkred"))
+                        nil)))
+    (add-hook 'after-init-hook #'global-whitespace-mode))
+
+  (setup (:package hiwin)
+    (:opt hiwin-mode-lighter "")
+    (:when-loaded
+      (custom-set-faces '(hiwin-face ((((class color) (background light))
+                                       (:background "gray90")))
+                                     nil)))
+    (:hook-into after-init-hook))
+
+  (setup (:package rainbow-mode)
+    (:blackout rainbow-mode)
+    (:hook-into prog-mode org-mode markdown-mode))
+
+  ;; Toggle uncloaking of invisible text near point (Reveal mode).
+  (setup reveal
+    (:blackout reveal-mode))
+#+end_src
+
+
+*** frame
+#+begin_src emacs-lisp
+  (setopt frame-title-format '("%@"
+                               (buffer-file-truename
+                                (:eval buffer-file-truename) "%b")
+                               "%*"
+                               " %q of %I"
+                               " - GNU Emacs " emacs-version " [%s]"))
+#+end_src
+
+*** mode-line
+#+begin_src emacs-lisp
+  (setopt mode-line-format '("%e"
+                             mode-line-front-space
+                             (current-input-method "" "      ")
+                             (:propertize
+                              (""
+                               mode-line-mule-info
+                               mode-line-client
+                               mode-line-modified
+                               mode-line-remote
+                               mode-line-auto-compile
+                               mode-line-window-dedicated)
+                              display (min-width (2.0)))
+                             ;; mode-line-frame-identification
+                             " "
+                             mode-line-buffer-identification
+                             " "
+                             mode-line-position
+                             (project-mode-line project-mode-line-format)
+                             (vc-mode vc-mode)
+                             " "
+                             mode-line-modes
+                             mode-line-misc-info
+                             mode-line-end-spaces))
+
+  (setup simple
+    (size-indication-mode 1)            ;ファイルサイズを表示
+    (line-number-mode 1)
+    (column-number-mode 1))
+
+  ;; save時mode-lineを光らせる
+  (defsubst mode-line-flush-color (color)
+    (let ((orig-fg (face-background 'mode-line-active)))
+      (set-face-background 'mode-line-active color)
+      (run-with-idle-timer 0.3 nil
+                           (lambda (fg) (set-face-background 'mode-line-active fg))
+                           orig-fg)))
+  (defsubst mode-line-flush--dark-green () (mode-line-flush-color "dark green"))
+  (defsubst mode-line-flush--purple1 () (mode-line-flush-color "purple1"))
+  (add-hook 'after-save-hook 'mode-line-flush--dark-green)
+
+  (setup (:package blackout))
+
+  (setup (:package yawc-mode)
+    (:hook-into org-mode markdown-mode)
+    (:opt yawc-mode-jp t))
+
+  (setup outline
+    (:blackout outline-minor-mode))
+
+#+end_src
+
+*** font
+#+begin_src emacs-lisp
+  (when-system-name "5CD51398X8"
+    (when window-system
+      (setopt initial-frame-alist '((height . 53) (width . 117) (left . 961) (top . 31)))
+      (setup font
+        (:with-hook after-init-hook
+          (:hook (lambda ()
+                   (set-frame-font "-TWR-Moralerspace Krypton HWJPDOC-regular-normal-normal-*-15-*-*-*-*-0-iso10646-1")
+                   (set-fontset-font nil 'unicode (font-spec :family "Moralerspace Krypton HWJPDOC") nil 'prepend)
+                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
+                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+        (setup face-remap
+          (:when-loaded
+            (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
+
+  (when-system-name "4CE536CRGP"
+    (when window-system
+      (modify-all-frames-parameters '((height . 72) (width . 157) (left . 5088) (top . 0)))
+      (setup font
+        (:with-hook after-init-hook
+          (:hook (lambda ()
+                   (set-frame-font "-TWR-PlemolJP Console NF-regular-normal-normal-*-15-*-*-*-d-0-iso10646-1")
+                   (set-fontset-font nil 'unicode (font-spec :family "PlemolJP Console NF") nil 'prepend)
+                   (set-fontset-font nil ?\u203B (font-spec :family "PlemolJP")) ; ※
+                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
+                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+        (setup face-remap
+          (:when-loaded
+            (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
+#+end_src
+
+*** header-line
+#+begin_src emacs-lisp
+  (setup which-func
+    (:when-loaded
+      (custom-set-faces '(which-func ((t
+                                       (:background unspecified :foreground unspecified)))))
+      (:opt mode-line-misc-info           ; mode-line から削除
+            (assq-delete-all 'which-function-mode mode-line-misc-info))
+      (:opt header-line-format            ; header-line に表示する
+            '((which-function-mode ("" which-func-format " ")))))
+    (:with-hook after-init-hook
+      (:hook which-function-mode)))
+#+end_src
+
+*** diff
+#+begin_src emacs-lisp
+  (setup diff-hl
+    (:opt diff-hl-draw-borders nil)
+    (:when-loaded
+      (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh t)))
+
+  (setup diff-mode
+    (:when-loaded
+      (set-face-attribute 'diff-refine-changed nil :extend t)
+      (set-face-attribute 'diff-refine-removed nil :extend t)
+      (set-face-attribute 'diff-refine-added   nil :extend t)))
+
+  (setup smerge-mode
+    (:when-loaded
+      (set-face-attribute 'smerge-refined-removed nil :extend t)
+      (set-face-attribute 'smerge-refined-added   nil :extend t)))
+#+end_src
+
+*** generic-x
+#+begin_src emacs-lisp
+  (require 'generic-x)
+#+end_src
+
+*** rainbow-delimiters
+#+begin_src emacs-lisp
+  (setup (:package rainbow-delimiters)
+    (:when-loaded
+      (custom-set-faces
+       '(rainbow-delimiters-depth-1-face
+         ((((class color) (background dark)) (:foreground "#EEEEEE"))))
+       '(rainbow-delimiters-depth-2-face
+         ((((class color) (background dark)) (:foreground "#f0df1f"))))
+       '(rainbow-delimiters-depth-3-face
+         ((((class color) (background dark)) (:foreground "#94bff3"))))
+       '(rainbow-delimiters-depth-4-face
+         ((((class color) (background dark)) (:foreground "#dca3a3"))))
+       '(rainbow-delimiters-depth-5-face
+         ((((class color) (background dark)) (:foreground "#8fb28f"))))
+       '(rainbow-delimiters-depth-6-face
+         ((((class color) (background dark)) (:foreground "#7cb8bb"))))
+       '(rainbow-delimiters-depth-7-face
+         ((((class color) (background dark)) (:foreground "#dfaf8f"))))
+       '(rainbow-delimiters-depth-8-face
+         ((((class color) (background dark)) (:foreground "#dc8cc3"))))
+       '(rainbow-delimiters-depth-9-face
+         ((((class color) (background dark)) (:foreground "#d0bf8f"))))))
+    (setup rainbow-delimiters-mode
+      (:hook-into prog-mode-hook)))
+#+end_src
+
+*** googles
+#+begin_src emacs-lisp
+  (setup (:package goggles)
+    (:blackout goggles-mode)
+    (:hook-into prog-mode text-mode)
+    (:opt goggles-pulse-iterations 1     ; 色を薄くする回数、1で即消える
+          goggles-pulse-delay 0.1)       ; 色を薄くする1回ごとの秒数
+    (defvar store-goggles-mode nil)
+    (defun resotre-goggles-mode-maybe ()
+      (interactive)
+      (when store-goggles-mode
+        (goggles-mode +1)))
+    (defun disable-goggles-mode ()
+      (interactive)
+      (setq-local store-goggles-mode goggles-mode)
+      (goggles-mode -1))
+    (:when-loaded
+      (:with-hook input-method-activate-hook
+        (:hook disable-goggles-mode))
+      (:with-hook input-method-deactivate-hook
+        (:hook resotre-goggles-mode-maybe))))
+#+end_src
+
+*** theme
+#+begin_src emacs-lisp
+  (add-hook 'emacs-startup-hook (lambda () (load-theme 'modus-operandi)))
+#+end_src
+
+** paren
+#+begin_src emacs-lisp
+  (setup paren
+    (setopt show-paren-delay 0.1)
+    (show-paren-mode 1))
+
+  (setup elec-pair
+    (:when-loaded
+      ;; 全角（ ）
+      (push '(?\uFF08 . ?\uFF09) electric-pair-pairs)
+      ;; 全角「 」
+      (push '(?\u300C . ?\u300D) electric-pair-pairs))
+    (setup electric-pair-mode (:hook-into after-init-hook)))
+
+  (setup (:package puni)
+    ;; (:bind "M-s" puni-splice) ; doesn't work.
+    (:with-hook after-init-hook
+      (:hook
+       (lambda ()
+         (puni-global-mode 1)
+         ;; change default keybind
+         (keymap-set puni-mode-map "M-(" 'puni-wrap-round) ; puni-syntactic-forward-punct
+         (keymap-set puni-mode-map "M-)" nil) ; puni-syntactic-backword-punct
+         (keymap-set puni-mode-map "M-s" 'puni-splice))))
+    (:foreach '(emacs-lisp-mode-hook
+                lisp-interaction-mode-hook
+                lisp-mode-hook
+                ilem-mode-hook
+                scheme-mode-hook
+                python-mode-hook
+                python-ts-mode-hook
+                shell-mode-hook)
+              (add-hook ,it #'puni-disable-puni-mode)))
+
+  (setup (:package lispy)
+    (setopt lispy-key-theme '(special paredit c-digits))
+    (:unbind "." "SPC")                   ; for key-combo
+    (:with-map lispy-mode-map-paredit
+      (:unbind "C-a" "C-e")               ; for sequential-command
+      (setopt lispy-comment-use-single-semicolon t))
+    (:hook-into emacs-lisp-mode
+                lisp-interaction-mode
+                lisp-mode
+                ilem-mode
+                scheme-mode))
+
+#+end_src
+
+** history
+#+begin_src emacs-lisp
+  (setopt auto-save-visited-interval 180) ; 180秒idleで保存
+  (auto-save-visited-mode 1)
+
+  (setup recentf
+    (:opt recentf-auto-cleanup 'never
+          recentf-max-menu-items 15
+          recentf-max-saved-items 10000
+          recentf-exclude '("recentf"
+                            "*.elc"
+                            "/TAGS$"
+                            "/var/tmp/"
+                            "^/\\(?:ssh\\|su\\|sudo\\)?x?:"))
+    (:hook-into after-init-hook)
+    (:when-loaded                         ; 30秒idleでを保存
+      (run-with-idle-timer 30 t 'recentf-save-list)))
+
+  (setup savehist
+    ;; (:when-loaded (add-to-list 'savehist-additional-variables '(kill-ring . 300)))
+    (:opt savehist-autosave-interval 180)
+    (:hook-into after-init-hook))
+
+  (setup saveplace
+    (save-place-mode 1))
+
+  (setup simple
+    (setopt kill-ring-max 2048
+            kill-read-only-ok t
+            kill-whole-line t
+            save-interprogram-paste-before-kill t
+            undo-no-redo t))
+
+  (setup (:package savekill))
+
+  (setup (:package undo-fu)
+    (:global-keymap
+     "C-/"   undo-fu-only-undo
+     "C-M-/" undo-fu-only-redo)
+    (:opt undo-limit        6000000
+          undo-strong-limit 9000000
+          undo-outer-limit 24000000))
+
+  (setup (:package vundo)
+    (:global-keymap
+     "C-x u" vundo)
+    (:opt vundo-window-max-height 20))
+
+  (setup winner
+    (:hook-into after-init-hook)
+    (defhydra hydra-winner (global-map "C-c u")
+      "Winner"
+      ("u" winner-undo "undo")
+      ("U" winner-redo "redo" :exit t)))
+
+  (setup (:package goto-chg)
+    (defhydra hydra-goto-chg (global-map "M-g l")
+      "Goto last change"
+      ("l" goto-last-change "goto last change")
+      ("L" goto-last-change-reverse "goto last change reverse")))
+
+#+end_src
+
+** search
+#+begin_src emacs-lisp
+  (setup isearch
+    (:opt isearch-allow-scroll t))
+#+end_src
+
+*** migemo
+#+begin_src emacs-lisp
+  (setup (:package migemo)
+    (:bind-into isearch
+      "C-t" migemo-isearch-toggle-migemo)
+    (:opt migemo-command "cmigemo"
+          migemo-options '("-q" "--emacs")
+          migemo-dictionary "/usr/share/cmigemo/utf-8/migemo-dict"
+          migemo-coding-system 'utf-8-unix
+          migemo-use-pattern-alist t
+          migemo-use-frequent-pattern-alist t
+          migemo-pattern-alist-length 1024)
+    (setq migemo-user-dictionary nil
+          migemo-regex-dictionary nil)
+    (:when-loaded
+      (migemo-init)))
+#+end_src
+
+** replace
+*** anzu
+#+begin_src emacs-lisp
+  (setup (:package anzu)
+    (:global-keymap "C-c r" anzu-query-replace         ; M-%
+             "C-c R" anzu-query-replace-regexp) ; C-M-%
+    (:opt anzu-deactivate-region t
+          anzu-search-threshold 1000
+          anzu-mode-lighter "")
+    (:with-hook after-init-hook
+      (:hook global-anzu-mode)))
+#+end_src
+
+** time-stamp
+#+begin_src emacs-lisp
+  (setup time-stamp
+    (:with-hook before-save-hook
+      (:hook time-stamp))
+    (:opt time-stamp-active t
+          time-stamp-start  "Last \\(m\\|M\\)odified\\(\\| \\):"
+          time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S"
+          time-stamp-end    "\n"))
+
+#+end_src
+
+** Dired
+#+begin_src emacs-lisp
+  (setup dired
+    (:also-load dired-x dired-subtree)
+    (:bind ")" toggle-dired-list-all
+           "r" wdired-change-to-wdired-mode
+           "<tab>" dired-subtree-toggle
+           "TAB" dired-subtree-toggle
+           "<backtab>" dired-subtree-remove
+           "S-TAB" dired-subtree-remove
+           "b" dired-preview-mode)
+    (:opt dired-listing-switches "-lGhFA --group-directories-first"
+          wdired-allow-to-change-permissions t)
+    (:when-loaded
+      (defun toggle-dired-list-all ()
+        "Toggle whether list dot files."
+        (interactive)
+        (dired-sort-other
+         (setq dired-listing-switches
+               (concat "-lGhF"
+                       (unless (string-match "[Aa]" dired-listing-switches)
+                         "A")
+                       " --group-directories-first"))))))
+
+  (setup (:package nerd-icons-dired)
+    (:hook-into dired-mode)
+    (:blackout nerd-icons-dired-mode))
+
+  (setup (:package dired-preview)
+    (:bind "SPC" dired-preview-page-down
+           "S-SPC" dired-preview-page-up))
+
+  (setup (:package dired-subtree)
+    (:opt dired-subtree-use-backgrounds nil))
+
+  (setup (:package dired-sidebar)
+    (:global-keymap "<f5>" dired-sidebar-toggle-sidebar))
+#+end_src
+
+** my utility tools
+#+begin_src emacs-lisp
+  ;; (setup my-font-utils
+  ;;   (autoload 'print-all-available-fontsets "my-font-utils"
+  ;;     "使用可能なfont-setをすべて表示する." t)
+  ;;   (autoload 'print-all-available-font-familes "my-font-utils"
+  ;;     "使用可能なfont-familyをすべて表示する." t)
+  ;;   (autoload 'check-font-here "my-font-utils"
+  ;;     "カーソルの位置のフォントを確認する."t)
+  ;;   (:global-keymap "C-c f" check-font-here
+  ;;            "C-c F" describe-text-properties))
+
+  ;; (setup my-blog-utils
+  ;;   (autoload 'replace-markdown-links-to-org "my-blog-utils" "" t)
+  ;;   (autoload 'create-blog-article "my-blog-utils" "" t)
+  ;;   (:global-keymap "C-c b" create-blog-article)
+  ;;   (setup org
+  ;;     (:bind "C-c 1"  replace-markdown-links-to-org)))
+
+  ;; (setup 'my-copy-kill-utils
+  ;;   (autoload 'kill-matching-lines "my-copy-kill-utils" "" t))
+
+  ;; (setup my-image-utils
+  ;;   (autoload 'insert-clipboard-image-as-markdown-or-org-style
+  ;;     "my-image-utils" "" t)
+  ;;   (:global
+  ;;    "C-c m" insert-clipboard-image-as-markdown-or-org-style))
+
+  ;; (setup my-window-utils
+  ;;   (autoload 'check-frame-parameters "my-window-utils"
+  ;;     "現在のframeのtop,left,height,widthを表示する."
+  ;;     t))
+#+end_src
+
+** unicode
+
+*** uniletter
+#+begin_quote
+Help to input Unicode letters.
+https://github.com/zonuexe/uniletter.el
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package uniletter)
+    (autoload 'uniletter-insert-mode "uniletter" "" t)
+    (autoload 'uniletter-self-insert "uniletter" "" t)
+    (autoload 'uniletter-convert-region "uniletter" "" t)
+    (autoload 'uniletter-copy-converted-text "uniletter" "" t)
+    (autoload 'uniletter-insert-mode-select-style "uniletter" "" t)
+    (:when-loaded
+      (setq uniletter-insert-mode-style 'math-double-struck)))
+#+end_src
+
+*** unicode-inspector
+#+begin_quote
+Provide detailed information about Unicode characters.
+[[https://github.com/zonuexe/unicode-inspector.el]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package unicode-inspector)
+    (:opt unicode-inspector-unique-input t))
+#+end_src
+
+** decolation
+#+begin_src emacs-lisp
+  (setup (:package boxes))
+
+  (setup (:package cowsay))
+
+  (setup (:package figlet)
+    (autoload 'figlet-message "figlet-message"
+      "Inserts large message of text in ASCII font into current buffer" t))
+#+end_src
+
+** Complement
+#+begin_src emacs-lisp
+  (setup (:package corfu)
+    (defvar-keymap corfu-map
+      :doc "Keymap used when popup is shown."
+      "<remap> <move-beginning-of-line>" #'corfu-prompt-beginning
+      "<remap> <move-end-of-line>" #'corfu-prompt-end
+      "<remap> <beginning-of-buffer>" #'corfu-first
+      "<remap> <end-of-buffer>" #'corfu-last
+      "<remap> <scroll-down-command>" #'corfu-scroll-down
+      "<remap> <scroll-up-command>" #'corfu-scroll-up
+      "<remap> <completion-at-point>" #'corfu-complete
+      "<remap> <keyboard-escape-quit>" #'corfu-reset
+      ;; XXX C-a is bound because of Eshell.
+      ;; Ideally Eshell would remap move-beginning-of-line.
+      "C-a" #'corfu-prompt-beginning
+      "<tab>" #'corfu-complete
+      "M-n" #'corfu-next
+      "M-p" #'corfu-previous
+      "C-g" #'corfu-quit
+      "RET" #'corfu-insert
+      "TAB" #'corfu-complete
+      "M-TAB" #'corfu-expand
+      "M-g" 'corfu-info-location
+      "M-h" 'corfu-info-documentation
+      "M-SPC" #'corfu-insert-separator)
+    (setopt corfu-auto t
+            corfu-auto-delay 0.2
+            corfu-auto-prefix 2
+            corfu-cycle t
+            read-extended-command-predicate #'command-completion-default-include-p
+            tab-always-indent 'complete
+            text-mode-ispell-word-completion nil)
+    (:hook corfu-popupinfo-mode)
+    (setup global-corfu-mode (:hook-into after-init-hook))
+    (:when-loaded
+      (setup kind-icon
+        (setopt kind-icon-default-face 'corfu-default)
+        (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))))
+
+  (setup (:package tempel)
+    (:also-load cape)
+    (:global
+     "M-+" tempel-complete ;; Alternative tempel-expand
+     "M-*" tempel-insert))
+
+  (setup (:package cape)
+    (defun tempel-setup-capf ()
+      (dolist
+          (funcs #'(cape-dict
+                    ;; cape-tex
+                    cape-abbrev
+                    cape-dabbrev
+                    cape-keyword
+                    cape-file))
+        (add-to-list 'completion-at-point-functions funcs))
+      (setq-local completion-at-point-functions
+                  (cons #'tempel-expand ; exact match
+                        completion-at-point-functions)))
+    (:foreach '(prog-mode-hook text-mode-hook conf-mode-hook)
+              (add-hook ,it #'tempel-setup-capf)))
+
+  (setup (:package yasnippet)
+    (:with-hook after-init-hook (:hook yas-global-mode))
+    (:when-loaded
+      (setup warning
+        (add-to-list 'warning-suppress-types '(yasnippet backquote-change))))
+    (:also-load yasnippet-snippets))
+
+  (setup (:package vertico)
+    (setup vertico-mode (:hook-into after-init-hook))
+    (:opt vertico-count 20)
+    (:also-load vertico-repeat vertico-directory orderless)
+    (setup vertico-repeat
+      (:global-keymap "M-R" vertico-repeat)
+      (setup minibuffer-setup-hook (:hook vertico-repeat-save)))
+
+    (setup vertico-directory
+      (:with-map vertico-map
+        (:bind
+         "<backspace>" vertico-directory-delete-char
+         "DEL" vertico-directory-delete-char
+         "M-DEL" vertico-directory-delete-word))
+      (setup vertico-directory-tidy (:hook rfn-eshadow-update-overlay-hook)))
+
+  (setup (:package consult)
+    (:global-keymap "C-x b" consult-buffer
+             [remap goto-line] consult-goto-line)
+    (:when-loaded
+      (setup org
+        (:when-loaded
+          (add-to-list 'org-speed-commands ; default `org-goto'
+                       '("j" . consult-org-heading))
+          (add-to-list 'org-speed-commands
+                       '("J" .  org-goto)))))
+    (:override-map "C-'" consult-buffer)
+    (:also-load affe consult-xref consult-ghq)
+
+    ;; (setup consult-preview-at-point-mode
+    ;;   (:hook-into completion-list-mode-hook))
+
+    (:opt consult-preview-key '(:debounce 0.5 any)
+          consult-ripgrep-args (concat "rg "
+                                       ;; -u がないと .gitignore のせいで何もヒットしないことがある.
+                                       "-uu "
+                                       "--null "
+                                       "--line-buffered "
+                                       "--color=never "
+                                       "--max-columns=1000 "
+                                       "--path-separator /\ "
+                                       "--smart-case "
+                                       "--no-heading "
+                                       "--with-filename "
+                                       "--line-number "
+                                       "--search-zip "))
+    (:when-loaded
+      (defun consult-ripgrep-single-file ()
+        "Call `consult-ripgrep' for the current buffer (a single file)."
+        (interactive)
+        (let ((consult-project-function (lambda (_) nil))
+              (consult-ripgrep-args
+               (concat "rg "
+                       "--null "
+                       "--line-buffered "
+                       "--color=never "
+                       "--line-number "
+                       "--smart-case "
+                       "--no-heading "
+                       "--max-columns=1000 "
+                       "--max-columns-preview "
+                       "--with-filename "
+                       (shell-quote-argument buffer-file-name))))
+          (consult-ripgrep)))))
+
+  (setup (:package affe)
+    (:also-load orderless)
+    (:when-loaded
+      (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+        (setq input (cdr (orderless-compile input)))
+        (cons input (apply-partially #'orderless--highlight input t)))
+      (setopt affe-regexp-compiler #'affe-orderless-regexp-compiler
+              affe-find-command  `,(let ((fd (or (executable-find "fd")
+                                                 (executable-find "fdfind"))))
+                                     (when fd
+                                       (concat fd " --color=never --full-path"))))
+      ;; expand (consult-customize affe-grep :preview-key "M-.")
+      (consult--customize-put '(affe-grep) :preview-key '"M-.")))
+
+  (setup (:package consult-yasnippet)
+    (:also-load yasnippet)
+    (:global-keymap "C-c y" consult-yasnippet))
+
+  (setup (:package consult-flycheck))
+
+  (setup (:package orderless)
+    (:also-load migemo)
+    (:when-loaded
+      ;; migemo
+      (defun orderless-migemo (component)
+        "Match COMPONENT as a migemo-string."
+        (let ((pattern (migemo-get-pattern component)))
+          (condition-case nil
+              (progn (string-match-p pattern "") pattern)
+            (invalid-regexp nil))))
+      (setopt completion-styles '(orderless basic flex)
+              ;; completion-category-defaults nil
+              completion-category-overrides '((file (styles basic partial-completion)))
+              orderless-matching-styles '(orderless-literal
+                                          orderless-regexp
+                                          orderless-migemo))))
+
+  (setup (:package marginalia)
+    (:hook-into after-init-hook)
+    (:hook nerd-icons-completion-marginalia-setup))
+
+  (setup (:package helm)
+    (:also-load migemo)
+    (:when-loaded
+      (helm-migemo-mode 1)
+      (:blackout helm-migemo-mode))
+    (setup helm-swoop
+      (:global-keymap "C-c i" helm-swoop
+               "C-c I" helm-swoop-back-to-last-point)
+      (:with-map helm-swoop-map
+        (:bind "C-r" helm-previous-line
+               "C-s" helm-next-line
+               "M-i" helm-multi-swoop-all-from-helm-swoop))
+      (:with-map isearch-mode-map
+        (:bind "M-i" helm-swoop-from-isearch)))
+    (setup helm-descbinds
+      (key-chord-define-global "df" 'helm-descbinds)))
+#+end_src
+
+*** embark
+#+begin_quote
+Conveniently act on minibuffer completions
+[[https://github.com/oantolin/embark]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package embark)
+    (:global-keymap
+     "C-." embark-act
+     "C-;" embark-dwim
+     "<f1> B" embark-bindings)
+    (:when-loaded
+      (setopt prefix-help-command #'embark-prefix-help-command
+              embark-mixed-indicator-delay 0.1)))
+#+end_src
+
+*** embark-consult
+#+begin_quote
+Consult integration for Embark
+[[https://github.com/oantolin/embark]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup embark-consult
+    (with-eval-after-load 'consult
+      (require 'embark-consult))
+    (with-eval-after-load 'embark
+      (require 'embark-consult))
+    (:with-mode embark-collect-mode
+      (:hook consult-preview-at-point-mode)))
+#+end_src
+
+
+** avy
+#+begin_src emacs-lisp
+  (setup (:package avy)
+    (:bind-into isearch
+      "M-j"  avy-isearch)
+    (:when-loaded
+      (defun avy-action-embark (pt)
+        (unwind-protect
+            (save-excursion
+              (goto-char pt)
+              (embark-act))
+          (select-window
+           (cdr (ring-ref avy-ring 0))))
+        t)
+      (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark)))
+#+end_src
+
+** ace-window
+#+begin_src emacs-lisp
+  (setup (:package ace-window)
+    (defun ace-window-advice (&rest _r)
+      "If the selected window is the only window, then split the window
+  holizontally."
+      (when (one-window-p)
+        (split-window-horizontally)))
+    (advice-add 'ace-window :before #'ace-window-advice)
+    (:global-keymap "C-c o" ace-window
+                    "C-z" ace-window)
+    (:when-loaded
+      (setopt aw-keys '(?j ?k ?l ?i ?o ?h ?y ?u ?p))
+      (custom-set-faces '(aw-leading-char-face ((t (:foreground "red" :height 4.0)))
+                                               nil))))
+#+end_src
+
+** Coding
+#+begin_src emacs-lisp
+  (setopt indent-tabs-mode nil)
+
+  (setup (:package envrc)
+    (:with-mode envrc-global-mode
+      (:hook-into after-init-hook))
+    (:when-loaded
+      (advice-add 'shell-command-to-string :around #'envrc-propagate-environment)))
+
+  (setup prog-mode
+    (:when-loaded
+      (defsubst indicate-buffer-boundaries-left ()
+        (setopt indicate-buffer-boundaries 'left)))
+    (:hook indicate-buffer-boundaries-left))
+
+  (setup project
+    (:when-loaded
+      (defun my/project-clear-cache ()
+        (interactive)
+        (setopt vc-file-prop-obarray (obarray-make 17)))))
+
+  (setup auto-insert
+    (:opt auto-insert-directory (concat user-emacs-directory "insert/"))
+    (:hook-into after-init-hook))
+
+  (setup hideshow
+    (:with-map hs-minor-mode-map
+      (:bind "C-c t" hs-toggle-hiding))
+    (add-hook 'prog-mode-hook #'hs-minor-mode))
+
+  (setup eldoc
+    (add-hook 'after-init-hook #'global-eldoc-mode))
+
+  (setup treesit
+    (:also-load treesit-auto)
+    (:opt treesit-font-lock-level 4)
+    (setup treesit-auto
+      (:opt treesit-auto-install t)
+      (:when-loaded
+        (add-to-list 'treesit-language-source-alist '(erlang "https://github.com/WhatsApp/tree-sitter-erlang"))
+        (add-to-list 'treesit-language-source-alist '(lua "https://github.com/MunifTanjim/tree-sitter-lua")))))
+
+  (setup eglot
+    (:also-load cape)
+    (:when-loaded
+      (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+    (defun my/eglot-capf ()
+      (add-to-list 'completion-at-point-functions #'eglot-completion-at-point))
+    (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
+    (:bind "C-c h" eglot-code-actions))
+
+  (setup flymake
+    (:bind "M-n" flymake-goto-next-error
+           "M-p" flymake-goto-prev-error))
+
+  (setup (:package flycheck)
+    (:also-load flycheck-inline)
+    (:hook flycheck-inline-mode)
+    (:bind "M-n" flycheck-next-error
+           "M-p" flycheck-previous-error)
+    (:when-loaded
+      (flycheck-define-checker textlint
+        "A linter for text."
+        ;; -c .textlintrc はいらない？
+        :command ("npx" "textlint" "--format" "unix" source)
+        :error-patterns
+        ((warning line-start (file-name) ":" line ":" column ": "
+                  (id (one-or-more (not (any " "))))
+                  (message (one-or-more not-newline)
+                           (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+                  line-end))
+        :modes (text-mode org-mode markdown-mode review-starter-mode LaTeX-mode))
+      (add-to-list 'flycheck-checkers 'textlint )))
+
+  (setup ispell
+    (:opt ispell-program-name "hunspell"
+          ispell-really-hunspell t
+          ispell-personal-dictionary "~/.hunspell_dict"
+          ispell-alternate-dictionary nil)
+    (:when-loaded
+      (unless (getenv "DICTIONARY")
+        (setenv "DICTIONARY" "en_US"))
+      (unless (getenv "Wordlist")
+        (setenv "WORDLIST" "~/.hunspell_dict"))
+      (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+") )))
+#+end_src
+
+*** Make
+#+begin_src emacs-lisp
+  (setup makefile-gmake-mode
+    (:hook (lambda () (indent-tabs-mode 1))))
+
+  (setup (:package cmake-mode))
+#+end_src
+
+*** LISP
+#+begin_src emacs-lisp
+  (setup elispxmp
+    (:when-loaded (setopt elispxmp-debug t)))
+
+  (setup elisp-mode
+    (setup simple
+      (setopt eval-expression-print-length nil
+              eval-expression-print-level nil))
+    (:with-map (emacs-lisp-mode-map
+                lisp-interaction-mode-map)
+      (:bind "C-c C-e" macrostep-expand
+             "C-c x" elispxmp))
+    (:with-mode emacs-lisp-mode
+      (:hook outline-minor-mode reveal-mode)))
+
+  (setup scheme
+    (:bind "C-c x" elispxmp)
+    (:opt scheme-program-name "racket")
+    (setup geiser
+      (:also-load geiser-racket)
+      (:opt geiser-repl-use-other-window nil
+            geiser-mode-auto-p t
+            geiser-mode-start-repl-p t)))
+#+end_src
+
+*** C/C++
+#+begin_src emacs-lisp
+  (setup cc-mode
+    (:with-map c-mode-base-map
+      (:bind "C-c C-c" compile))        ; defaultは`comment-region'
+    (:with-hook c-mode-hook (:hook (lambda () (c-set-style "bsd"))))
+    (:with-hook c++-mode-hook (:hook (lambda () (c-set-style "gnu"))))
+    (:with-hook c-mode-common-hook (:hook eglot-ensure)))
+
+  (setup c-ts-mode
+    (:with-hook c-ts-mode-common-hook (:hook eglot-ensure))
+    (:with-map c-ts-base-mode-map
+      (:bind "C-c C-c" compile))
+    (:hook (lambda () (c-ts-mode-toggle-comment-style -1))))
+
+  (setup hideif
+    (:with-hook (c-mode-common-hook c-ts-mode-common-hook)
+      (:hook hide-ifdef-mode)))
+
+  (setup (:package gdb-x)
+    (:with-mode gud-mode
+      (:bind
+       "C-c C-'" gdb-x-many-windows-mode
+       "C-c C-q" gdb-x-gud-quit))
+    (:with-map gud-minor-mode-map
+      (:bind "C-c C-'" gdb-x-many-windows-mode
+             "C-c C-q" gdb-x-gud-quit))
+    (:hook-into c-ts-mode-hook))
+
+  (setup (:package clang-format))
+
+#+end_src
+
+*** Python
+#+begin_src emacs-lisp
+  (eval-when-compile (require 'reformatter))
+
+  (setup python
+    (:hook (lambda () (setq-local tab-always-indent t)))
+    (:when-loaded
+      (setopt python-indent-guess-indent-offset-verbose nil)))
+
+  (setup python-ts-mode
+    (:also-load reformatter ruff-format)
+    (:hook eglot-ensure
+           flymake-ruff-load
+           ruff-format-on-save-mode
+           (lambda () (setq-local tab-always-indent t))))
+
+  (setup (:package reformatter)
+    (:when-loaded
+      (reformatter-define ruff-format
+        :program "ruff"
+        :args `("format" "--stdin-filename" ,buffer-file-name "-"))))
+
+  (setup (:package highlight-indent-guides)
+    (:hook-into python-mode-hook
+                python-ts-mode-hook)
+    (:opt highlight-indent-guides-auto-enabled t
+          highlight-indent-guides-responsive 'top ; nil 'top 'stack
+          highlight-indent-guides-method 'fill))
+
+  (setup (:package flymake-ruff))
+#+end_src
+
+*** Jupyter
+#+begin_quote
+[[https://zenn.dev/nonamecat/articles/6d7d3a7fbe6cbd][pythonデータ分析のためのemacs設定の大枠とemacs-jupyterによるjupyter-REPLの紹介]]
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package zmq))
+
+  (setup (:package jupyter)
+    (:also-load zmq)
+    (:opt jupyter-repl-echo-eval-p t)
+    (:when-loaded
+      (defun my-jupyter-image-save ()
+        "Save the image under point to the '.fig' directory with a timestamp filename.
+  Creates the '.fig' directory if it doesn't exist.
+  Copies the full path of the saved image to the clipboard."
+        (interactive)
+        (let* ((fig-dir ".fig")
+               (out-f (format-time-string (concat fig-dir "/%Y%m%d-%H%M%S.png")))
+               (full-path (expand-file-name out-f)))
+          ;; Create '.fig' directory if it doesn't exist
+          (unless (file-exists-p fig-dir)
+            (make-directory fig-dir t)
+            (message "Created directory: %s" (expand-file-name fig-dir)))
+          ;; Save the image
+          (my-jupyter-image-save-with-arg out-f)
+          ;; Copy the full path to clipboard
+          (kill-new full-path)
+          ;; Message to inform user
+          (message "Image saved and full path copied to clipboard: %s" full-path)
+          ;; Return the full path of the saved image
+          full-path))
+      (defun my-jupyter-image-save-with-arg (&optional file)
+        "Save the image under point.
+  This writes the original image data to a file.  Rotating or
+  changing the displayed image size does not affect the saved image.
+  If FILE is provided, save to that file. Otherwise, prompt for a filename."
+        (interactive)
+        (let ((image (image--get-image)))
+          (with-temp-buffer
+            (let ((image-file (plist-get (cdr image) :file)))
+              (if image-file
+                  (if (not (file-exists-p image-file))
+                      (error "File %s no longer exists" image-file)
+                    (insert-file-contents-literally image-file))
+                (insert (plist-get (cdr image) :data))))
+            (let ((save-file (or file
+                                 (read-file-name "Write image to file: "))))
+              (write-region (point-min) (point-max) save-file)
+              (message "Image saved to %s" save-file)))))
+      (defun my-jupyter-image-yank ()
+        "Insert an Org mode file link for the image path in the clipboard
+  at the current cursor position.  Only insert if the file is an
+  image (png, jpg, jpeg, gif, or svg)."
+        (interactive)
+        (let ((file-path (substring-no-properties (current-kill 0))))
+          (if (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\)$" file-path)
+              (let ((relative-path (file-relative-name file-path)))
+                (insert (format "#+ATTR_HTML: :width 300\n[[file:%s]]" relative-path))
+                (org-redisplay-inline-images))
+            (message "Clipboard content is not a supported image file path. No insertion performed."))))))
+#+end_src
+
+*** Rust
+#+begin_src emacs-lisp
+  (setup (:package rustic)
+    (:match-file "*.rs")
+    (:opt rustic-lsp-client 'eglot        ; default lsp
+          rustic-analyzer-command '("rustup" "run" "stable" "rust-analyzer")
+          rustic-format-trigger 'on-save
+          rustic-rustfmt-bin "rustfmt")
+    (:when-loaded
+      (add-to-list 'rustic-rustfmt-config-alist '("edition" . "2018"))))
+#+end_src
+
+*** Others
+#+begin_src emacs-lisp
+  ;;; Typescript
+  (setup tsx-ts
+    (:match-file "*.tsx"))
+
+  (setup typescript-ts
+    (:match-file "*.ts"))
+
+  (setup js
+    (:opt js-indent-level 2))
+
+  ;;; Go
+  (setup go-ts-mode
+    (:match-file "*.go")
+    (:opt go-ts-mode-indent-offset 4)
+    (:hook (lambda () (indent-tabs-mode 1))
+           eglot-ensure))
+
+  ;;; Erlang
+  (setup (:package erlang-ts)
+    (:match-file "*.erl"))
+
+  ;;; Haskel
+  (setup (:package haskell-mode)
+    (:hook eglot-ensure))
+  (setup (:package haskell-ts-mode)
+    (:hook eglot-ensure))
+
+  ;;; Clojure
+  (setup (:package clojure-ts-mode)
+    (:hook eglot-ensure))
+
+  ;;; Scala
+  (setup (:package scala-ts-mode)
+    (:hook eglot-ensure))
+
+  ;;; IO language
+  (setup (:package io-mode))
+
+  ;;; Prolog
+  (setup prolog
+    (:also-load ediprolog)
+    (:match-file "*.pl")                ; default perl-mode
+    (:bind "C-c C-e" 'ediprolog-dwim)
+    (:opt prolog-system 'swi
+          ediprolog-system 'swi))
+
+  ;;; EBNF
+  (setup (:package ebnf-mode)
+    (:opt ebnf-mode-production-re  "^\\s-*\\([[:alnum:]_-]+\\)\\s-*="
+          ebnf-mode-comment-starter "(*"
+          ebnf-mode-comment-ender  "*)"
+          ebnf-mode-eop-char ?\;)
+    (:when-loaded
+      (modify-syntax-entry ?- "_" ebnf-mode-syntax-table)
+      (modify-syntax-entry ?\; "." ebnf-mode-syntax-table)
+      (modify-syntax-entry ?\n "." ebnf-mode-syntax-table)
+      (modify-syntax-entry ?' "\"" ebnf-mode-syntax-table)
+      (modify-syntax-entry ?\( "()1" ebnf-mode-syntax-table)
+      (modify-syntax-entry ?* ". 23" ebnf-mode-syntax-table)
+      (modify-syntax-entry ?\) ")(4" ebnf-mode-syntax-table)))
+
+  ;;; SQL
+  (setup sql (:opt sql-product "postgres"))
+
+  ;;; Gnuplot
+  (setup (:package gnuplot)
+    (:match-file "*.plt"))
+#+end_src
+
+** Shell
+#+begin_src emacs-lisp
+  ;;; Shell
+  (setup (:package eat))
+
+  (setup (:package mistty))
+
+  (setup (:package shell-pop)
+    (:global "C-c s" shell-pop)
+    (:opt shell-pop-window-size 50
+          shell-pop-shell-type '("shell" "*shell*" (lambda () (shell)))
+          shell-pop-window-position "bottom"
+          shell-pop-universal-key "C-c s")
+    (setup dired
+      (:bind [remap dired-do-shell-command] dired-start-shell)
+      (:when-loaded
+        (defun dired-start-shell (arg)
+          "Execute `shell-pop' or `shell' and then pasete ARG if they are non-nil.
+  ARG is the markeed files in `dired-mode'. Ofcouse, this function
+  is only valid in `dired-mode'."
+          (interactive "P")
+          (let ((files (mapconcat 'shell-quote-argument
+                                  (dired-get-marked-files (not arg))
+                                  " ")))
+            (if (fboundp 'shell-pop)
+                (shell-pop arg)
+              (shell t))
+            (sleep-for 0.1)
+            (save-excursion (insert " " files)))))))
+
+#+end_src
+
+** Maxima
+#+begin_src emacs-lisp
+  (setup (:package imaxima)
+    (autoload 'imaxima "imaxima" "Frontend of Maxima CAS" t)
+    (autoload 'imath "imath" "Interactive Math mode" t)
+    (autoload 'imath-mode "imath" "Interactive Math mode" t)
+    (:opt imaxima-use-maxima-mode-flag t
+          imaxima-latex-preamble "\\usepackage{amsmath}\n"))
+#+end_src
+
+
+** Documentation
+
+*** open-junk-file
+#+begin_src emacs-lisp
+  (setup (:package open-junk-file)
+    (:global "C-c z" open-junk-file)
+    (:opt open-junk-file-format "~/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
+#+end_src
+
+*** TeX/LaTeX
+#+begin_src emacs-lisp
+    ;;; TeX/LaTeX
+  (setup (:package auctex))
+
+  (setup tex-jp
+    (:with-mode japanese-LaTeX-mode
+      (:match-file "*.tex"))
+    (:also-load texmathp                  ; empheq
+                reftex)
+    (:opt reftex-plug-into-AUCTeX t
+          reftex-insert-label-flags '("s" "sfte")
+          TeX-default-mode 'japanese-latex-mode
+          japanese-LaTeX-default-style "jsarticle"
+          japanese-TeX-engine-default 'uptex
+          TeX-command-output-list '(("LaTeXMk" ("pdf"))
+                                    ("LuaLaTeX" ("pdf")))
+          TeX-electric-sub-and-superscript t
+          TeX-source-correlate-start-server t
+          LaTeX-indent-level 4
+          LaTeX-item-indent  2
+          TeX-auto-save t                   ; Enable parse on save.
+          TeX-parse-self t                  ; Enable parse on load.
+          LaTeX-electric-left-right-brace t ; カッコの補完.
+          TeX-electric-math '("$" . "$")
+          TeX-master nil
+          TeX-auto-untabify nil
+          TeX-view-program-selection '((output-pdf "PDF Tools")
+                                       (output-dvi "xdvi")))
+    (:when-loaded
+      (:foreach '(("make" "make"
+                   TeX-run-command nil t :help "Run Make")
+                  ("Latexmk" "latexmk -pdfdvi %t"
+                   TeX-run-TeX nil (latex-mode) :help "Run LaTeXmk")
+                  ("LuaLaTeX" "lualatex %t"
+                   TeX-run-TeX nil (latex-mode) :help "Run LuaLaTeX")
+                  ("pBibTeX" "pbibtex -kanji=utf8 %s"
+                   TeX-run-BibTeX nil t :help "Run pBibTeX")
+                  ("upBibTeX" "upbibtex %s"
+                   TeX-run-BibTeX nil t :help "Run upBibTeX")
+                  ("Mendex" "mendex -U %s"
+                   TeX-run-command nil t
+                   :help "Create index file with mendex")
+                  ("Okular"
+                   "okular --unique \"file:\"%s.pdf\"#src:%n %a\""
+                   TeX-run-discard-or-function t t :help "Forward search with Okular"))
+                (add-to-list 'TeX-command-list ,it)))
+    (defun latex-mode--my-hooks ()
+      (turn-on-reftex)
+      (TeX-source-correlate-mode)
+      (TeX-PDF-mode)
+      (LaTeX-math-mode)
+      (outline-minor-mode)
+      (setopt TeX-command-default "LatexMk"))
+    (:with-hook LaTeX-mode-hook
+      (:hook latex-mode--my-hooks)))
+
+  (setup kinsoku
+    (setopt kinsoku-limit 10))
+
+  (setup (:package pdf-tools)
+    (:with-hook after-init-hook
+      (:hook pdf-loader-install))
+    (:with-map pdf-view-mode-map
+      (:bind "C-s" isearch-forward)))
+#+end_src
+
+
+*** Markdown
+#+begin_src emacs-lisp
+  (setup (:package markdown-mode)
+    (:match-file "*.md")
+    (:bind "C-c RET" compile)
+    (:when-loaded
+      (setopt markdown-fontify-code-blocks-natively t)))
+
+#+end_src
+
+*** Weekly report mode
+#+begin_src emacs-lisp
+  ;; (setup (:package wkr-mode)
+  ;;   (autoload 'wkr-mode "wkr-mode")
+  ;;   (autoload 'wkr-cleanup "wkr-mode")
+  ;;   (:file-match "/MyWeeklyReport/CY[0-9]+/.*\\.txt$"))
+#+end_src
+
+*** Org-mode
+#+begin_src emacs-lisp
+  ;;; Org-mode
+  (setup org
+    (:match-file "*.org_archive")
+    (:global "C-c a" org-agenda
+             "C-c c" org-capture
+             "C-c l" org-store-link)
+    (:bind "<f11>"   org-tree-slide-mode
+           "S-<f11>" org-tree-slide-skip-done-toggle
+           "C-c t" org-toggle-link-display)
+    (:opt org-directory "~/memo/"
+          org-default-notes-file (concat org-directory "agenda.org")
+          org-use-speed-commands t
+          org-startup-indented  nil  ; 見出しをインデントするか
+          org-startup-folded 'nofold ; 見出しの初期状態 (見出しだけ表示)
+          org-startup-truncated nil
+          org-return-follows-link t
+          org-link-descriptive t        ; org linkを折りたたむ (default)
+          org-highlight-latex-and-related '(latex script entities)
+          org-src-fontify-natively t
+          org-clock-out-remove-zero-time-clocks nil ; 秒まで記録
+          org-clock-clocked-in-display 'both
+          org-log-done 'time
+          org-use-fast-todo-selection 'auto
+          ;; TODO keywordsをGTD styleに変更
+          org-todo-keywords '((sequence "TODO(t)" "DOING(d)" "WAITING(w)"
+                                        "|" "DONE(x)" "CANCELED(c)" "DEFERRED(f)")
+                              (sequence "APPT(a)" "|" "DONE(x)" "CANCEL(c)" "DEFERRED(f)"))
+          ;; archive先を変更
+          org-archive-location "%s_archive::* Archived Tasks"
+          ;; C-c C-w で見出の相互移動を可能にする。
+          org-refile-targets '(("agenda.org" :maxlevel . 1)
+                               ("someday.org" :level . 2)
+                               ("agenda.org_archive" :maxlevel . 1)))
+    (:when-loaded
+      (defhydra hydra-org-outline (org-mode-map "C-c")
+        "Move outline"
+        ("C-n" (outline-next-visible-heading 1) "Next")
+        ("C-p" (outline-previous-visible-heading 1) "Previous")))
+    (autoload 'org-read-date "org")
+    (defun my/insert-date-at-point ()
+      "Minibufferで日付を選択し、カーソル位置に `YYYY/MM/DD DOW` フォーマットで挿入する。"
+      (interactive)
+      (let ((system-time-locale "ja_JP.utf8")
+            (date (org-read-date nil nil nil "日付を選択してください:")))
+        (insert (format "%04d年%d月%d日(%s)"
+                        (string-to-number (format-time-string "%Y" (org-time-string-to-time date)))
+                        (string-to-number (format-time-string "%m" (org-time-string-to-time date)))
+                        (string-to-number (format-time-string "%d" (org-time-string-to-time date)))
+                        (format-time-string "%a" (org-time-string-to-time date)))))))
+
+  (setup org-agenda
+    (defun open-my-agenda-file ()
+      "Open `org-default-notes-file'."
+      (interactive)
+      (unless (boundp 'org-default-notes-file)
+        (require 'org-agenda))
+      (find-file org-default-notes-file))
+    (defun org-agenda-default ()
+      "Short command for C-c a a"
+      (interactive)
+      (unless (boundp 'org-default-notes-file)
+        (require 'org-agenda))
+      (org-agenda nil (kbd "A")))
+    (:global "C-c g" open-my-agenda-file
+             "<f6>" org-agenda-default)
+    (:when-loaded
+      (defun my-agenda-skip-function ()
+        (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+              (today (format-time-string "%Y-%m-%d 00:00")))
+          (if (or (member "repeatable" (org-get-tags))
+                  (if (re-search-forward org-element-clock-line-re subtree-end t)
+                      (org-time< (match-string-no-properties 1) today)
+                    t))
+              nil
+            subtree-end))))
+    (:opt org-agenda-sticky t             ; don't kill agenda buffer
+          org-agenda-restore-windows-after-quit nil ;  default
+          org-agenda-skip-scheduled-if-done t
+          org-agenda-start-with-log-mode '(state)
+          ;; 参照するファイルを追加
+          org-agenda-files `(,org-default-notes-file
+                             "~/memo/birthday.org"
+                             "~/memo/daily-projects.org")
+          ;; GTD context & org習慣仕事術 by rubikitch
+          org-agenda-custom-commands '(("A" "Agenda and all Tasks"
+                                        ((tags "project"
+                                               ((org-agenda-skip-function 'my-agenda-skip-function)))
+                                         (agenda "")
+                                         (alltodo "")))
+                                       ("l" "Agenda for current month"
+                                        ((agenda "" ((org-agenda-span 'month)))))
+                                       ("g" . "GTD contexts")
+                                       ("go" "Office" tags-todo "office")
+                                       ("gc" "Computer" tags-todo "computer")
+                                       ("gp" "Phone" tags-todo "phone")
+                                       ("gh" "Home" tags-todo "home")
+                                       ("ge" "Errands" tags-todo "errands")
+                                       ("G" "GTD Block Agenda"
+                                        ((tags-todo "office")
+                                         (tags-todo "computer")
+                                         (tags-todo "phone")
+                                         (tags-todo "home")
+                                         (tags-todo "errands")
+                                         (tags-todo "anywhere"))
+                                        nil ;; i.e., no local settings
+                                        ("~/memo/next-actions.html")) ;; exports block to this file with C-c a e
+                                       ("w" "Weekly Review"
+                                        ((agenda "" ((org-agenda-span 7)))
+                                         (todo "APT")
+                                         (todo "TASK")
+                                         (todo "STARTED")
+                                         (todo "WAITING")
+                                         (todo "DONE")
+                                         (todo "CANCEL")
+                                         (todo "DONE"))))))
+
+  (setup org-capture
+    (:opt org-capture-templates  '(("n" "Note" entry (file+headline "~/memo/agenda.org" "Inbox")
+                                    "** %?\n %i\n   %T\n   %a\n")
+                                   ("t" "Todo" entry (file+headline "~/memo/agenda.org" "Inbox")
+                                    "** TODO %?\n %i\n   %T\n   %a\n")
+                                   ("b" "Bug" entry (file+headline "~/memo/agenda.org" "Inbox")
+                                    "** TODO %?   :bug:\n %i\n   %T\n   %a\n")
+                                   ("j" "Journal" entry (file+olp+datetree "~/memo/journal.org" "Journal")
+                                    "* %?\n %i\n  Added: %U \n  From:  %a\n")
+                                   ("m" "Memo (Clip)" entry (file+headline "~/memo/journal.org" "Clip")
+                                    "** %?   :MEMO:\n %i\n %U\n %a\n")
+                                   ("i" "Idea" entry (file+headline "~/memo/journal.org" "New Ideas")
+                                    "** %?\n %i\n   %T\n   %a\n")
+                                   ("R" "To Read" entry (file+headline "~/memo/someday.org" "Books to Read")
+                                    "** %?\n %i\n   %T\n   %a\n"))))
+
+  (setup ox-html
+    (:opt org-html-mathjax-template "<script>
+    window.MathJax = {
+      loader: {load: ['[tex]/mathtools', '[tex]/empheq']},
+      tex: {
+        packages: {'[+]': ['mathtools','empheq']},
+        ams: {
+          multlineWidth: '%MULTLINEWIDTH'
+        },
+        tags: '%TAGS',
+        tagSide: '%TAGSIDE',
+        tagIndent: '%TAGINDENT',
+        useLabelIds: true, // use label name rather than tag for ids
+      },
+      chtml: {
+        scale: %SCALE,
+        displayAlign: '%ALIGN',
+        displayIndent: '%INDENT',
+        mtextInheritFont: true
+      },
+      svg: {
+        scale: %SCALE,
+        displayAlign: '%ALIGN',
+        displayIndent: '%INDENT'
+        // fontCache: 'global'
+      },
+      output: {
+        font: '%FONT',
+        displayOverflow: '%OVERFLOW'
+      }
+    };
+  </script>
+
+  <script
+    id=\"MathJax-script\"
+    async
+    src=\"%PATH\">
+  </script>"
+          org-html-mathjax-optionsa '((path "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js") ; TeX
+                                      (scale 1.0)
+                                      (align "center")
+                                      (font "TeX") ; default "mathjax-modern"
+                                      (overflow "linebreaks") ; default "overflow"
+                                      (tags "ams")
+                                      (indent "0em")
+                                      (multlinewidth "85%")
+                                      (tagindent ".8em")
+                                      (tagside "right"))))
+
+  (setup ox-latex
+    (:opt org-export-with-author t
+          org-latex-default-class "jlreq"
+          org-latex-pdf-process '("latexmk %b"))
+    (:when-loaded
+      (add-to-list 'org-latex-classes
+                   '("jlreq"
+                     "\\documentclass[uplatex,dvipdfmx,11pt,paper=a4]{jlreq}
+  [NO-DEFAULT-PACKAGES]
+  \\usepackage{amsmath}
+  \\usepackage{newtxtext,newtxmath}
+  \\ifdefined\\kanjiskip
+    \\usepackage{graphicx}
+    \\usepackage{hyperref}
+    \\usepackage{pxjahyper}
+    \\hypersetup{colorlinks=true}
+  \\else
+    \\usepackage{graphicx}
+    \\usepackage{hyperref}
+    \\hypersetup{pdfencoding=auto,colorlinks=true}
+  \\fi"
+                     ("\\section{%s}" . "\\section*{%s}")
+                     ("\\subsection{%s}" . "\\subsection*{%s}")
+                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                     ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
+#+end_src
+
+*** HOWM
+#+begin_quote
+Hitori otegaru wiki modoki
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package howm)
+    (setup org                            ; from `howm-org'
+      (setopt howm-dtime-format "[%Y-%m-%d %a %H:%M]")
+      (add-hook 'howm-view-contents-mode-hook #'howm-org-font-lock-minor-mode)
+      (:match-file "*.howm"))
+    (autoload 'howm-menu "howm" "Hitori Otegaru Wiki Modoki" t)
+    (autoload 'howm-create "howm" "Hitori Otegaru Wiki Modoki" t)
+    (:override-map "C-c , ," howm-menu
+                   "C-c , c" howm-create)
+    (:bind "C-x C-c" howm-save-and-kill-buffer)
+    (setopt howm-menu-file "~/howm/0000-00-00-000000.txt"
+            howm-menu-lang 'ja
+            howm-menu-refresh-after-save nil ; メニューを自動更新しない
+            howm-refresh-after-save nil      ; 下線を引き直さない
+            howm-list-recent-title t ; 「最近のメモ」一覧時にタイトル表示
+            howm-list-all-title t    ; 全メモ一覧時にタイトル表示
+            howm-menu-expiry-hours 2 ; メニューを 2 時間キャッシュ
+            howm-menu-schedule-days-before 1
+            howm-menu-schedule-days 7
+            howm-file-name-format "%Y/%m/%Y-%m-%d-%H%M%S.howm" )
+    (:when-loaded
+      (defun howm-save-and-kill-buffer ()
+        (interactive)
+        (when (and
+               (buffer-file-name)
+               (string-match "\\.howm\\'"
+                             (buffer-file-name)))
+          (save-buffer)
+          (kill-buffer nil)))
+      (custom-set-faces '(howm-mode-title-face ((((class color) (background light)) (:foreground "RoyalBlue"))
+                                                (((class color) (background dark)) (:foreground "#00bb00"))
+                                                (t ()))))))
+
+#+end_src
+
+** Perspective
+#+begin_src emacs-lisp
+  (setup (:package perspective)
+    (:when-loaded
+      (:global "C-x C-b" persp-list-buffers)
+      (set-face-foreground 'persp-selected-face "red"))
+    (:opt persp-mode-prefix-key (kbd "C-c p")
+          persp-frame-global-perspective-include-scratch-buffer nil)
+    (setup consult
+      (:when-loaded
+        (add-to-list 'consult-buffer-sources 'persp-consult-source)))
+    (defvar num-persp-number-sequence (number-sequence 1 5))
+    (defun num-persp-generate-perspective ()
+      (interactive)
+      (mapc
+       (lambda (i)
+         (persp-switch (int-to-string i)))
+       num-persp-number-sequence))
+    (defun num-persp-local-switch-workspace (index)
+      `(lambda ()
+         (interactive)
+         (persp-switch (int-to-string ,index))))
+    (defun num-persp-assign-keys ()
+      (interactive)
+      (mapc
+       (lambda (i)
+         (global-set-key (kbd (format "M-%d" i))
+                         (num-persp-local-switch-workspace i)))
+       num-persp-number-sequence))
+    (defun persp-after-init-hooks ()
+      (persp-mode 1)
+      (num-persp-generate-perspective)
+      (num-persp-assign-keys)
+      (persp-switch "1"))
+    (:with-hook after-init-hook
+      (:hook persp-after-init-hooks)))
+#+end_src
+
+** View mode
+#+begin_src emacs-lisp
+  ;;; View mode
+  (setup (:package viewer)
+    (key-chord-define-global "kj" 'view-mode)
+    (:with-mode view-mode
+      (:bind
+       "h" backward-char
+       "j" next-line
+       "k" previous-line
+       "l" forward-char
+       "J" View-scroll-line-forward
+       "K" View-scroll-line-backward
+       "q" kill-buffer))
+    (setopt view-read-only t
+            viewer-modeline-color-unwritable "tomato"
+            viewer-modeline-color-view "orange"
+            view-mode-by-default-regexp "\\.log$")
+    (:with-hook view-mode-hook
+      (:hook viewer-change-modeline-color-setup))
+    (:with-hook read-only-mode-hook
+      (:hook viewer-stay-in-setup)))
+
+#+end_src
+
+** Calendar
+#+begin_src emacs-lisp
+  ;;; Calender
+  (setup calendar
+    (:when-loaded
+      (require 'japanese-holidays)
+      (add-to-list 'holiday-local-holidays '(holiday-fixed 5 1 "May Day"))
+      (setopt calendar-holidays ; 他の国の祝日も表示させたい場合は適当に調整
+              (append japanese-holidays holiday-local-holidays holiday-other-holidays))
+      (setopt calendar-mark-holidays-flag t) ; 祝日をカレンダーに表示
+      ;; 土曜日・日曜日を祝日として表示する場合、以下の設定を追加します。
+      ;; デフォルトで設定済み
+      (setopt japanese-holiday-weekend '(0 6) ; 土日を祝日として表示
+              japanese-holiday-weekend-marker ; 土曜日を水色で表示
+              '(holiday nil nil nil nil nil japanese-holiday-saturday))
+      (add-hook 'calendar-today-visible-hook 'japanese-holiday-mark-weekend)
+      (add-hook 'calendar-today-invisible-hook 'japanese-holiday-mark-weekend)
+      (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+      (setopt calendar-month-header '(propertize
+                                      (format "%d年 %s月" year month)
+                                      'font-lock-face 'calendar-month-header))
+      (let ((array ["日" "月" "火" "水" "木" "金" "土"]))
+        (setopt calendar-day-header-array array
+                calendar-day-name-array array))
+      (defun my/japanese-holiday-show (&rest _args)
+        (let* ((date (calendar-cursor-to-date t))
+               (calendar-date-display-form '((format "%s年 %s月 %s日（%s）" year month day dayname)))
+               (date-string (calendar-date-string date))
+               (holiday-list (calendar-check-holidays date)))
+          (when holiday-list
+            (message "%s: %s" date-string (mapconcat #'identity holiday-list "; ")))))
+      (add-hook 'calendar-move-hook 'my/japanese-holiday-show)))
+#+end_src
+
+*** calfw
+#+begin_src emacs-lisp
+  (setup (:package calfw)
+    (setopt cfw:org-agenda-schedule-args '(:scheduled :timestamp :deadline))
+    (:with-map cfw:calendar-mode-map
+      (:bind "o" 'cfw:org-open-agenda-day))
+
+    (setup org-agenda
+      (:when-loaded
+        (add-to-list 'org-agenda-custom-commands
+                     '("c" "Display calendar" (lambda (_) (cfw:open-my-calendar))))))
+
+    (defun cfw:open-my-calendar ()
+      "org-agenda, 天文現象, 祝日, howm を source として表示する。"
+      (interactive)
+      (let* ((source1 (cfw:org-create-source "DodgerBlue1"))
+             (source2 (cfw:ical-create-source
+                       "天文現象"
+                       "http://www.cantonbecker.com/astronomy-calendar/astrocal.ics"
+                       "ForestGreen"))
+             (source3 (cfw:howm-create-source "LightSlateBlue")))
+        (cfw:open-calendar-buffer
+         :view 'month
+         :contents-sources (list source1 source2 source3)))))
+#+end_src

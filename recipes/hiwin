@@ -1,0 +1,3 @@
+(hiwin :fetcher github
+       :repo "fenril058/hiwin-mode"
+       :branch "develop")

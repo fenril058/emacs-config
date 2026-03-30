@@ -1,0 +1,3 @@
+(open-junk-file :fetcher github
+                :repo "fenril058/open-junk-file"
+                :branch "develop")

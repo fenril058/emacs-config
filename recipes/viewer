@@ -1,0 +1,3 @@
+(viewer :fetcher github
+        :repo "fenril058/viewer"
+        :branch "develop")

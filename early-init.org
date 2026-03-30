@@ -1,0 +1,93 @@
+#+begin_src emacs-lisp
+  ;;; Code:
+
+  (setopt load-prefer-newer t)
+
+  ;; Temporarily increase GC threshol
+  (setopt gc-cons-threshold (* 1280 1024 1024)) ; it means 1280 MB
+  (setopt gc-cons-percentage 0.2)               ; default 0.1
+
+  ;; Temporarily disabe Magic File Name
+  (defconst default-file-name-handler-alist file-name-handler-alist)
+  (setopt file-name-handler-alist nil)
+
+  ;; Temporarily suppress message
+  (setopt inhibit-message t)
+
+  ;; Restore GC threshold and Magic File Name
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              "Restore defalut values after startup."
+              (setopt inhibit-message nil)
+              (setopt file-name-handler-alist default-file-name-handler-alist)
+              (setopt gc-cons-threshold (* 100 1024 1024)))) ; default 800000
+
+  ;; Mainly for LSP
+  (setopt read-process-output-max (* 1024 1024)) ; default 4096
+
+  ;; disable package.el
+  (setopt package-enable-at-startup nil)
+  (setopt package-quickstart nil)
+
+  ;; basic frame settings
+  (setopt frame-resize-pixelwise t
+          frame-inhibit-implied-resize t
+          ring-bell-function 'ignore
+          use-dialog-box nil
+          use-file-dialog nil
+          use-short-answers t
+          ;; inhibit-compacting-font-caches t
+          inhibit-splash-screen t
+          inhibit-startup-screen t
+          inhibit-startup-message t
+          inhibit-x-resources t
+          inhibit-startup-buffer-menu t
+          scroll-preserve-screen-position t
+          scroll-conservatively 100
+          scroll-conservatively 35 ; スクロール行数 (一行ごとのスクロール)
+          scroll-margin 0
+          scroll-step 1
+          scroll-preserve-screen-position t
+          display-line-numbers t
+          display-line-numbers-widen t
+          display-line-numbers-width nil
+          indicate-empty-lines t
+          tab-width 4)
+  (push '(vertical-scroll-bars) default-frame-alist)
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+
+  (setopt user-full-name "ril"
+          user-mail-address "fenril.nh@gmail.com")
+
+  ;; auto-save and backup
+  (setopt make-backup-files nil           ; 変更fileのバックアップ
+          version-control nil             ; 番号つきバックアップ
+          kept-old-versions 1
+          kept-new-versions 2
+          trim-versions-without-asking t
+          delete-old-versions t
+          auto-save-default t
+          auto-save-list-file-prefix nil
+          auto-save-list-file-name nil
+          auto-save-timeout 10            ; 秒間隔
+          auto-save-interval 500          ; タイプ間隔
+          create-lockfiles nil)
+
+  ;; log & history
+  (setopt message-log-max 1000
+          history-length 1000
+          history-delete-duplicates t)
+
+  ;; minibuffer
+  (setopt enable-recursive-minibuffers t
+          echo-keystrokes 0.1)
+
+  ;; scratch buffer
+  (setopt initial-scratch-message ""
+          initial-major-mode 'fundamental-mode)
+
+  ;; suppress warning
+  (setopt native-comp-async-report-warnings-errors 'silent)
+
+#+end_src

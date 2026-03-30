@@ -1,0 +1,4 @@
+(imaxima :fetcher git
+         :url "https://git.code.sf.net/p/maxima/code"
+         :files ("interfaces/emacs/imaxima/imaxima.el"
+                 "interfaces/emacs/imaxima/imaxima.lisp"))
