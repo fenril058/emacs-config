@@ -452,7 +452,6 @@ Nix3.el integration for Magit
       (magit-nix3-flake-lock-mode t)))
 #+end_src
 
-
 ** appearance
 
 #+begin_src emacs-lisp
@@ -513,6 +512,38 @@ Nix3.el integration for Magit
                                " - GNU Emacs " emacs-version " [%s]"))
 #+end_src
 
+**** font and size
+#+begin_src emacs-lisp
+  (when-system-name "5CD51398X8"
+    (when window-system
+      (setopt initial-frame-alist '((height . 53) (width . 117) (left . 961) (top . 31)))
+      (setup font
+        (:with-hook after-init-hook
+          (:hook (lambda ()
+                   (set-frame-font "-TWR-Moralerspace Krypton HWJPDOC-regular-normal-normal-*-15-*-*-*-*-0-iso10646-1")
+                   (set-fontset-font nil 'unicode (font-spec :family "Moralerspace Krypton HWJPDOC") nil 'prepend)
+                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
+                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+        (setup face-remap
+          (:when-loaded
+            (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
+
+  (when-system-name "4CE536CRGP"
+    (when window-system
+      (modify-all-frames-parameters '((height . 72) (width . 157) (left . 5088) (top . 0)))
+      (setup font
+        (:with-hook after-init-hook
+          (:hook (lambda ()
+                   (set-frame-font "-TWR-PlemolJP Console NF-regular-normal-normal-*-15-*-*-*-d-0-iso10646-1")
+                   (set-fontset-font nil 'unicode (font-spec :family "PlemolJP Console NF") nil 'prepend)
+                   (set-fontset-font nil ?\u203B (font-spec :family "PlemolJP")) ; ※
+                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
+                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+        (setup face-remap
+          (:when-loaded
+            (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
+#+end_src
+
 *** mode-line
 #+begin_src emacs-lisp
   (setopt mode-line-format '("%e"
@@ -564,38 +595,6 @@ Nix3.el integration for Magit
   (setup outline
     (:blackout outline-minor-mode))
 
-#+end_src
-
-*** font
-#+begin_src emacs-lisp
-  (when-system-name "5CD51398X8"
-    (when window-system
-      (setopt initial-frame-alist '((height . 53) (width . 117) (left . 961) (top . 31)))
-      (setup font
-        (:with-hook after-init-hook
-          (:hook (lambda ()
-                   (set-frame-font "-TWR-Moralerspace Krypton HWJPDOC-regular-normal-normal-*-15-*-*-*-*-0-iso10646-1")
-                   (set-fontset-font nil 'unicode (font-spec :family "Moralerspace Krypton HWJPDOC") nil 'prepend)
-                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
-                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
-        (setup face-remap
-          (:when-loaded
-            (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
-
-  (when-system-name "4CE536CRGP"
-    (when window-system
-      (modify-all-frames-parameters '((height . 72) (width . 157) (left . 5088) (top . 0)))
-      (setup font
-        (:with-hook after-init-hook
-          (:hook (lambda ()
-                   (set-frame-font "-TWR-PlemolJP Console NF-regular-normal-normal-*-15-*-*-*-d-0-iso10646-1")
-                   (set-fontset-font nil 'unicode (font-spec :family "PlemolJP Console NF") nil 'prepend)
-                   (set-fontset-font nil ?\u203B (font-spec :family "PlemolJP")) ; ※
-                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
-                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
-        (setup face-remap
-          (:when-loaded
-            (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
 #+end_src
 
 *** header-line
@@ -966,6 +965,8 @@ Provide detailed information about Unicode characters.
 #+end_src
 
 ** Complement
+
+*** corfu
 #+begin_src emacs-lisp
   (setup (:package corfu)
     (defvar-keymap corfu-map
@@ -1004,13 +1005,10 @@ Provide detailed information about Unicode characters.
       (setup kind-icon
         (setopt kind-icon-default-face 'corfu-default)
         (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))))
+#+end_src
 
-  (setup (:package tempel)
-    (:also-load cape)
-    (:global
-     "M-+" tempel-complete ;; Alternative tempel-expand
-     "M-*" tempel-insert))
-
+*** cape
+#+begin_src emacs-lisp
   (setup (:package cape)
     (defun tempel-setup-capf ()
       (dolist
@@ -1027,6 +1025,20 @@ Provide detailed information about Unicode characters.
     (:foreach '(prog-mode-hook text-mode-hook conf-mode-hook)
               (add-hook ,it #'tempel-setup-capf)))
 
+#+end_src
+
+*** tempel
+#+begin_src emacs-lisp
+  (setup (:package tempel)
+    (:also-load cape)
+    (:global
+     "M-+" tempel-complete ;; Alternative tempel-expand
+     "M-*" tempel-insert))
+
+#+end_src
+
+*** yasnippet
+#+begin_src emacs-lisp
   (setup (:package yasnippet)
     (:with-hook after-init-hook (:hook yas-global-mode))
     (:when-loaded
@@ -1034,25 +1046,32 @@ Provide detailed information about Unicode characters.
         (add-to-list 'warning-suppress-types '(yasnippet backquote-change))))
     (:also-load yasnippet-snippets))
 
+#+end_src
+
+*** vertico
+#+begin_src emacs-lisp
   (setup (:package vertico)
     (setup vertico-mode (:hook-into after-init-hook))
     (:opt vertico-count 20)
     (:also-load vertico-repeat vertico-directory orderless)
     (setup vertico-repeat
       (:global-keymap "M-R" vertico-repeat)
-      (setup minibuffer-setup-hook (:hook vertico-repeat-save)))
+      (setup minibuffer-setup-hook (:hook vertico-repeat-save))))
 
-    (setup vertico-directory
-      (:with-map vertico-map
-        (:bind
-         "<backspace>" vertico-directory-delete-char
-         "DEL" vertico-directory-delete-char
-         "M-DEL" vertico-directory-delete-word))
-      (setup vertico-directory-tidy (:hook rfn-eshadow-update-overlay-hook)))
+  (setup vertico-directory
+    (:with-map vertico-map
+      (:bind
+       "<backspace>" vertico-directory-delete-char
+       "DEL" vertico-directory-delete-char
+       "M-DEL" vertico-directory-delete-word))
+    (setup vertico-directory-tidy (:hook rfn-eshadow-update-overlay-hook)))
+#+end_src
 
+*** consult
+#+begin_src emacs-lisp
   (setup (:package consult)
     (:global-keymap "C-x b" consult-buffer
-             [remap goto-line] consult-goto-line)
+                    [remap goto-line] consult-goto-line)
     (:when-loaded
       (setup org
         (:when-loaded
@@ -1063,8 +1082,8 @@ Provide detailed information about Unicode characters.
     (:override-map "C-'" consult-buffer)
     (:also-load affe consult-xref consult-ghq)
 
-    ;; (setup consult-preview-at-point-mode
-    ;;   (:hook-into completion-list-mode-hook))
+    (:with-mode completion-list-mode-hook
+      (:hook consult-preview-at-point-mode))
 
     (:opt consult-preview-key '(:debounce 0.5 any)
           consult-ripgrep-args (concat "rg "
@@ -1099,6 +1118,15 @@ Provide detailed information about Unicode characters.
                        (shell-quote-argument buffer-file-name))))
           (consult-ripgrep)))))
 
+  (setup (:package consult-yasnippet)
+    (:also-load yasnippet)
+    (:global-keymap "C-c y" consult-yasnippet))
+
+  (setup (:package consult-flycheck))
+#+end_src
+
+*** affe
+#+begin_src emacs-lisp
   (setup (:package affe)
     (:also-load orderless)
     (:when-loaded
@@ -1112,13 +1140,10 @@ Provide detailed information about Unicode characters.
                                        (concat fd " --color=never --full-path"))))
       ;; expand (consult-customize affe-grep :preview-key "M-.")
       (consult--customize-put '(affe-grep) :preview-key '"M-.")))
+#+end_src
 
-  (setup (:package consult-yasnippet)
-    (:also-load yasnippet)
-    (:global-keymap "C-c y" consult-yasnippet))
-
-  (setup (:package consult-flycheck))
-
+*** orderless
+#+begin_src emacs-lisp
   (setup (:package orderless)
     (:also-load migemo)
     (:when-loaded
@@ -1135,11 +1160,17 @@ Provide detailed information about Unicode characters.
               orderless-matching-styles '(orderless-literal
                                           orderless-regexp
                                           orderless-migemo))))
+#+end_src
 
+*** marginalia
+#+begin_src emacs-lisp
   (setup (:package marginalia)
     (:hook-into after-init-hook)
     (:hook nerd-icons-completion-marginalia-setup))
+#+end_src
 
+*** helm
+#+begin_src emacs-lisp
   (setup (:package helm)
     (:also-load migemo)
     (:when-loaded
@@ -1147,7 +1178,7 @@ Provide detailed information about Unicode characters.
       (:blackout helm-migemo-mode))
     (setup helm-swoop
       (:global-keymap "C-c i" helm-swoop
-               "C-c I" helm-swoop-back-to-last-point)
+                      "C-c I" helm-swoop-back-to-last-point)
       (:with-map helm-swoop-map
         (:bind "C-r" helm-previous-line
                "C-s" helm-next-line
@@ -1190,7 +1221,6 @@ Consult integration for Embark
     (:with-mode embark-collect-mode
       (:hook consult-preview-at-point-mode)))
 #+end_src
-
 
 ** avy
 #+begin_src emacs-lisp
@@ -1488,7 +1518,7 @@ Consult integration for Embark
       (add-to-list 'rustic-rustfmt-config-alist '("edition" . "2018"))))
 #+end_src
 
-*** Others
+*** Typescript
 #+begin_src emacs-lisp
   ;;; Typescript
   (setup tsx-ts
@@ -1499,44 +1529,65 @@ Consult integration for Embark
 
   (setup js
     (:opt js-indent-level 2))
+#+end_src
 
-  ;;; Go
+*** Go
+#+begin_src emacs-lisp
   (setup go-ts-mode
     (:match-file "*.go")
     (:opt go-ts-mode-indent-offset 4)
     (:hook (lambda () (indent-tabs-mode 1))
            eglot-ensure))
 
-  ;;; Erlang
+#+end_src
+
+*** Erlang
+#+begin_src emacs-lisp
   (setup (:package erlang-ts)
     (:match-file "*.erl"))
+#+end_src
 
-  ;;; Haskel
+
+***  Haskel
+#+begin_src emacs-lisp
   (setup (:package haskell-mode)
     (:hook eglot-ensure))
   (setup (:package haskell-ts-mode)
     (:hook eglot-ensure))
+#+end_src
 
-  ;;; Clojure
-  (setup (:package clojure-ts-mode)
+*** Clojure
+#+begin_src emacs-lisp
+    (setup (:package clojure-ts-mode)
     (:hook eglot-ensure))
+#+end_src
 
-  ;;; Scala
+*** Scala
+#+begin_src emacs-lisp
   (setup (:package scala-ts-mode)
     (:hook eglot-ensure))
+#+end_src
 
-  ;;; IO language
+*** IO language
+
+#+begin_src emacs-lisp
   (setup (:package io-mode))
+#+end_src
 
-  ;;; Prolog
+*** Prolog
+
+#+begin_src emacs-lisp
   (setup prolog
     (:also-load ediprolog)
     (:match-file "*.pl")                ; default perl-mode
     (:bind "C-c C-e" 'ediprolog-dwim)
     (:opt prolog-system 'swi
           ediprolog-system 'swi))
+#+end_src
 
-  ;;; EBNF
+*** BNF
+
+#+begin_src emacs-lisp
   (setup (:package ebnf-mode)
     (:opt ebnf-mode-production-re  "^\\s-*\\([[:alnum:]_-]+\\)\\s-*="
           ebnf-mode-comment-starter "(*"
@@ -1550,13 +1601,22 @@ Consult integration for Embark
       (modify-syntax-entry ?\( "()1" ebnf-mode-syntax-table)
       (modify-syntax-entry ?* ". 23" ebnf-mode-syntax-table)
       (modify-syntax-entry ?\) ")(4" ebnf-mode-syntax-table)))
+#+end_src
 
-  ;;; SQL
+*** SQL
+#+begin_src emacs-lisp
   (setup sql (:opt sql-product "postgres"))
+#+end_src
 
-  ;;; Gnuplot
+***  Gnuplot
+#+begin_src emacs-lisp
   (setup (:package gnuplot)
     (:match-file "*.plt"))
+#+end_src
+
+*** Powershell script
+#+begin_src emacs-lisp
+  (setup (:package powershell))
 #+end_src
 
 ** Shell
@@ -1591,6 +1651,43 @@ Consult integration for Embark
 
 #+end_src
 
+** For WSL
+#+begin_src emacs-lisp
+  (when-wsl
+   (setup browser-url
+     (setopt browse-url-browser-function 'browse-url-generic
+             browse-url-generic-program "wslstart"))
+   (setup dired
+     (:bind "z" dired-winstart
+            "E" open-dir-in-win-explorer)
+     (:when-loaded
+       (defun dired-winstart ()
+         "Win-start the current line's file."
+         (interactive)
+         (if (eq major-mode 'dired-mode)
+             (let ((cmd "wslstart")
+                   (fname (shell-quote-argument (dired-get-filename))))
+               (call-process-shell-command (concat cmd " " fname "&"))
+               (message "%s %s" cmd fname))
+           (message "Not in dired-mode")))
+       (defun open-dir-in-win-explorer ()
+         "Open current directory in MS Explorer."
+         (interactive)
+         (let* ((fname (buffer-file-name))
+                (dname
+                 (cond ((eq major-mode 'dired-mode)
+                        (dired-current-directory))
+                       (fname
+                        (file-name-directory fname))
+                       (t
+                        nil))))
+           (if (not dname)
+               (message "Current buffer is not visiting a file.")
+             (call-process-shell-command (concat "wslstart " (shell-quote-argument dname)))
+             (message "Open %s with MS Exploer" dname)))))))
+
+#+end_src
+
 ** Maxima
 #+begin_src emacs-lisp
   (setup (:package imaxima)
@@ -1600,7 +1697,6 @@ Consult integration for Embark
     (:opt imaxima-use-maxima-mode-flag t
           imaxima-latex-preamble "\\usepackage{amsmath}\n"))
 #+end_src
-
 
 ** Documentation
 
@@ -2070,4 +2166,69 @@ Hitori otegaru wiki modoki
         (cfw:open-calendar-buffer
          :view 'month
          :contents-sources (list source1 source2 source3)))))
+#+end_src
+
+*** LLM
+#+begin_src emacs-lisp
+  (setup (:package ellama)
+    (:global-keymap "C-c e" ellama-transient-main-menu)
+    (:when-loaded
+      (require 'llm-ollama)
+      (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+      (setopt ellama-language "Japanese")
+      (setopt ellama-auto-scroll t)
+      (setopt ellama-provider
+              (make-llm-ollama
+               :chat-model "llama3.2"
+               :embedding-model "nomic-embed-text"
+               :default-chat-non-standard-params '(("num_ctx" . 8192))))
+      (setopt ellama-naming-provider
+              (make-llm-ollama
+               :chat-model "llama3.2"
+               :embedding-model "nomic-embed-text"
+               :default-chat-non-standard-params '(("stop" . ("\n")))))
+      (setopt ellama-summarization-provider
+              (make-llm-ollama
+               :chat-model "qwen2.5:3b"
+               :embedding-model "nomic-embed-text"
+               :default-chat-non-standard-params '(("num_ctx" . 32768))))
+      (setopt ellama-coding-provider
+              (make-llm-ollama
+               :chat-model "qwen2.5-coder:3b"
+               :embedding-model "nomic-embed-text"
+               :default-chat-non-standard-params '(("num_ctx" . 32768))))
+      (setopt ellama-translation-provider
+              (make-llm-ollama
+               ;; :chat-model "qwen2.5:3b"
+               :chat-model "gemma2:9b-instruct-q4_K_S"
+               :embedding-model "nomic-embed-text"
+               :default-chat-non-standard-params
+               '(("num_ctx" . 32768))))
+      (setopt ellama-providers
+              '(("zephyr" . (make-llm-ollama
+                             :chat-model "zephyr:7b-beta-q6_K"
+                             :embedding-model "zephyr:7b-beta-q6_K"))
+                ("mistral" . (make-llm-ollama
+                              :chat-model "mistral:7b-instruct-v0.2-q6_K"
+                              :embedding-model "mistral:7b-instruct-v0.2-q6_K"))
+                ("mixtral" . (make-llm-ollama
+                              :chat-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"
+                              :embedding-model "mixtral:8x7b-instruct-v0.1-q3_K_M-4k"))
+                ("codestral" . (make-llm-ollama
+                                :chat-model "codestral:22b-v0.1-q4_K_S"
+                                :embedding-model "codestral:22b-v0.1-q4_K_S"))
+                ("gemma2" . (make-llm-ollama
+                             :chat-model "gemma2:27b-instruct-q4_K_S"
+                             :embedding-model "gemma2:27b-instruct-q4_K_S"))
+                ("gemma2-9b" . (make-llm-ollama
+                                :chat-model "gemma2:9b-instruct-q4_K_S"
+                                :embedding-model "gemma2:9b-instruct-q4_K_S"))
+                ("command-r" . (make-llm-ollama
+                                :chat-model "command-r:35b"
+                                :embedding-model "command-r:35b"))
+                ("llama3.1" . (make-llm-ollama
+                               :chat-model "llama3.1:8b"
+                               :embedding-model "llama3.1:8b")))))
+    (with-eval-after-load 'embark
+      (keymap-set embark-region-map "T" #'ellama-translate)))
 #+end_src
