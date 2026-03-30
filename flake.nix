@@ -61,7 +61,11 @@
       exportManifest = true;
       extraPackages = [ "setup" ];
       initParser = inputs.twist.lib.parseSetup { inherit (inputs.nixpkgs) lib; } { }; # for setup.el
-      extraInputOverrides = { };
+      extraInputOverrides = {
+        auctex = _: _: {
+          buildInputs = [ pkgs.perl ];
+        };
+      };
       earlyInitFile = pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org { };
       initFiles = [ (pkgs.tangleOrgBabelFile "init.el" ./init.org { }) ];
     };

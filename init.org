@@ -121,7 +121,7 @@
 #+begin_src emacs-lisp
   (eval-when-compile
     (defsetup :nixpkgs (&rest nixpkgs)
-                        "Fake installation of packages from NIXPKGS for executables."))
+              "Fake installation of packages from NIXPKGS for executables."))
 #+end_src
 
 *** other keywords
@@ -1709,7 +1709,6 @@ Consult integration for Embark
 
 *** TeX/LaTeX
 #+begin_src emacs-lisp
-    ;;; TeX/LaTeX
   (setup (:package auctex))
 
   (setup tex-jp
