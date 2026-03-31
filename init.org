@@ -117,11 +117,41 @@
      `(keymap-unset ,(setup-get 'map) ,key)))
 #+end_src
 
+*** :mode-repl
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup
+     :mode-repl (repl-fn)
+     "Add an entry to `rtog/mode-repl-alist'."
+     `(progn
+        (with-eval-after-load 'repl-toggle
+          (push (cons ',(setup-get 'mode) ',repl-fn)
+                rtog/mode-repl-alist))
+        (add-hook ',(setup-get 'hook)
+                  #'repl-toggle-mode))))
+#+end_src
+
+
 *** :nixpkgs
 #+begin_src emacs-lisp
   (eval-when-compile
     (defsetup :nixpkgs (&rest nixpkgs)
               "Fake installation of packages from NIXPKGS for executables."))
+#+end_src
+
+*** :reformatter
+#+begin_src emacs-lisp
+  (setup (:package reformatter))
+
+  (eval-when-compile
+    (defsetup
+     :reformatters (&rest entries)
+     "Define reformatters."
+     (let ((feature (setup-get 'feature)))
+       (macroexp-progn
+        (mapcar (pcase-lambda (`(,name . ,args))
+                  `(reformatter-define ,name ,@args))
+                entries)))))
 #+end_src
 
 *** other keywords
@@ -1454,8 +1484,6 @@ Consult integration for Embark
 #+end_quote
 
 #+begin_src emacs-lisp
-  ;; (setup (:package zmq))
-
   ;; (setup (:package jupyter)
   ;;   (:also-load zmq)
   ;;   (:opt jupyter-repl-echo-eval-p t)
@@ -1511,16 +1539,25 @@ Consult integration for Embark
   ;;           (message "Clipboard content is not a supported image file path. No insertion performed."))))))
 #+end_src
 
+*** Nix
+#+begin_src emacs-lisp
+  (setup (:package nix-ts-mode)
+    (:file-match "\\.nix\\'")
+    (:hook eglot-ensure)
+    (:mode-repl nix-repl)
+    ;; Install nixfmt for reformatting.
+    (:nixpkgs nixfmt)
+    (:reformatters
+     (nixfmt :program "nixfmt")))
+#+end_src
+
+
 *** Rust
 #+begin_src emacs-lisp
-  ;; (setup (:package rustic)
-  ;;   (:match-file "*.rs")
-  ;;   (:opt rustic-lsp-client 'eglot        ; default lsp
-  ;;         rustic-analyzer-command '("rustup" "run" "stable" "rust-analyzer")
-  ;;         rustic-format-trigger 'on-save
-  ;;         rustic-rustfmt-bin "rustfmt")
-  ;;   (:when-loaded
-  ;;     (add-to-list 'rustic-rustfmt-config-alist '("edition" . "2018"))))
+  (setup (:package rust-mode)
+    (:option rust-format-on-save t
+             rust-mode-treesitter-derive t)
+    (:hook eglot-ensure))
 #+end_src
 
 *** Typescript

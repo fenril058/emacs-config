@@ -1139,6 +1139,22 @@
         "type": "github"
       }
     },
+    "nix-ts-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771165311,
+        "narHash": "sha256-HlSohlTC2A4njWu0S4U18qlZGDqKH0KflOeqzQYOVHg=",
+        "owner": "nix-community",
+        "repo": "nix-ts-mode",
+        "rev": "319831712125e8c9e4f14b66def518d7a633685c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-ts-mode",
+        "type": "github"
+      }
+    },
     "nix3": {
       "flake": false,
       "locked": {
@@ -1422,6 +1438,7 @@
         "mozc": "mozc",
         "nerd-icons": "nerd-icons",
         "nerd-icons-dired": "nerd-icons-dired",
+        "nix-ts-mode": "nix-ts-mode",
         "nix3": "nix3",
         "open-junk-file": "open-junk-file",
         "orderless": "orderless",
@@ -1435,6 +1452,7 @@
         "puni": "puni",
         "rainbow-delimiters": "rainbow-delimiters",
         "reformatter": "reformatter",
+        "rust-mode": "rust-mode",
         "s": "s",
         "savekill": "savekill",
         "scala-ts-mode": "scala-ts-mode",
@@ -1460,6 +1478,22 @@
         "yasnippet": "yasnippet",
         "yawc-mode": "yawc-mode",
         "zoutline": "zoutline"
+      }
+    },
+    "rust-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772170748,
+        "narHash": "sha256-FdTAFJimLe7xaSEP0MkZqOXOX3mRYObC7WouQxC1g78=",
+        "owner": "rust-lang",
+        "repo": "rust-mode",
+        "rev": "668069ad8b6ca20bd0d2334db1c0d046809affd6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "repo": "rust-mode",
+        "type": "github"
       }
     },
     "s": {

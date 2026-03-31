@@ -424,6 +424,12 @@
       repo = "nerd-icons-dired";
       type = "github";
     };
+    nix-ts-mode = {
+      flake = false;
+      owner = "nix-community";
+      repo = "nix-ts-mode";
+      type = "github";
+    };
     nix3 = {
       flake = false;
       owner = "emacs-twist";
@@ -502,6 +508,12 @@
       flake = false;
       owner = "purcell";
       repo = "emacs-reformatter";
+      type = "github";
+    };
+    rust-mode = {
+      flake = false;
+      owner = "rust-lang";
+      repo = "rust-mode";
       type = "github";
     };
     "s" = {
