@@ -1,0 +1,7 @@
+(lispy :fetcher github
+       :repo "fenril058/lispy"
+       :files
+       (:defaults "lispy-clojure.clj"
+                  "lispy-clojure.cljs"
+                  "lispy-python.py"
+                  (:exclude "le-js.el")))

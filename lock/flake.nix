@@ -45,8 +45,31 @@
     };
     calfw = {
       flake = false;
-      owner = "fenril058";
-      ref = "enable-cl-lib-and-lexical-binding-etc";
+      owner = "kiwanami";
+      repo = "emacs-calfw";
+      type = "github";
+    };
+    calfw-cal = {
+      flake = false;
+      owner = "kiwanami";
+      repo = "emacs-calfw";
+      type = "github";
+    };
+    calfw-howm = {
+      flake = false;
+      owner = "kiwanami";
+      repo = "emacs-calfw";
+      type = "github";
+    };
+    calfw-ical = {
+      flake = false;
+      owner = "kiwanami";
+      repo = "emacs-calfw";
+      type = "github";
+    };
+    calfw-org = {
+      flake = false;
+      owner = "kiwanami";
       repo = "emacs-calfw";
       type = "github";
     };
@@ -192,12 +215,6 @@
       repo = "emacs-erlang-ts";
       type = "github";
     };
-    "f" = {
-      flake = false;
-      owner = "rejeep";
-      repo = "f.el";
-      type = "github";
-    };
     fcopy = {
       flake = false;
       owner = "ataka";
@@ -325,7 +342,7 @@
     };
     lispy = {
       flake = false;
-      owner = "abo-abo";
+      owner = "fenril058";
       repo = "lispy";
       type = "github";
     };
@@ -487,18 +504,6 @@
       repo = "emacs-reformatter";
       type = "github";
     };
-    rust-mode = {
-      flake = false;
-      owner = "rust-lang";
-      repo = "rust-mode";
-      type = "github";
-    };
-    rustic = {
-      flake = false;
-      owner = "emacs-rustic";
-      repo = "rustic";
-      type = "github";
-    };
     "s" = {
       flake = false;
       owner = "magnars";
@@ -534,12 +539,6 @@
       flake = false;
       owner = "kyagi";
       repo = "shell-pop-el";
-      type = "github";
-    };
-    spinner = {
-      flake = false;
-      owner = "Malabarba";
-      repo = "spinner.el";
       type = "github";
     };
     swiper = {
@@ -624,12 +623,6 @@
       flake = false;
       owner = "magit";
       repo = "with-editor";
-      type = "github";
-    };
-    xterm-color = {
-      flake = false;
-      owner = "atomontage";
-      repo = "xterm-color";
       type = "github";
     };
     yadmacro = {

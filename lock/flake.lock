@@ -116,16 +116,79 @@
     "calfw": {
       "flake": false,
       "locked": {
-        "lastModified": 1742745668,
-        "narHash": "sha256-Wbi1Sr5IN78l0B3R2HKA+UWHiOhhUZsmBBWEIh/8iqQ=",
-        "owner": "fenril058",
+        "lastModified": 1761909004,
+        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
+        "owner": "kiwanami",
         "repo": "emacs-calfw",
-        "rev": "3d537a50919aa661e8995dd82ef10337db63bac3",
+        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
         "type": "github"
       },
       "original": {
-        "owner": "fenril058",
-        "ref": "enable-cl-lib-and-lexical-binding-etc",
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "type": "github"
+      }
+    },
+    "calfw-cal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761909004,
+        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "type": "github"
+      }
+    },
+    "calfw-howm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761909004,
+        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "type": "github"
+      }
+    },
+    "calfw-ical": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761909004,
+        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "type": "github"
+      }
+    },
+    "calfw-org": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761909004,
+        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
+        "owner": "kiwanami",
+        "repo": "emacs-calfw",
+        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kiwanami",
         "repo": "emacs-calfw",
         "type": "github"
       }
@@ -514,22 +577,6 @@
         "type": "github"
       }
     },
-    "f": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1727955076,
-        "narHash": "sha256-rDUl2oUlcnSjNbFZn9A/80RVk6neaTScw2kvh6FjmTE=",
-        "owner": "rejeep",
-        "repo": "f.el",
-        "rev": "931b6d0667fe03e7bf1c6c282d6d8d7006143c52",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rejeep",
-        "repo": "f.el",
-        "type": "github"
-      }
-    },
     "fcopy": {
       "flake": false,
       "locked": {
@@ -873,13 +920,13 @@
       "locked": {
         "lastModified": 1678815495,
         "narHash": "sha256-IfSu4hrC1h71FxcUZaikkSHVUdIUPVtHLNNZq11J/ck=",
-        "owner": "abo-abo",
+        "owner": "fenril058",
         "repo": "lispy",
         "rev": "fe44efd21573868638ca86fc8313241148fabbe3",
         "type": "github"
       },
       "original": {
-        "owner": "abo-abo",
+        "owner": "fenril058",
         "repo": "lispy",
         "type": "github"
       }
@@ -1312,6 +1359,10 @@
         "blackout": "blackout",
         "boxes": "boxes",
         "calfw": "calfw",
+        "calfw-cal": "calfw-cal",
+        "calfw-howm": "calfw-howm",
+        "calfw-ical": "calfw-ical",
+        "calfw-org": "calfw-org",
         "cape": "cape",
         "clang-format": "clang-format",
         "clojure-ts-mode": "clojure-ts-mode",
@@ -1336,7 +1387,6 @@
         "envrc": "envrc",
         "erlang": "erlang",
         "erlang-ts": "erlang-ts",
-        "f": "f",
         "fcopy": "fcopy",
         "figlet": "figlet",
         "flycheck": "flycheck",
@@ -1385,15 +1435,12 @@
         "puni": "puni",
         "rainbow-delimiters": "rainbow-delimiters",
         "reformatter": "reformatter",
-        "rust-mode": "rust-mode",
-        "rustic": "rustic",
         "s": "s",
         "savekill": "savekill",
         "scala-ts-mode": "scala-ts-mode",
         "sequential-command": "sequential-command",
         "setup": "setup",
         "shell-pop": "shell-pop",
-        "spinner": "spinner",
         "swiper": "swiper",
         "tablist": "tablist",
         "tempel": "tempel",
@@ -1408,44 +1455,11 @@
         "vundo": "vundo",
         "which-key": "which-key",
         "with-editor": "with-editor",
-        "xterm-color": "xterm-color",
         "yadmacro": "yadmacro",
         "yaml": "yaml",
         "yasnippet": "yasnippet",
         "yawc-mode": "yawc-mode",
         "zoutline": "zoutline"
-      }
-    },
-    "rust-mode": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772170748,
-        "narHash": "sha256-FdTAFJimLe7xaSEP0MkZqOXOX3mRYObC7WouQxC1g78=",
-        "owner": "rust-lang",
-        "repo": "rust-mode",
-        "rev": "668069ad8b6ca20bd0d2334db1c0d046809affd6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rust-lang",
-        "repo": "rust-mode",
-        "type": "github"
-      }
-    },
-    "rustic": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1771216823,
-        "narHash": "sha256-aiXzitC9sZqJrffMrJjr+S99AI1on3oEDigmiVvmhs4=",
-        "owner": "emacs-rustic",
-        "repo": "rustic",
-        "rev": "eea94386bf0c7b55adc264faefdfb134ae2807b9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-rustic",
-        "repo": "rustic",
-        "type": "github"
       }
     },
     "s": {
@@ -1543,22 +1557,6 @@
       "original": {
         "owner": "kyagi",
         "repo": "shell-pop-el",
-        "type": "github"
-      }
-    },
-    "spinner": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1663246199,
-        "narHash": "sha256-Ad6J3xGUWD+WDP3BbsgKvxJb90VMOkjJuIt/fhBu+rs=",
-        "owner": "Malabarba",
-        "repo": "spinner.el",
-        "rev": "d4647ae87fb0cd24bc9081a3d287c860ff061c21",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Malabarba",
-        "repo": "spinner.el",
         "type": "github"
       }
     },
@@ -1784,22 +1782,6 @@
       "original": {
         "owner": "magit",
         "repo": "with-editor",
-        "type": "github"
-      }
-    },
-    "xterm-color": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1765576093,
-        "narHash": "sha256-SLgkSXqlwZE+YihYPoMN633lUJx4PAuxCXkrHZqXH/0=",
-        "owner": "atomontage",
-        "repo": "xterm-color",
-        "rev": "86fab1d247eb5ebe6b40fa5073a70dfa487cd465",
-        "type": "github"
-      },
-      "original": {
-        "owner": "atomontage",
-        "repo": "xterm-color",
         "type": "github"
       }
     },

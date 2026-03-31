@@ -1,4 +1,0 @@
-(calfw-ical :fetcher github
-            :repo "fenril058/emacs-calfw"
-            :branch "enable-cl-lib-and-lexical-binding-etc"
-            :files ("calfw-ical.el" "calfw-compat.el"))

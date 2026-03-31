@@ -725,17 +725,17 @@ Nix3.el integration for Magit
                 shell-mode-hook)
               (add-hook ,it #'puni-disable-puni-mode)))
 
-  ;; (setup (:package lispy)
-  ;;   (setopt lispy-key-theme '(special paredit c-digits))
-  ;;   (:unbind "." "SPC")                   ; for key-combo
-  ;;   (:with-map lispy-mode-map-paredit
-  ;;     (:unbind "C-a" "C-e")               ; for sequential-command
-  ;;     (setopt lispy-comment-use-single-semicolon t))
-  ;;   (:hook-into emacs-lisp-mode
-  ;;               lisp-interaction-mode
-  ;;               lisp-mode
-  ;;               ilem-mode
-  ;;               scheme-mode))
+  (setup (:package lispy)
+    (setopt lispy-key-theme '(special paredit c-digits))
+    (:unbind "." "SPC")                   ; for key-combo
+    (:with-map lispy-mode-map-paredit
+      (:unbind "C-a" "C-e")               ; for sequential-command
+      (setopt lispy-comment-use-single-semicolon t))
+    (:hook-into emacs-lisp-mode
+                lisp-interaction-mode
+                lisp-mode
+                ilem-mode
+                scheme-mode))
 
 #+end_src
 
@@ -2148,11 +2148,6 @@ Hitori otegaru wiki modoki
 
 *** calfw
 #+begin_src emacs-lisp
-  ;; (setup (:package calfw-org))
-  ;; (setup (:package calfw-howm))
-  ;; (setup (:package calfw-cal))
-  ;; (setup (:package calfw-ical))
-
   (setup (:package calfw)
     (setopt cfw:org-agenda-schedule-args '(:scheduled :timestamp :deadline))
     (:with-map cfw:calendar-mode-map
@@ -2176,6 +2171,10 @@ Hitori otegaru wiki modoki
          :view 'month
          :contents-sources (list source1 source2 source3)))))
 
+  (setup (:package calfw-org))
+  (setup (:package calfw-howm))
+  (setup (:package calfw-cal))
+  (setup (:package calfw-ical))
 
 #+end_src
 
