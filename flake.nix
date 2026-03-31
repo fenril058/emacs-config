@@ -58,7 +58,6 @@
       emacsPackage = pkgs.emacs-gtk;
       lockDir = ./lock;
       extraRecipeDir = ./recipes;
-      exportManifest = true;
       extraPackages = [ "setup" ];
       initParser = inputs.twist.lib.parseSetup { inherit (inputs.nixpkgs) lib; } { }; # for setup.el
       extraInputOverrides = { };
@@ -76,18 +75,11 @@
             path = profile.extraRecipeDir;
           }                     # exstraRecipeDirを優先
         ] ++ (import ./nix/registries.nix inputs);
+        exportManifest = true;
         inputOverrides = profile.extraInputOverrides;
       })
         .overrideScope (_tself: tsuper: {
           elispPackages = tsuper.elispPackages.overrideScope (_eself: esuper: {
-            # helm = esuper.helm.overrideAttrs (old:
-          #     let
-          #       asyncLisp = "${esuper.async}/share/emacs/site-lisp";
-          #     in {
-          #       preBuild = (old.preBuild or "") + ''
-          #   export EMACSLOADPATH="${asyncLisp}:${EMACSLOADPATH:-}"
-          # '';
-          #     });
             auctex = esuper.auctex.overrideAttrs (old: {
               outputs = [ "out" ];
               # buildInputs = (old.buildInputs or []) ++ [

@@ -120,6 +120,12 @@
       repo = "consult-flycheck";
       type = "github";
     };
+    consult-ghq = {
+      flake = false;
+      owner = "tomoya";
+      repo = "consult-ghq";
+      type = "github";
+    };
     consult-yasnippet = {
       flake = false;
       owner = "mohkale";
@@ -185,6 +191,18 @@
       repo = "ebnf-mode";
       type = "github";
     };
+    ediprolog = {
+      flake = false;
+      owner = "triska";
+      repo = "ediprolog";
+      type = "github";
+    };
+    elispxmp = {
+      flake = false;
+      owner = "fenril058";
+      repo = "elispxmp";
+      type = "github";
+    };
     ellama = {
       flake = false;
       owner = "s-kostyaev";
@@ -192,6 +210,12 @@
       type = "github";
     };
     embark = {
+      flake = false;
+      owner = "oantolin";
+      repo = "embark";
+      type = "github";
+    };
+    embark-consult = {
       flake = false;
       owner = "oantolin";
       repo = "embark";
@@ -231,6 +255,12 @@
       flake = false;
       owner = "flycheck";
       repo = "flycheck";
+      type = "github";
+    };
+    flycheck-inline = {
+      flake = false;
+      owner = "flycheck";
+      repo = "flycheck-inline";
       type = "github";
     };
     flymake-ruff = {
@@ -327,6 +357,12 @@
       repo = "swiper";
       type = "github";
     };
+    japanese-holidays = {
+      flake = false;
+      owner = "emacs-jp";
+      repo = "japanese-holidays";
+      type = "github";
+    };
     key-chord = {
       flake = false;
       owner = "emacsorphanage";
@@ -362,6 +398,12 @@
       flake = false;
       owner = "abo-abo";
       repo = "hydra";
+      type = "github";
+    };
+    macrostep = {
+      flake = false;
+      owner = "emacsorphanage";
+      repo = "macrostep";
       type = "github";
     };
     magit = {
@@ -418,6 +460,12 @@
       repo = "nerd-icons.el";
       type = "github";
     };
+    nerd-icons-completion = {
+      flake = false;
+      owner = "rainstormstudio";
+      repo = "nerd-icons-completion";
+      type = "github";
+    };
     nerd-icons-dired = {
       flake = false;
       owner = "rainstormstudio";
@@ -448,6 +496,12 @@
       owner = "oantolin";
       repo = "orderless";
       type = "github";
+    };
+    org = {
+      flake = false;
+      ref = "bugfix";
+      type = "git";
+      url = "https://git.savannah.gnu.org/git/emacs/org-mode.git";
     };
     pdf-tools = {
       flake = false;
@@ -577,6 +631,12 @@
       repo = "transient";
       type = "github";
     };
+    treesit-auto = {
+      flake = false;
+      owner = "renzmann";
+      repo = "treesit-auto";
+      type = "github";
+    };
     twist = {
       flake = false;
       owner = "emacs-twist";
@@ -653,6 +713,12 @@
       flake = false;
       owner = "joaotavora";
       repo = "yasnippet";
+      type = "github";
+    };
+    yasnippet-snippets = {
+      flake = false;
+      owner = "AndreaCrotti";
+      repo = "yasnippet-snippets";
       type = "github";
     };
     yawc-mode = {

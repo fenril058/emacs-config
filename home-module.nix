@@ -45,6 +45,7 @@ in
   home.packages =  [
     emacsDesktopItem
     pkgs.tree-sitter
+    pkgs.just
   ];
 
   home.file = {

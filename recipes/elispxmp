@@ -1,0 +1,2 @@
+(elispxmp :fetcher github
+          :repo "fenril058/elispxmp")

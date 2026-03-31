@@ -321,6 +321,22 @@
         "type": "github"
       }
     },
+    "consult-ghq": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1699707813,
+        "narHash": "sha256-kLF06zQSLb1fZGKZ3XWJoPoSiIR4MzRV8ujpd/v5a/8=",
+        "owner": "tomoya",
+        "repo": "consult-ghq",
+        "rev": "65a99980fb313d473376542cb87464a8a44ff25e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tomoya",
+        "repo": "consult-ghq",
+        "type": "github"
+      }
+    },
     "consult-yasnippet": {
       "flake": false,
       "locked": {
@@ -497,6 +513,38 @@
         "type": "github"
       }
     },
+    "ediprolog": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728151816,
+        "narHash": "sha256-BuZq3mi8St6EFRY0jB/BYVfvp1Z48jfK7wxNr4A2mbQ=",
+        "owner": "triska",
+        "repo": "ediprolog",
+        "rev": "bc108f832253c2bad220b1a9936546963d743386",
+        "type": "github"
+      },
+      "original": {
+        "owner": "triska",
+        "repo": "ediprolog",
+        "type": "github"
+      }
+    },
+    "elispxmp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739592583,
+        "narHash": "sha256-hKlo8WcLlXkjfk/vlzqWU8Hq3js7Sw8xGRUyXVSS8SI=",
+        "owner": "fenril058",
+        "repo": "elispxmp",
+        "rev": "073b40806e1ac64c180a7df757de8901f82f2027",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenril058",
+        "repo": "elispxmp",
+        "type": "github"
+      }
+    },
     "ellama": {
       "flake": false,
       "locked": {
@@ -521,6 +569,22 @@
         "owner": "oantolin",
         "repo": "embark",
         "rev": "e0238889b1c946514fd967d21d70599af9c4e887",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oantolin",
+        "repo": "embark",
+        "type": "github"
+      }
+    },
+    "embark-consult": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774909289,
+        "narHash": "sha256-b52zAdQ3ILCwdzhQiq2tQ7yEpmJLNoydLKm76SgWO5I=",
+        "owner": "oantolin",
+        "repo": "embark",
+        "rev": "66429937eb46a45064f17b74b8fa94eecd8a9227",
         "type": "github"
       },
       "original": {
@@ -622,6 +686,22 @@
       "original": {
         "owner": "flycheck",
         "repo": "flycheck",
+        "type": "github"
+      }
+    },
+    "flycheck-inline": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753339856,
+        "narHash": "sha256-+GCJ1KwTA4hs4f4ksULOp4gbKMVuFU2uzwctoDUWHVs=",
+        "owner": "flycheck",
+        "repo": "flycheck-inline",
+        "rev": "8af846984375c9bf5786cc57f7ce00bc6a6a4555",
+        "type": "github"
+      },
+      "original": {
+        "owner": "flycheck",
+        "repo": "flycheck-inline",
         "type": "github"
       }
     },
@@ -882,6 +962,22 @@
         "type": "github"
       }
     },
+    "japanese-holidays": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1609228547,
+        "narHash": "sha256-WKFA808MeQ8ePmCSzbKHcxABTYDSKlFjlGcBpz/rq68=",
+        "owner": "emacs-jp",
+        "repo": "japanese-holidays",
+        "rev": "324b6bf2f55ec050bef49e001caedaabaf4fa35d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-jp",
+        "repo": "japanese-holidays",
+        "type": "github"
+      }
+    },
     "key-chord": {
       "flake": false,
       "locked": {
@@ -976,6 +1072,22 @@
       "original": {
         "owner": "abo-abo",
         "repo": "hydra",
+        "type": "github"
+      }
+    },
+    "macrostep": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738533932,
+        "narHash": "sha256-DYuq1KPDXIKdljuTJpakv7pRxxyFJx/kuRgWyc7ThiI=",
+        "owner": "emacsorphanage",
+        "repo": "macrostep",
+        "rev": "d0928626b4711dcf9f8f90439d23701118724199",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacsorphanage",
+        "repo": "macrostep",
         "type": "github"
       }
     },
@@ -1123,6 +1235,22 @@
         "type": "github"
       }
     },
+    "nerd-icons-completion": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761771997,
+        "narHash": "sha256-u0WpInnNyae+3bVQ0P1hARPBqlS9SL3plY97tt10Xgg=",
+        "owner": "rainstormstudio",
+        "repo": "nerd-icons-completion",
+        "rev": "d09ea987ed3d2cc64137234f27851594050e2b64",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rainstormstudio",
+        "repo": "nerd-icons-completion",
+        "type": "github"
+      }
+    },
     "nerd-icons-dired": {
       "flake": false,
       "locked": {
@@ -1202,6 +1330,23 @@
         "owner": "oantolin",
         "repo": "orderless",
         "type": "github"
+      }
+    },
+    "org": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774812709,
+        "narHash": "sha256-42//QrHFy2+kTqdMsy9CyHsnV6Cf2SwbIzORr7QrZdc=",
+        "ref": "bugfix",
+        "rev": "e012823239122314d62d1497d8fd2ada2adb87ba",
+        "revCount": 28620,
+        "type": "git",
+        "url": "https://git.savannah.gnu.org/git/emacs/org-mode.git"
+      },
+      "original": {
+        "ref": "bugfix",
+        "type": "git",
+        "url": "https://git.savannah.gnu.org/git/emacs/org-mode.git"
       }
     },
     "pdf-tools": {
@@ -1387,6 +1532,7 @@
         "cond-let": "cond-let",
         "consult": "consult",
         "consult-flycheck": "consult-flycheck",
+        "consult-ghq": "consult-ghq",
         "consult-yasnippet": "consult-yasnippet",
         "corfu": "corfu",
         "cowsay": "cowsay",
@@ -1398,14 +1544,18 @@
         "duplicate-thing": "duplicate-thing",
         "eat": "eat",
         "ebnf-mode": "ebnf-mode",
+        "ediprolog": "ediprolog",
+        "elispxmp": "elispxmp",
         "ellama": "ellama",
         "embark": "embark",
+        "embark-consult": "embark-consult",
         "envrc": "envrc",
         "erlang": "erlang",
         "erlang-ts": "erlang-ts",
         "fcopy": "fcopy",
         "figlet": "figlet",
         "flycheck": "flycheck",
+        "flycheck-inline": "flycheck-inline",
         "flymake-ruff": "flymake-ruff",
         "gdb-x": "gdb-x",
         "gnuplot": "gnuplot",
@@ -1422,12 +1572,14 @@
         "inheritenv": "inheritenv",
         "io-mode": "io-mode",
         "ivy": "ivy",
+        "japanese-holidays": "japanese-holidays",
         "key-chord": "key-chord",
         "key-combo": "key-combo",
         "lispy": "lispy",
         "llama": "llama",
         "llm": "llm",
         "lv": "lv",
+        "macrostep": "macrostep",
         "magit": "magit",
         "magit-nix3": "magit-nix3",
         "magit-section": "magit-section",
@@ -1437,11 +1589,13 @@
         "mistty": "mistty",
         "mozc": "mozc",
         "nerd-icons": "nerd-icons",
+        "nerd-icons-completion": "nerd-icons-completion",
         "nerd-icons-dired": "nerd-icons-dired",
         "nix-ts-mode": "nix-ts-mode",
         "nix3": "nix3",
         "open-junk-file": "open-junk-file",
         "orderless": "orderless",
+        "org": "org",
         "pdf-tools": "pdf-tools",
         "perspective": "perspective",
         "plz": "plz",
@@ -1463,6 +1617,7 @@
         "tablist": "tablist",
         "tempel": "tempel",
         "transient": "transient",
+        "treesit-auto": "treesit-auto",
         "twist": "twist",
         "undo-fu": "undo-fu",
         "unicode-inspector": "unicode-inspector",
@@ -1476,6 +1631,7 @@
         "yadmacro": "yadmacro",
         "yaml": "yaml",
         "yasnippet": "yasnippet",
+        "yasnippet-snippets": "yasnippet-snippets",
         "yawc-mode": "yawc-mode",
         "zoutline": "zoutline"
       }
@@ -1655,6 +1811,22 @@
       "original": {
         "owner": "magit",
         "repo": "transient",
+        "type": "github"
+      }
+    },
+    "treesit-auto": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770754235,
+        "narHash": "sha256-Hvm5L2jOqq1RRcD1rrCS/YEZlwI/sERBVXz2PpO70Yk=",
+        "owner": "renzmann",
+        "repo": "treesit-auto",
+        "rev": "31466e4ccfd4f896ce3145c95c4c1f8b59d4bfdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "renzmann",
+        "repo": "treesit-auto",
         "type": "github"
       }
     },
@@ -1864,6 +2036,22 @@
       "original": {
         "owner": "joaotavora",
         "repo": "yasnippet",
+        "type": "github"
+      }
+    },
+    "yasnippet-snippets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765801918,
+        "narHash": "sha256-nwg8Y0crlC/hRxIkd3fikYheFBEeC5tZwpg/nltHaBE=",
+        "owner": "AndreaCrotti",
+        "repo": "yasnippet-snippets",
+        "rev": "606ee926df6839243098de6d71332a697518cb86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AndreaCrotti",
+        "repo": "yasnippet-snippets",
         "type": "github"
       }
     },

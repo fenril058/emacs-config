@@ -88,11 +88,13 @@
 *** :global-keymap
 #+begin_src emacs-lisp
   (eval-when-compile
-    (defsetup
-     :global-keymap (key command)
-     "Use `keymap-global-set' to define global keybindings."
-     :repeatable t
-     `(keymap-global-set ,key ,command)))
+    (setup-define :global-keymap
+      (lambda (key command)
+        `(keymap-global-set ,key ,command))
+      :documentation "Globally bind KEY to COMMAND."
+      :debug '(form sexp)
+      :ensure '(nil func)
+      :repeatable t))
 #+end_src
 
 *** :keymap
@@ -284,7 +286,7 @@ https://github.com/victorhge/iedit/tree/main
 
 #+begin_src emacs-lisp
   (setup (:package iedit)
-    (:global "C-=" iedit-mode)
+    (:global-keymap "C-=" iedit-mode)
     (setq iedit-toggle-key-default (kbd "C-="))) ; type warning
 #+end_src
 
@@ -309,12 +311,13 @@ Yet another dmacro
 *** Sequential command
 #+begin_src emacs-lisp
   (setup (:package sequential-command)
-    (:also-load sequential-command-config)
     (:when-loaded
       (setopt seq-cmd-home-prefer-back-to-indentation t
               seq-cmd-end-prefer-end-of-code t))
     (:with-hook after-init-hook
-      (:hook sequential-command-setup-keys)))
+      (:hook (lambda ()
+      (require 'sequential-command-config)
+      (sequential-command-setup-keys)))))
 
   (setup (:package key-combo)
     (:opt key-combo-common-mode-hooks '(c-mode-common-hook
@@ -417,9 +420,8 @@ Hot-reload packages with twist
 
 #+begin_src emacs-lisp
   (setup (:package twist)
-    (:status personal
-      (add-hook 'emacs-startup-hook #'twist-watch-mode)
-      (:global-keymap "<f12> e R" #'twist-update)))
+    (add-hook 'emacs-startup-hook #'twist-watch-mode)
+    (:global-keymap "<f12> e R" #'twist-update))
 #+end_src
 
 *** nix3
@@ -430,7 +432,7 @@ Frontend to experimental commands of Nix
 
 #+begin_src emacs-lisp
   (setup (:package nix3)
-    (:set nix3-flake-remote-wait 20
+    (:opt nix3-flake-remote-wait 20
           nix3-registry-list-completion-options (list :add-to-registry t
                                                       :require-match nil))
 
@@ -573,9 +575,21 @@ Nix3.el integration for Magit
         (setup face-remap
           (:when-loaded
             (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
+
+  (when-system-name "omen2025"
+    (when window-system
+      (setup font
+        (:with-hook after-init-hook
+          (:hook (lambda ()
+                   (set-frame-font "-GOOG-Noto Sans CJK JP-medium-normal-normal-*-16-*-*-*-*-0-iso10646-1")
+                   (set-fontset-font nil 'unicode (font-spec :family "Noto Sans Mono CJK JP") nil 'prepend))))
+        (setup face-remap
+          (:when-loaded
+            (set-face-attribute 'variable-pitch nil :family "Noto Serif CJK JP"))))))
 #+end_src
 
 *** mode-line
+
 #+begin_src emacs-lisp
   (setopt mode-line-format '("%e"
                              mode-line-front-space
@@ -945,7 +959,7 @@ Nix3.el integration for Magit
   ;; (setup my-image-utils
   ;;   (autoload 'insert-clipboard-image-as-markdown-or-org-style
   ;;     "my-image-utils" "" t)
-  ;;   (:global
+  ;;   (:global-keymap
   ;;    "C-c m" insert-clipboard-image-as-markdown-or-org-style))
 
   ;; (setup my-window-utils
@@ -1062,7 +1076,7 @@ Provide detailed information about Unicode characters.
 #+begin_src emacs-lisp
   (setup (:package tempel)
     (:also-load cape)
-    (:global
+    (:global-keymap
      "M-+" tempel-complete ;; Alternative tempel-expand
      "M-*" tempel-insert))
 
@@ -1077,6 +1091,7 @@ Provide detailed information about Unicode characters.
         (add-to-list 'warning-suppress-types '(yasnippet backquote-change))))
     (:also-load yasnippet-snippets))
 
+  (setup (:package yasnippet-snippets))
 #+end_src
 
 *** vertico
@@ -1099,10 +1114,14 @@ Provide detailed information about Unicode characters.
 #+end_src
 
 *** consult
+
+- from =helm-swoop= tp =consult-line= 
+
 #+begin_src emacs-lisp
   (setup (:package consult)
     (:global-keymap "C-x b" consult-buffer
-                    [remap goto-line] consult-goto-line)
+                    "C-c i" consult-line
+                    "<remap> <goto-line>" consult-goto-line)
     (:when-loaded
       (setup org
         (:when-loaded
@@ -1154,6 +1173,7 @@ Provide detailed information about Unicode characters.
     (:global-keymap "C-c y" consult-yasnippet))
 
   (setup (:package consult-flycheck))
+  (setup (:package consult-ghq))
 #+end_src
 
 *** affe
@@ -1198,6 +1218,8 @@ Provide detailed information about Unicode characters.
   (setup (:package marginalia)
     (:hook-into after-init-hook)
     (:hook nerd-icons-completion-marginalia-setup))
+
+  (setup (:package nerd-icons-completion))
 #+end_src
 
 *** helm
@@ -1230,15 +1252,18 @@ Conveniently act on minibuffer completions
 [[https://github.com/oantolin/embark]]
 #+end_quote
 
+from =helm-descbinds= to =embark-bindings=
+
 #+begin_src emacs-lisp
   (setup (:package embark)
     (:global-keymap
      "C-." embark-act
      "C-;" embark-dwim
-     "<f1> B" embark-bindings)
+     "<f1> b" embark-bindings)
     (:when-loaded
       (setopt prefix-help-command #'embark-prefix-help-command
               embark-mixed-indicator-delay 0.1)))
+
 #+end_src
 
 *** embark-consult
@@ -1248,7 +1273,7 @@ Consult integration for Embark
 #+end_quote
 
 #+begin_src emacs-lisp
-  (setup embark-consult
+  (setup (:package embark-consult)
     (with-eval-after-load 'consult
       (require 'embark-consult))
     (with-eval-after-load 'embark
@@ -1328,7 +1353,7 @@ Consult integration for Embark
   (setup treesit
     (:also-load treesit-auto)
     (:opt treesit-font-lock-level 4)
-    (setup treesit-auto
+    (setup (:package treesit-auto)
       (:opt treesit-auto-install t)
       (:when-loaded
         (add-to-list 'treesit-language-source-alist '(erlang "https://github.com/WhatsApp/tree-sitter-erlang"))
@@ -1346,6 +1371,8 @@ Consult integration for Embark
   (setup flymake
     (:bind "M-n" flymake-goto-next-error
            "M-p" flymake-goto-prev-error))
+
+  (setup (:package flycheck-inline))
 
   (setup (:package flycheck)
     (:also-load flycheck-inline)
@@ -1389,28 +1416,31 @@ Consult integration for Embark
 
 *** LISP
 #+begin_src emacs-lisp
-  (setup elispxmp
+  (setup (:package elispxmp)
     (:when-loaded (setopt elispxmp-debug t)))
 
   (setup elisp-mode
     (setup simple
       (setopt eval-expression-print-length nil
               eval-expression-print-level nil))
-    (:with-map (emacs-lisp-mode-map
-                lisp-interaction-mode-map)
-      (:bind "C-c C-e" macrostep-expand
-             "C-c x" elispxmp))
     (:with-mode emacs-lisp-mode
       (:hook outline-minor-mode reveal-mode)))
 
-  (setup scheme
+  (setup (:package macrostep)
+    (:with-map (emacs-lisp-mode-map
+                lisp-interaction-mode-map)
+      (:bind "C-c C-e" macrostep-expand
+             "C-c x" elispxmp)))
+
+  (setup  scheme
     (:bind "C-c x" elispxmp)
-    (:opt scheme-program-name "racket")
-    (setup geiser
-      (:also-load geiser-racket)
-      (:opt geiser-repl-use-other-window nil
-            geiser-mode-auto-p t
-            geiser-mode-start-repl-p t)))
+    (:opt scheme-program-name "racket"))
+
+  ;; (setup (:package geiser)
+  ;;   (:also-load geiser-racket)
+  ;;   (:opt geiser-repl-use-other-window nil
+  ;;         geiser-mode-auto-p t
+  ;;         geiser-mode-start-repl-p t))
 #+end_src
 
 *** C/C++
@@ -1542,7 +1572,7 @@ Consult integration for Embark
 *** Nix
 #+begin_src emacs-lisp
   (setup (:package nix-ts-mode)
-    (:file-match "\\.nix\\'")
+    (:match-file "*.nix")
     (:hook eglot-ensure)
     (:mode-repl nix-repl)
     ;; Install nixfmt for reformatting.
@@ -1619,6 +1649,7 @@ Consult integration for Embark
 *** Prolog
 
 #+begin_src emacs-lisp
+  (setup (:package ediprolog))
   (setup prolog
     (:also-load ediprolog)
     (:match-file "*.pl")                ; default perl-mode
@@ -1669,7 +1700,7 @@ Consult integration for Embark
   (setup (:package mistty))
 
   (setup (:package shell-pop)
-    (:global "C-c s" shell-pop)
+    (:global-keymap "C-c s" shell-pop)
     (:opt shell-pop-window-size 50
           shell-pop-shell-type '("shell" "*shell*" (lambda () (shell)))
           shell-pop-window-position "bottom"
@@ -1745,7 +1776,7 @@ Consult integration for Embark
 *** open-junk-file
 #+begin_src emacs-lisp
   (setup (:package open-junk-file)
-    (:global "C-c z" open-junk-file)
+    (:global-keymap "C-c z" open-junk-file)
     (:opt open-junk-file-format "~/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
 #+end_src
 
@@ -1837,9 +1868,9 @@ Consult integration for Embark
 *** Org-mode
 #+begin_src emacs-lisp
   ;;; Org-mode
-  (setup org
+  (setup (:package org)
     (:match-file "*.org_archive")
-    (:global "C-c a" org-agenda
+    (:global-keymap "C-c a" org-agenda
              "C-c c" org-capture
              "C-c l" org-store-link)
     (:bind "<f11>"   org-tree-slide-mode
@@ -1899,7 +1930,7 @@ Consult integration for Embark
       (unless (boundp 'org-default-notes-file)
         (require 'org-agenda))
       (org-agenda nil (kbd "A")))
-    (:global "C-c g" open-my-agenda-file
+    (:global-keymap "C-c g" open-my-agenda-file
              "<f6>" org-agenda-default)
     (:when-loaded
       (defun my-agenda-skip-function ()
@@ -2090,7 +2121,7 @@ Hitori otegaru wiki modoki
 #+begin_src emacs-lisp
   (setup (:package perspective)
     (:when-loaded
-      (:global "C-x C-b" persp-list-buffers)
+      (:global-keymap "C-x C-b" persp-list-buffers)
       (set-face-foreground 'persp-selected-face "red"))
     (:opt persp-mode-prefix-key (kbd "C-c p")
           persp-frame-global-perspective-include-scratch-buffer nil)
@@ -2152,6 +2183,8 @@ Hitori otegaru wiki modoki
 ** Calendar
 #+begin_src emacs-lisp
   ;;; Calender
+  (setup (:package japanese-holidays))
+
   (setup calendar
     (:when-loaded
       (require 'japanese-holidays)
@@ -2182,29 +2215,29 @@ Hitori otegaru wiki modoki
             (message "%s: %s" date-string (mapconcat #'identity holiday-list "; ")))))
       (add-hook 'calendar-move-hook 'my/japanese-holiday-show)))
 #+end_src
-
 *** calfw
 #+begin_src emacs-lisp
   (setup (:package calfw)
-    (setopt cfw:org-agenda-schedule-args '(:scheduled :timestamp :deadline))
-    (:with-map cfw:calendar-mode-map
-      (:bind "o" 'cfw:org-open-agenda-day))
+    (:also-load calfw-org calfw-howm calfw-cal calfw ical)
+    (setopt calfw-org-agenda-schedule-args '(:scheduled :timestamp :deadline))
+    (:with-map calfw-calendar-mode-map
+      (:bind "o" 'calfw-org-open-agenda-day))
 
     (setup org-agenda
       (:when-loaded
         (add-to-list 'org-agenda-custom-commands
-                     '("c" "Display calendar" (lambda (_) (cfw:open-my-calendar))))))
+                     '("c" "Display calendar" (lambda (_) (calfw-open-my-calendar))))))
 
-    (defun cfw:open-my-calendar ()
+    (defun calfw-open-my-calendar ()
       "org-agenda, 天文現象, 祝日, howm を source として表示する。"
       (interactive)
-      (let* ((source1 (cfw:org-create-source "DodgerBlue1"))
-             (source2 (cfw:ical-create-source
+      (let* ((source1 (calfw-org-create-source "DodgerBlue1"))
+             (source2 (calfw-ical-create-source
                        "天文現象"
                        "http://www.cantonbecker.com/astronomy-calendar/astrocal.ics"
                        "ForestGreen"))
-             (source3 (cfw:howm-create-source "LightSlateBlue")))
-        (cfw:open-calendar-buffer
+             (source3 (calfw-howm-create-source "LightSlateBlue")))
+        (calfw-open-calendar-buffer
          :view 'month
          :contents-sources (list source1 source2 source3)))))
 
