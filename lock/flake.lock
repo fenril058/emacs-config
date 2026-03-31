@@ -48,22 +48,6 @@
         "type": "github"
       }
     },
-    "async": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1451290400,
-        "narHash": "sha256-5nTkAnB6SOsFg9aXOxI5oON9RBByVO3Lq/vrmqHVgw4=",
-        "owner": "jwiegley",
-        "repo": "emacs-async",
-        "rev": "1794ea4955c6eeb62471b232a2d4fd6a6925a2c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jwiegley",
-        "repo": "emacs-async",
-        "type": "github"
-      }
-    },
     "auctex": {
       "flake": false,
       "locked": {
@@ -706,38 +690,6 @@
         "url": "https://codeberg.org/pranshu/haskell-ts-mode"
       }
     },
-    "helm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1771079536,
-        "narHash": "sha256-VfCyjiBOIRBDnXM/L9hNp0kKsDBMUS5aKX5zhFcj3MA=",
-        "owner": "emacs-helm",
-        "repo": "helm",
-        "rev": "9d8de1e0810ef5a5e1f3a46c9461b78b9e86167b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-helm",
-        "repo": "helm",
-        "type": "github"
-      }
-    },
-    "helm-core": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1771079536,
-        "narHash": "sha256-VfCyjiBOIRBDnXM/L9hNp0kKsDBMUS5aKX5zhFcj3MA=",
-        "owner": "emacs-helm",
-        "repo": "helm",
-        "rev": "9d8de1e0810ef5a5e1f3a46c9461b78b9e86167b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-helm",
-        "repo": "helm",
-        "type": "github"
-      }
-    },
     "highlight-indent-guides": {
       "flake": false,
       "locked": {
@@ -880,22 +832,6 @@
       "original": {
         "owner": "abo-abo",
         "repo": "swiper",
-        "type": "github"
-      }
-    },
-    "jupyter": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772843705,
-        "narHash": "sha256-c1jS++s+o1K6twXJ2BvBLdtbNwXJOOyLv0GqKI3k86U=",
-        "owner": "emacs-jupyter",
-        "repo": "jupyter",
-        "rev": "3b9caed3e4cc5f4bc0348eb65d17098de76904e4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-jupyter",
-        "repo": "jupyter",
         "type": "github"
       }
     },
@@ -1371,7 +1307,6 @@
         "ace-window": "ace-window",
         "affe": "affe",
         "anzu": "anzu",
-        "async": "async",
         "auctex": "auctex",
         "avy": "avy",
         "blackout": "blackout",
@@ -1412,8 +1347,6 @@
         "goto-chg": "goto-chg",
         "haskell-mode": "haskell-mode",
         "haskell-ts-mode": "haskell-ts-mode",
-        "helm": "helm",
-        "helm-core": "helm-core",
         "highlight-indent-guides": "highlight-indent-guides",
         "hiwin": "hiwin",
         "howm": "howm",
@@ -1423,7 +1356,6 @@
         "inheritenv": "inheritenv",
         "io-mode": "io-mode",
         "ivy": "ivy",
-        "jupyter": "jupyter",
         "key-chord": "key-chord",
         "key-combo": "key-combo",
         "lispy": "lispy",
@@ -1461,11 +1393,11 @@
         "sequential-command": "sequential-command",
         "setup": "setup",
         "shell-pop": "shell-pop",
-        "simple-httpd": "simple-httpd",
         "spinner": "spinner",
         "swiper": "swiper",
         "tablist": "tablist",
         "tempel": "tempel",
+        "transient": "transient",
         "twist": "twist",
         "undo-fu": "undo-fu",
         "unicode-inspector": "unicode-inspector",
@@ -1474,8 +1406,6 @@
         "viewer": "viewer",
         "vui": "vui",
         "vundo": "vundo",
-        "websocket": "websocket",
-        "wfnames": "wfnames",
         "which-key": "which-key",
         "with-editor": "with-editor",
         "xterm-color": "xterm-color",
@@ -1483,7 +1413,6 @@
         "yaml": "yaml",
         "yasnippet": "yasnippet",
         "yawc-mode": "yawc-mode",
-        "zmq": "zmq",
         "zoutline": "zoutline"
       }
     },
@@ -1617,22 +1546,6 @@
         "type": "github"
       }
     },
-    "simple-httpd": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1703869136,
-        "narHash": "sha256-9XVDGVN/m5pEto+g3FYrExhFOeIZdypDkYUGlMezLIc=",
-        "owner": "skeeto",
-        "repo": "emacs-web-server",
-        "rev": "3982c55e9061475038a3ccd61aecb2de3d407cec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "skeeto",
-        "repo": "emacs-web-server",
-        "type": "github"
-      }
-    },
     "spinner": {
       "flake": false,
       "locked": {
@@ -1694,6 +1607,22 @@
       "original": {
         "owner": "minad",
         "repo": "tempel",
+        "type": "github"
+      }
+    },
+    "transient": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774602950,
+        "narHash": "sha256-ea7yaTPdQXlzDtc1PgWPcmxFcG43YNqDTaPs5BIgFlc=",
+        "owner": "magit",
+        "repo": "transient",
+        "rev": "79c49830a80f550728738e378b7f7a53dd908478",
+        "type": "github"
+      },
+      "original": {
+        "owner": "magit",
+        "repo": "transient",
         "type": "github"
       }
     },
@@ -1826,38 +1755,6 @@
         "type": "github"
       }
     },
-    "websocket": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772330265,
-        "narHash": "sha256-m4+0bhOJLZ2qnQMC9gF5XkfK1sdjU982twH+9sSqJEA=",
-        "owner": "ahyatt",
-        "repo": "emacs-websocket",
-        "rev": "2195e1247ecb04c30321702aa5f5618a51c329c5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ahyatt",
-        "repo": "emacs-websocket",
-        "type": "github"
-      }
-    },
-    "wfnames": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767589092,
-        "narHash": "sha256-me8OoGhUc0KiCxcBN8DeDaNuIlmoH8LLf9k99aDl66k=",
-        "owner": "thierryvolpiatto",
-        "repo": "wfnames",
-        "rev": "6ea49841ab76f44c0164b9f4722da2f9d46228da",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thierryvolpiatto",
-        "repo": "wfnames",
-        "type": "github"
-      }
-    },
     "which-key": {
       "flake": false,
       "locked": {
@@ -1967,22 +1864,6 @@
       "original": {
         "owner": "fenril058",
         "repo": "yawc-mode",
-        "type": "github"
-      }
-    },
-    "zmq": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1728241041,
-        "narHash": "sha256-B1gONCwCCRb7L4aIeb2WuLuNOE1CdbMbP3y1XgJ/ydc=",
-        "owner": "nnicandro",
-        "repo": "emacs-zmq",
-        "rev": "fe856c43286674aa6770d95a81d915363f5df399",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nnicandro",
-        "repo": "emacs-zmq",
         "type": "github"
       }
     },

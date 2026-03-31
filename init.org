@@ -370,6 +370,7 @@ Yet another dmacro
 
 ** magit
 #+begin_src emacs-lisp
+  (setup (:package transient))
   (setup (:package magit)
     (:when-loaded
       (magit-add-section-hook 'magit-status-sections-hook
@@ -724,17 +725,17 @@ Nix3.el integration for Magit
                 shell-mode-hook)
               (add-hook ,it #'puni-disable-puni-mode)))
 
-  (setup (:package lispy)
-    (setopt lispy-key-theme '(special paredit c-digits))
-    (:unbind "." "SPC")                   ; for key-combo
-    (:with-map lispy-mode-map-paredit
-      (:unbind "C-a" "C-e")               ; for sequential-command
-      (setopt lispy-comment-use-single-semicolon t))
-    (:hook-into emacs-lisp-mode
-                lisp-interaction-mode
-                lisp-mode
-                ilem-mode
-                scheme-mode))
+  ;; (setup (:package lispy)
+  ;;   (setopt lispy-key-theme '(special paredit c-digits))
+  ;;   (:unbind "." "SPC")                   ; for key-combo
+  ;;   (:with-map lispy-mode-map-paredit
+  ;;     (:unbind "C-a" "C-e")               ; for sequential-command
+  ;;     (setopt lispy-comment-use-single-semicolon t))
+  ;;   (:hook-into emacs-lisp-mode
+  ;;               lisp-interaction-mode
+  ;;               lisp-mode
+  ;;               ilem-mode
+  ;;               scheme-mode))
 
 #+end_src
 
@@ -1171,22 +1172,26 @@ Provide detailed information about Unicode characters.
 
 *** helm
 #+begin_src emacs-lisp
-  (setup (:package helm)
-    (:also-load migemo)
-    (:when-loaded
-      (helm-migemo-mode 1)
-      (:blackout helm-migemo-mode))
-    (setup helm-swoop
-      (:global-keymap "C-c i" helm-swoop
-                      "C-c I" helm-swoop-back-to-last-point)
-      (:with-map helm-swoop-map
-        (:bind "C-r" helm-previous-line
-               "C-s" helm-next-line
-               "M-i" helm-multi-swoop-all-from-helm-swoop))
-      (:with-map isearch-mode-map
-        (:bind "M-i" helm-swoop-from-isearch)))
-    (setup helm-descbinds
-      (key-chord-define-global "df" 'helm-descbinds)))
+  ;; (setup (:package helm-core))
+
+  ;; (setup helm
+  ;;   (:also-load migemo)
+  ;;   (:when-loaded
+  ;;     (helm-migemo-mode 1)
+  ;;     (:blackout helm-migemo-mode)))
+
+  ;; (setup (:package helm-descbinds)
+  ;;   (key-chord-define-global "df" 'helm-descbinds))
+
+  ;; (setup (:package helm-swoop)
+  ;;   (:global-keymap "C-c i" helm-swoop
+  ;;                   "C-c I" helm-swoop-back-to-last-point)
+  ;;   (:with-map helm-swoop-map
+  ;;     (:bind "C-r" helm-previous-line
+  ;;            "C-s" helm-next-line
+  ;;            "M-i" helm-multi-swoop-all-from-helm-swoop))
+  ;;   (:with-map isearch-mode-map
+  ;;     (:bind "M-i" helm-swoop-from-isearch)))
 #+end_src
 
 *** embark
@@ -1449,73 +1454,73 @@ Consult integration for Embark
 #+end_quote
 
 #+begin_src emacs-lisp
-  (setup (:package zmq))
+  ;; (setup (:package zmq))
 
-  (setup (:package jupyter)
-    (:also-load zmq)
-    (:opt jupyter-repl-echo-eval-p t)
-    (:when-loaded
-      (defun my-jupyter-image-save ()
-        "Save the image under point to the '.fig' directory with a timestamp filename.
-  Creates the '.fig' directory if it doesn't exist.
-  Copies the full path of the saved image to the clipboard."
-        (interactive)
-        (let* ((fig-dir ".fig")
-               (out-f (format-time-string (concat fig-dir "/%Y%m%d-%H%M%S.png")))
-               (full-path (expand-file-name out-f)))
-          ;; Create '.fig' directory if it doesn't exist
-          (unless (file-exists-p fig-dir)
-            (make-directory fig-dir t)
-            (message "Created directory: %s" (expand-file-name fig-dir)))
-          ;; Save the image
-          (my-jupyter-image-save-with-arg out-f)
-          ;; Copy the full path to clipboard
-          (kill-new full-path)
-          ;; Message to inform user
-          (message "Image saved and full path copied to clipboard: %s" full-path)
-          ;; Return the full path of the saved image
-          full-path))
-      (defun my-jupyter-image-save-with-arg (&optional file)
-        "Save the image under point.
-  This writes the original image data to a file.  Rotating or
-  changing the displayed image size does not affect the saved image.
-  If FILE is provided, save to that file. Otherwise, prompt for a filename."
-        (interactive)
-        (let ((image (image--get-image)))
-          (with-temp-buffer
-            (let ((image-file (plist-get (cdr image) :file)))
-              (if image-file
-                  (if (not (file-exists-p image-file))
-                      (error "File %s no longer exists" image-file)
-                    (insert-file-contents-literally image-file))
-                (insert (plist-get (cdr image) :data))))
-            (let ((save-file (or file
-                                 (read-file-name "Write image to file: "))))
-              (write-region (point-min) (point-max) save-file)
-              (message "Image saved to %s" save-file)))))
-      (defun my-jupyter-image-yank ()
-        "Insert an Org mode file link for the image path in the clipboard
-  at the current cursor position.  Only insert if the file is an
-  image (png, jpg, jpeg, gif, or svg)."
-        (interactive)
-        (let ((file-path (substring-no-properties (current-kill 0))))
-          (if (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\)$" file-path)
-              (let ((relative-path (file-relative-name file-path)))
-                (insert (format "#+ATTR_HTML: :width 300\n[[file:%s]]" relative-path))
-                (org-redisplay-inline-images))
-            (message "Clipboard content is not a supported image file path. No insertion performed."))))))
+  ;; (setup (:package jupyter)
+  ;;   (:also-load zmq)
+  ;;   (:opt jupyter-repl-echo-eval-p t)
+  ;;   (:when-loaded
+  ;;     (defun my-jupyter-image-save ()
+  ;;       "Save the image under point to the '.fig' directory with a timestamp filename.
+  ;; Creates the '.fig' directory if it doesn't exist.
+  ;; Copies the full path of the saved image to the clipboard."
+  ;;       (interactive)
+  ;;       (let* ((fig-dir ".fig")
+  ;;              (out-f (format-time-string (concat fig-dir "/%Y%m%d-%H%M%S.png")))
+  ;;              (full-path (expand-file-name out-f)))
+  ;;         ;; Create '.fig' directory if it doesn't exist
+  ;;         (unless (file-exists-p fig-dir)
+  ;;           (make-directory fig-dir t)
+  ;;           (message "Created directory: %s" (expand-file-name fig-dir)))
+  ;;         ;; Save the image
+  ;;         (my-jupyter-image-save-with-arg out-f)
+  ;;         ;; Copy the full path to clipboard
+  ;;         (kill-new full-path)
+  ;;         ;; Message to inform user
+  ;;         (message "Image saved and full path copied to clipboard: %s" full-path)
+  ;;         ;; Return the full path of the saved image
+  ;;         full-path))
+  ;;     (defun my-jupyter-image-save-with-arg (&optional file)
+  ;;       "Save the image under point.
+  ;; This writes the original image data to a file.  Rotating or
+  ;; changing the displayed image size does not affect the saved image.
+  ;; If FILE is provided, save to that file. Otherwise, prompt for a filename."
+  ;;       (interactive)
+  ;;       (let ((image (image--get-image)))
+  ;;         (with-temp-buffer
+  ;;           (let ((image-file (plist-get (cdr image) :file)))
+  ;;             (if image-file
+  ;;                 (if (not (file-exists-p image-file))
+  ;;                     (error "File %s no longer exists" image-file)
+  ;;                   (insert-file-contents-literally image-file))
+  ;;               (insert (plist-get (cdr image) :data))))
+  ;;           (let ((save-file (or file
+  ;;                                (read-file-name "Write image to file: "))))
+  ;;             (write-region (point-min) (point-max) save-file)
+  ;;             (message "Image saved to %s" save-file)))))
+  ;;     (defun my-jupyter-image-yank ()
+  ;;       "Insert an Org mode file link for the image path in the clipboard
+  ;; at the current cursor position.  Only insert if the file is an
+  ;; image (png, jpg, jpeg, gif, or svg)."
+  ;;       (interactive)
+  ;;       (let ((file-path (substring-no-properties (current-kill 0))))
+  ;;         (if (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\)$" file-path)
+  ;;             (let ((relative-path (file-relative-name file-path)))
+  ;;               (insert (format "#+ATTR_HTML: :width 300\n[[file:%s]]" relative-path))
+  ;;               (org-redisplay-inline-images))
+  ;;           (message "Clipboard content is not a supported image file path. No insertion performed."))))))
 #+end_src
 
 *** Rust
 #+begin_src emacs-lisp
-  (setup (:package rustic)
-    (:match-file "*.rs")
-    (:opt rustic-lsp-client 'eglot        ; default lsp
-          rustic-analyzer-command '("rustup" "run" "stable" "rust-analyzer")
-          rustic-format-trigger 'on-save
-          rustic-rustfmt-bin "rustfmt")
-    (:when-loaded
-      (add-to-list 'rustic-rustfmt-config-alist '("edition" . "2018"))))
+  ;; (setup (:package rustic)
+  ;;   (:match-file "*.rs")
+  ;;   (:opt rustic-lsp-client 'eglot        ; default lsp
+  ;;         rustic-analyzer-command '("rustup" "run" "stable" "rust-analyzer")
+  ;;         rustic-format-trigger 'on-save
+  ;;         rustic-rustfmt-bin "rustfmt")
+  ;;   (:when-loaded
+  ;;     (add-to-list 'rustic-rustfmt-config-alist '("edition" . "2018"))))
 #+end_src
 
 *** Typescript
@@ -2143,6 +2148,11 @@ Hitori otegaru wiki modoki
 
 *** calfw
 #+begin_src emacs-lisp
+  ;; (setup (:package calfw-org))
+  ;; (setup (:package calfw-howm))
+  ;; (setup (:package calfw-cal))
+  ;; (setup (:package calfw-ical))
+
   (setup (:package calfw)
     (setopt cfw:org-agenda-schedule-args '(:scheduled :timestamp :deadline))
     (:with-map cfw:calendar-mode-map
@@ -2165,6 +2175,8 @@ Hitori otegaru wiki modoki
         (cfw:open-calendar-buffer
          :view 'month
          :contents-sources (list source1 source2 source3)))))
+
+
 #+end_src
 
 *** LLM

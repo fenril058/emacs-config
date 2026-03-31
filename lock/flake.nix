@@ -19,12 +19,6 @@
       repo = "anzu";
       type = "github";
     };
-    async = {
-      flake = false;
-      owner = "jwiegley";
-      repo = "emacs-async";
-      type = "github";
-    };
     auctex = {
       flake = false;
       ref = "main";
@@ -262,18 +256,6 @@
       type = "git";
       url = "https://codeberg.org/pranshu/haskell-ts-mode";
     };
-    helm = {
-      flake = false;
-      owner = "emacs-helm";
-      repo = "helm";
-      type = "github";
-    };
-    helm-core = {
-      flake = false;
-      owner = "emacs-helm";
-      repo = "helm";
-      type = "github";
-    };
     highlight-indent-guides = {
       flake = false;
       owner = "DarthFennec";
@@ -326,12 +308,6 @@
       flake = false;
       owner = "abo-abo";
       repo = "swiper";
-      type = "github";
-    };
-    jupyter = {
-      flake = false;
-      owner = "emacs-jupyter";
-      repo = "jupyter";
       type = "github";
     };
     key-chord = {
@@ -560,12 +536,6 @@
       repo = "shell-pop-el";
       type = "github";
     };
-    simple-httpd = {
-      flake = false;
-      owner = "skeeto";
-      repo = "emacs-web-server";
-      type = "github";
-    };
     spinner = {
       flake = false;
       owner = "Malabarba";
@@ -588,6 +558,12 @@
       flake = false;
       owner = "minad";
       repo = "tempel";
+      type = "github";
+    };
+    transient = {
+      flake = false;
+      owner = "magit";
+      repo = "transient";
       type = "github";
     };
     twist = {
@@ -638,18 +614,6 @@
       repo = "vundo";
       type = "github";
     };
-    websocket = {
-      flake = false;
-      owner = "ahyatt";
-      repo = "emacs-websocket";
-      type = "github";
-    };
-    wfnames = {
-      flake = false;
-      owner = "thierryvolpiatto";
-      repo = "wfnames";
-      type = "github";
-    };
     which-key = {
       flake = false;
       owner = "justbur";
@@ -690,12 +654,6 @@
       flake = false;
       owner = "fenril058";
       repo = "yawc-mode";
-      type = "github";
-    };
-    zmq = {
-      flake = false;
-      owner = "nnicandro";
-      repo = "emacs-zmq";
       type = "github";
     };
     zoutline = {

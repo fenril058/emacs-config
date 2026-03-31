@@ -1,4 +1,9 @@
 (imaxima :fetcher git
          :url "https://git.code.sf.net/p/maxima/code"
-         :files ("interfaces/emacs/imaxima/imaxima.el"
+         :files ("interfaces/emacs/imaxima/imath.el"
+                 "interfaces/emacs/imaxima/imaxima-autoconf-variables.el"
+                 "interfaces/emacs/imaxima/imaxima.el"
+                 "interfaces/emacs/imaxima/mylatex.ltx.el"
+                 "interfaces/emacs/imaxima/rtest-imaxima.el"
+                 "interfaces/emacs/imaxima/setup-imaxima-imath.el"
                  "interfaces/emacs/imaxima/imaxima.lisp"))
