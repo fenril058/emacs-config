@@ -1,0 +1,4 @@
+(calfw-ical :fetcher github
+            :repo "fenril058/emacs-calfw"
+            :branch "fix/ical-crlf-normalization"
+            :files ("calfw-ical.el" "calfw-compat.el"))

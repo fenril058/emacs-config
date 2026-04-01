@@ -63,7 +63,8 @@
     };
     calfw-ical = {
       flake = false;
-      owner = "kiwanami";
+      owner = "fenril058";
+      ref = "fix/ical-crlf-normalization";
       repo = "emacs-calfw";
       type = "github";
     };
@@ -172,6 +173,12 @@
       flake = false;
       owner = "Fuco1";
       repo = "dired-hacks";
+      type = "github";
+    };
+    dtw-mode = {
+      flake = false;
+      owner = "fenril058";
+      repo = "dtw-mode";
       type = "github";
     };
     duplicate-thing = {
@@ -449,6 +456,12 @@
       repo = "mozc";
       type = "github";
     };
+    mozc-cand-posframe = {
+      flake = false;
+      owner = "akirak";
+      repo = "mozc-posframe";
+      type = "github";
+    };
     nerd-icons = {
       flake = false;
       owner = "rainstormstudio";
@@ -528,6 +541,12 @@
       flake = false;
       owner = "r0man";
       repo = "plz-media-type";
+      type = "github";
+    };
+    posframe = {
+      flake = false;
+      owner = "tumashu";
+      repo = "posframe";
       type = "github";
     };
     powershell = {

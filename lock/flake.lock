@@ -164,15 +164,16 @@
     "calfw-ical": {
       "flake": false,
       "locked": {
-        "lastModified": 1761909004,
-        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
-        "owner": "kiwanami",
+        "lastModified": 1775063660,
+        "narHash": "sha256-264LjoluHvN6ufmpjiKP/OSaAF34XjyAKMKCtew+2yI=",
+        "owner": "fenril058",
         "repo": "emacs-calfw",
-        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
+        "rev": "928ac98be18499a374fd25d1dc5e8ec4502a88b8",
         "type": "github"
       },
       "original": {
-        "owner": "kiwanami",
+        "owner": "fenril058",
+        "ref": "fix/ical-crlf-normalization",
         "repo": "emacs-calfw",
         "type": "github"
       }
@@ -462,6 +463,22 @@
       "original": {
         "owner": "Fuco1",
         "repo": "dired-hacks",
+        "type": "github"
+      }
+    },
+    "dtw-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741094299,
+        "narHash": "sha256-gD/EUhx5B5Rp/rGV7YVmXrla8WwJUO3v9ULSWPyBeNs=",
+        "owner": "fenril058",
+        "repo": "dtw-mode",
+        "rev": "c89ddc66f815bdadb1e7606bc73ef66dae0b15a8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenril058",
+        "repo": "dtw-mode",
         "type": "github"
       }
     },
@@ -1204,6 +1221,22 @@
         "type": "github"
       }
     },
+    "mozc-cand-posframe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1581148219,
+        "narHash": "sha256-PHmGB4bO/hJoet1SvR5Gw9imDC5qVahr1kVLIbsxjMM=",
+        "owner": "akirak",
+        "repo": "mozc-posframe",
+        "rev": "1d07d5055381008ccbb29b97315d140e09a7ee95",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akirak",
+        "repo": "mozc-posframe",
+        "type": "github"
+      }
+    },
     "nerd-icons": {
       "flake": false,
       "locked": {
@@ -1415,6 +1448,22 @@
         "type": "github"
       }
     },
+    "posframe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772419914,
+        "narHash": "sha256-kFTcj2G1xh4bwj1GrPjUPsyr03NNbI/N38rP3XMFCec=",
+        "owner": "tumashu",
+        "repo": "posframe",
+        "rev": "3a80911b2f45ce6926196930bb7d5cc662c7b3c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tumashu",
+        "repo": "posframe",
+        "type": "github"
+      }
+    },
     "powershell": {
       "flake": false,
       "locked": {
@@ -1526,6 +1575,7 @@
         "dired-preview": "dired-preview",
         "dired-sidebar": "dired-sidebar",
         "dired-subtree": "dired-subtree",
+        "dtw-mode": "dtw-mode",
         "duplicate-thing": "duplicate-thing",
         "eat": "eat",
         "ebnf-mode": "ebnf-mode",
@@ -1572,6 +1622,7 @@
         "migemo": "migemo",
         "mistty": "mistty",
         "mozc": "mozc",
+        "mozc-cand-posframe": "mozc-cand-posframe",
         "nerd-icons": "nerd-icons",
         "nerd-icons-completion": "nerd-icons-completion",
         "nerd-icons-dired": "nerd-icons-dired",
@@ -1585,6 +1636,7 @@
         "plz": "plz",
         "plz-event-source": "plz-event-source",
         "plz-media-type": "plz-media-type",
+        "posframe": "posframe",
         "powershell": "powershell",
         "promise": "promise",
         "puni": "puni",
