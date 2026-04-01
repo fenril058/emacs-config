@@ -1,0 +1,17 @@
+# contributor : kiwanami
+# name : defun template
+# group : defun
+# key : df
+# --
+(defun ${1:`(save-excursion
+  (let ((re "(def\\\\(un\\\\|var\\\\)[ \t\n]*\\\\([a-z0-9]*[:-]\\\\)"))
+    (cond
+     ((or
+       (re-search-backward re nil t)
+       (re-search-forward  re nil t))
+      (match-string 2))
+     (t ""))))`}${2:func-name} (${3:args})
+  "$2
+${3:$(mapconcat 'upcase (split-string (replace-regexp-in-string "&[a-z]+" "" yas/text)) " \n")}"
+  $0
+  )

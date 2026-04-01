@@ -1,0 +1,7 @@
+#name : review
+# key : rev
+# expand-env: ((yas/indent-line 'fixed) (yas/wrap-around-region 'nil))
+# --
+- 良かった事 (good)
+- 悪かった事 (bad)
+- 改善点 (try)

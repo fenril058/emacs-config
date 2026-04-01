@@ -1,6 +1,7 @@
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
+    nix-filter.url = "github:numtide/nix-filter";
 
     # Emacs Twist
     twist.url = "github:emacs-twist/twist.nix";
@@ -31,7 +32,7 @@
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, nix-filter, ... }:
   let
     # system 非依存で公開したいものはここで定義
     homeModules = {
@@ -85,7 +86,17 @@
               include = [ "site-lisp" ];
             };
           };
+          wkr-mode = _: _: {
+            src = inputs.nix-filter.lib {
+              root = inputs.self;
+              include = [ "site-lisp" ];
+            };
+          };
         };
+        localPackages = [
+          "myutils"
+          "wkr-mode"
+        ];
       })
         .overrideScope (_tself: tsuper: {
           elispPackages = tsuper.elispPackages.overrideScope (_eself: esuper: {

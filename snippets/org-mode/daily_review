@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: daily_review
+# key: dr
+# --
+
+** `(insert (concat "[" (format-time-string "%Y-%m-%d %a") "]"))` 8:45-17:30 8:00
+- 良かった事 (good)
+  - $0
+- 悪かった事 (bad)
+  -
+- 改善点 (try)
+  -

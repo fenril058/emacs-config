@@ -1,0 +1,6 @@
+#name : LATEX
+#contributor : Rick Moynihan <rick@sourcesmouth.co.uk>
+# --
+#+BEGIN_LaTeX latex
+${0}
+#+END_LaTeX

@@ -936,36 +936,38 @@ Nix3.el integration for Magit
 
 ** my utility tools
 #+begin_src emacs-lisp
-  ;; (setup my-font-utils
-  ;;   (autoload 'print-all-available-fontsets "my-font-utils"
-  ;;     "使用可能なfont-setをすべて表示する." t)
-  ;;   (autoload 'print-all-available-font-familes "my-font-utils"
-  ;;     "使用可能なfont-familyをすべて表示する." t)
-  ;;   (autoload 'check-font-here "my-font-utils"
-  ;;     "カーソルの位置のフォントを確認する."t)
-  ;;   (:global-keymap "C-c f" check-font-here
-  ;;            "C-c F" describe-text-properties))
+  (setup (:package myutils))
 
-  ;; (setup my-blog-utils
-  ;;   (autoload 'replace-markdown-links-to-org "my-blog-utils" "" t)
-  ;;   (autoload 'create-blog-article "my-blog-utils" "" t)
-  ;;   (:global-keymap "C-c b" create-blog-article)
-  ;;   (setup org
-  ;;     (:bind "C-c 1"  replace-markdown-links-to-org)))
+  (setup my-font-utils
+    (autoload 'print-all-available-fontsets "my-font-utils"
+      "使用可能なfont-setをすべて表示する." t)
+    (autoload 'print-all-available-font-familes "my-font-utils"
+      "使用可能なfont-familyをすべて表示する." t)
+    (autoload 'check-font-here "my-font-utils"
+      "カーソルの位置のフォントを確認する."t)
+    (:global-keymap "C-c f" check-font-here
+                    "C-c F" describe-text-properties))
 
-  ;; (setup 'my-copy-kill-utils
-  ;;   (autoload 'kill-matching-lines "my-copy-kill-utils" "" t))
+  (setup my-blog-utils
+    (autoload 'replace-markdown-links-to-org "my-blog-utils" "" t)
+    (autoload 'create-blog-article "my-blog-utils" "" t)
+    (:global-keymap "C-c b" create-blog-article)
+    (setup org
+      (:bind "C-c 1"  replace-markdown-links-to-org)))
 
-  ;; (setup my-image-utils
-  ;;   (autoload 'insert-clipboard-image-as-markdown-or-org-style
-  ;;     "my-image-utils" "" t)
-  ;;   (:global-keymap
-  ;;    "C-c m" insert-clipboard-image-as-markdown-or-org-style))
+  (setup 'my-copy-kill-utils
+    (autoload 'kill-matching-lines "my-copy-kill-utils" "" t))
 
-  ;; (setup my-window-utils
-  ;;   (autoload 'check-frame-parameters "my-window-utils"
-  ;;     "現在のframeのtop,left,height,widthを表示する."
-  ;;     t))
+  (setup my-image-utils
+    (autoload 'insert-clipboard-image-as-markdown-or-org-style
+      "my-image-utils" "" t)
+    (:global-keymap
+     "C-c m" insert-clipboard-image-as-markdown-or-org-style))
+
+  (setup my-window-utils
+    (autoload 'check-frame-parameters "my-window-utils"
+      "現在のframeのtop,left,height,widthを表示する."
+      t))
 #+end_src
 
 ** unicode
@@ -1115,7 +1117,7 @@ Provide detailed information about Unicode characters.
 
 *** consult
 
-- from =helm-swoop= tp =consult-line= 
+- from =helm-swoop= tp =consult-line=
 
 #+begin_src emacs-lisp
   (setup (:package consult)
@@ -1220,30 +1222,6 @@ Provide detailed information about Unicode characters.
     (:hook nerd-icons-completion-marginalia-setup))
 
   (setup (:package nerd-icons-completion))
-#+end_src
-
-*** helm
-#+begin_src emacs-lisp
-  ;; (setup (:package helm-core))
-
-  ;; (setup helm
-  ;;   (:also-load migemo)
-  ;;   (:when-loaded
-  ;;     (helm-migemo-mode 1)
-  ;;     (:blackout helm-migemo-mode)))
-
-  ;; (setup (:package helm-descbinds)
-  ;;   (key-chord-define-global "df" 'helm-descbinds))
-
-  ;; (setup (:package helm-swoop)
-  ;;   (:global-keymap "C-c i" helm-swoop
-  ;;                   "C-c I" helm-swoop-back-to-last-point)
-  ;;   (:with-map helm-swoop-map
-  ;;     (:bind "C-r" helm-previous-line
-  ;;            "C-s" helm-next-line
-  ;;            "M-i" helm-multi-swoop-all-from-helm-swoop))
-  ;;   (:with-map isearch-mode-map
-  ;;     (:bind "M-i" helm-swoop-from-isearch)))
 #+end_src
 
 *** embark
@@ -1351,6 +1329,7 @@ Consult integration for Embark
     (add-hook 'after-init-hook #'global-eldoc-mode))
 
   (setup treesit
+    (:nixpkgs tree-sitter)
     (:also-load treesit-auto)
     (:opt treesit-font-lock-level 4)
     (setup (:package treesit-auto)
@@ -1420,6 +1399,7 @@ Consult integration for Embark
     (:when-loaded (setopt elispxmp-debug t)))
 
   (setup elisp-mode
+    (:also-load macrostep)
     (setup simple
       (setopt eval-expression-print-length nil
               eval-expression-print-level nil))
@@ -1854,15 +1834,13 @@ Consult integration for Embark
     (:bind "C-c RET" compile)
     (:when-loaded
       (setopt markdown-fontify-code-blocks-natively t)))
-
 #+end_src
 
 *** Weekly report mode
 #+begin_src emacs-lisp
-  ;; (setup (:package wkr-mode)
-  ;;   (autoload 'wkr-mode "wkr-mode")
-  ;;   (autoload 'wkr-cleanup "wkr-mode")
-  ;;   (:file-match "/MyWeeklyReport/CY[0-9]+/.*\\.txt$"))
+  (setup (:package wkr-mode)
+    (add-to-list 'auto-mode-alist
+                 (cons "/MyWeeklyReport/CY[0-9]+/.*\\.txt$" 'wkr-mode)))
 #+end_src
 
 *** Org-mode

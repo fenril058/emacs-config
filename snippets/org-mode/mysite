@@ -1,0 +1,8 @@
+#name : mysite
+# --
+# Last modified : 2018-03-15 16:29:36
+#+TITLE: ${1:title}
+#+AUTHOR: ril
+#+LANGUAGE: ja
+#+OPTIONS: H:1 ^:nil toc:nil num:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="${2:style}.css" />

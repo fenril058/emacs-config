@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: time
+# key: time
+# binding: direct-keybinding
+# --
+`(insert (concat
+         (format-time-string  "%Y ")
+         "年"
+         (format-time-string "%B %d")
+         "日"
+         (format-time-string " %A %H:%M:%S")))`

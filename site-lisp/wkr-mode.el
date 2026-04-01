@@ -3,6 +3,8 @@
 ;; Copyright (C) 2020-2025  ril
 
 ;; Author: ril <fenril.nh@gmail.com>
+;; Version: 1.0.0
+;; Package-Requires: ((emacs "29.1") (markdown-mode "2.0"))
 ;; Keywords: outlines, convenience
 
 ;; This program is free software; you can redistribute it and/or modify

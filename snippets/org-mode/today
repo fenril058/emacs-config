@@ -1,0 +1,13 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: today
+# key: today
+# binding: direct-keybinding
+# --
+`(insert
+    (let ((system-time-locale "ja_JP.UTF8"))
+    (concat
+    (format-time-string  "%Y")
+    "年"
+    (format-time-string "%B%d")
+    "日"
+    )))`
