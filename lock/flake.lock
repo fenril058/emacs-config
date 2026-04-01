@@ -946,22 +946,6 @@
         "type": "github"
       }
     },
-    "ivy": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773842101,
-        "narHash": "sha256-BT8miQzTuEvx76kb7GH+p1Xu0jlSxPJyR4yvChP+s/k=",
-        "owner": "abo-abo",
-        "repo": "swiper",
-        "rev": "1005bff8a700b92dc464f770aff8a0db5b4a1c0b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "abo-abo",
-        "repo": "swiper",
-        "type": "github"
-      }
-    },
     "japanese-holidays": {
       "flake": false,
       "locked": {
@@ -1023,6 +1007,7 @@
       },
       "original": {
         "owner": "fenril058",
+        "ref": "master",
         "repo": "lispy",
         "type": "github"
       }
@@ -1337,16 +1322,16 @@
       "locked": {
         "lastModified": 1774812709,
         "narHash": "sha256-42//QrHFy2+kTqdMsy9CyHsnV6Cf2SwbIzORr7QrZdc=",
-        "ref": "bugfix",
+        "owner": "elpa-mirrors",
+        "repo": "org-mode",
         "rev": "e012823239122314d62d1497d8fd2ada2adb87ba",
-        "revCount": 28620,
-        "type": "git",
-        "url": "https://git.savannah.gnu.org/git/emacs/org-mode.git"
+        "type": "github"
       },
       "original": {
+        "owner": "elpa-mirrors",
         "ref": "bugfix",
-        "type": "git",
-        "url": "https://git.savannah.gnu.org/git/emacs/org-mode.git"
+        "repo": "org-mode",
+        "type": "github"
       }
     },
     "pdf-tools": {
@@ -1571,7 +1556,6 @@
         "imaxima": "imaxima",
         "inheritenv": "inheritenv",
         "io-mode": "io-mode",
-        "ivy": "ivy",
         "japanese-holidays": "japanese-holidays",
         "key-chord": "key-chord",
         "key-combo": "key-combo",
@@ -1613,7 +1597,6 @@
         "sequential-command": "sequential-command",
         "setup": "setup",
         "shell-pop": "shell-pop",
-        "swiper": "swiper",
         "tablist": "tablist",
         "tempel": "tempel",
         "transient": "transient",
@@ -1747,22 +1730,6 @@
       "original": {
         "owner": "kyagi",
         "repo": "shell-pop-el",
-        "type": "github"
-      }
-    },
-    "swiper": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773842101,
-        "narHash": "sha256-BT8miQzTuEvx76kb7GH+p1Xu0jlSxPJyR4yvChP+s/k=",
-        "owner": "abo-abo",
-        "repo": "swiper",
-        "rev": "1005bff8a700b92dc464f770aff8a0db5b4a1c0b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "abo-abo",
-        "repo": "swiper",
         "type": "github"
       }
     },

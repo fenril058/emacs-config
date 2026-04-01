@@ -351,12 +351,6 @@
       repo = "io-mode";
       type = "github";
     };
-    ivy = {
-      flake = false;
-      owner = "abo-abo";
-      repo = "swiper";
-      type = "github";
-    };
     japanese-holidays = {
       flake = false;
       owner = "emacs-jp";
@@ -379,6 +373,7 @@
     lispy = {
       flake = false;
       owner = "fenril058";
+      ref = "master";
       repo = "lispy";
       type = "github";
     };
@@ -499,9 +494,10 @@
     };
     org = {
       flake = false;
+      owner = "elpa-mirrors";
       ref = "bugfix";
-      type = "git";
-      url = "https://git.savannah.gnu.org/git/emacs/org-mode.git";
+      repo = "org-mode";
+      type = "github";
     };
     pdf-tools = {
       flake = false;
@@ -605,12 +601,6 @@
       flake = false;
       owner = "kyagi";
       repo = "shell-pop-el";
-      type = "github";
-    };
-    swiper = {
-      flake = false;
-      owner = "abo-abo";
-      repo = "swiper";
       type = "github";
     };
     tablist = {

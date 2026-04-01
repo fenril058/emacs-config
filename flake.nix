@@ -60,7 +60,9 @@
       extraRecipeDir = ./recipes;
       extraPackages = [ "setup" ];
       initParser = inputs.twist.lib.parseSetup { inherit (inputs.nixpkgs) lib; } { }; # for setup.el
-      extraInputOverrides = { };
+
+
+
       earlyInitFile = pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org { };
       initFiles = [ (pkgs.tangleOrgBabelFile "init.el" ./init.org { }) ];
     };
@@ -76,7 +78,14 @@
           }                     # exstraRecipeDirを優先
         ] ++ (import ./nix/registries.nix inputs);
         exportManifest = true;
-        inputOverrides = profile.extraInputOverrides;
+        inputOverrides = (import ./nix/inputs.nix) // {
+          myutils = _: _: {
+            src = inputs.nix-filter.lib {
+              root = inputs.self;
+              include = [ "site-lisp" ];
+            };
+          };
+        };
       })
         .overrideScope (_tself: tsuper: {
           elispPackages = tsuper.elispPackages.overrideScope (_eself: esuper: {
@@ -122,7 +131,6 @@
     packages.default = package;
     apps = package.makeApps { lockDirName = "lock"; };
     earlyInitEl = profile.earlyInitFile; # home-moduleから参照できるように
-  }
-  )
+  })
   // { inherit homeModules; };
 }
