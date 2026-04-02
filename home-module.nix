@@ -43,14 +43,6 @@ in
   ];
 
   home.file = {
-    ".local/bin/mozc_emacs_helper.sh" = {
-      text = ''
-           #!/bin/sh
-           cd
-           mozc_emacs_helper.exe "$@" 2> /dev/null
-           '';
-      executable = true;
-    };
     ".config/emacs/snippets".source = ./snippets;
   };
 }
