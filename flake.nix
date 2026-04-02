@@ -5,7 +5,6 @@
 
     # Emacs Twist
     twist.url = "github:emacs-twist/twist.nix";
-    # 
     org-babel.url = "github:emacs-twist/org-babel";
 
     # Package registries for Twist
@@ -61,9 +60,6 @@
       extraRecipeDir = ./recipes;
       extraPackages = [ "setup" ];
       initParser = inputs.twist.lib.parseSetup { inherit (inputs.nixpkgs) lib; } { }; # for setup.el
-
-
-
       earlyInitFile = pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org { };
       initFiles = [ (pkgs.tangleOrgBabelFile "init.el" ./init.org { }) ];
     };

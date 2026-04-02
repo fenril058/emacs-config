@@ -1,4 +1,4 @@
-* An Emacs Configuration
+* init.org --- An Emacs Configuration
 
 ** Introduction
 
@@ -71,17 +71,17 @@ The example of =flake.nix= is below:
 
 ** initial settings
 #+begin_src emacs-lisp
-  ;;;; -*- lexical-binding: t; no-byte-compile: t; -*-
+  ;;; init.el --- user init file -*- lexical-binding: t; no-byte-compile: t; -*-
 
   ;;; Optimize native compilation
   (with-eval-after-load 'comp-run
     (setopt native-comp-async-jobs-number 8)
     (setopt native-comp-speed 2))         ; if 3, puni-splice doesn't work.
 
-  ;;; custom-file
+    ;;; custom-file
   (setopt custom-file (locate-user-emacs-file "custom.el"))
 
-  ;;; Conditional-case macros
+    ;;; Conditional-case macros
   (defmacro when-wsl (&rest body)
     (when (and (string= system-type "gnu/linux")
                (string-match "microsoft" (shell-command-to-string "uname -r")))

@@ -1,5 +1,13 @@
+* early-init.org
+
+#+begin_quote
+  By contrast, the normal init files are read after the GUI is initialized.
+  from [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][Early Init File (GNU Emacs Manual)]]
+#+end_quote
+
+
 #+begin_src emacs-lisp
-  ;;; Code:
+  ;;; early-init.el --- user early-init file -*- lexical-binding: t; no-byte-compile: t; -*-
 
   (setopt load-prefer-newer t)
 
