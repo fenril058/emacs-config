@@ -1,33 +1,35 @@
-* Introduction
+* An Emacs Configuration
+
+** Introduction
 
 This repository contains my Emacs configuration which is built using [[https://github.com/akirak/emacs-twist][emacs-twist]].
 I use home-manager to install the configuration.
 
 Note: This configuration is currently built and tested only on Windows Subsystem for Linux (WSL).
 
-** Commands
+*** Commands
 
 In zsh, you need to use a backslash before the #.
 More information on metacharacters can be found in =man zshmisc=, in the "QUOTING" section.
 
-*** Update flake.lock
+**** Update flake.lock
 #+BEGIN_SRC sh
   nix run .#lock --impure
 #+END_SRC
 
-*** Update Package Metadata
+**** Update Package Metadata
 #+BEGIN_SRC sh
   nix flake update melpa gnu-elpa nongnu-elpa gnu-elpa-archive nongnu-elpa-archive
   nix run --impure .#update
 #+END_SRC
 
-*** Show Available Flake Outputs
+**** Show Available Flake Outputs
 #+begin_src sh
   nix flake show --all-systems
 #+end_src
 Lists exported flake outputs (=packages=, =apps=, =formatter=, etc.).
 
-** Tips for home-manager integration
+*** Tips for home-manager integration
 The example of =flake.nix= is below:
 #+BEGIN_SRC nix
   {
@@ -60,13 +62,11 @@ The example of =flake.nix= is below:
   nix flake update emacs-config && home-manager switch
 #+END_SRC
 
-** Reference
+*** Reference
 - [[https://zenn.dev/kyre/articles/b1959567edfc15][Twist.nix で再現性のある Emacs 設定を作る (Zenn)]]
 - [[https://github.com/Kyure-A/.emacs.d][Kure-A/.emacs.d]]
 - [[https://github.com/akirak/emacs-config][akirak/emacs-config]]
 - [[https://deepwiki.com/emacs-twist/twist.nix][DeepWiki emacs-twist/twist.nix]]
-
-* An Emacs Configuration
 
 ** initial settings
 #+begin_src emacs-lisp

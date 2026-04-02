@@ -148,15 +148,16 @@
     "calfw-howm": {
       "flake": false,
       "locked": {
-        "lastModified": 1761909004,
-        "narHash": "sha256-4qjIMYEhSB9xjjl7pg8ehUvegm8FLzoUaOje1MA8Qws=",
-        "owner": "kiwanami",
+        "lastModified": 1775133289,
+        "narHash": "sha256-w4MLjY8I3CoFjkV9i1VKdyDiyTug4jX2G9D38+V7CtU=",
+        "owner": "fenril058",
         "repo": "emacs-calfw",
-        "rev": "36846cdca91794cf38fa171d5a3ac291d3ebc060",
+        "rev": "6bdc916f5649f9768eea62e6fa0dfbd13c3e9755",
         "type": "github"
       },
       "original": {
-        "owner": "kiwanami",
+        "owner": "fenril058",
+        "ref": "fix/howm-cl-loop-variable-binding",
         "repo": "emacs-calfw",
         "type": "github"
       }
