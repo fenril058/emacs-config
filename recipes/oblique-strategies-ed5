@@ -1,0 +1,2 @@
+(oblique-strategies-ed5 :fetcher github
+                        :repo "fenril058/oblique-strategies-ed5.el")

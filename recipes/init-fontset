@@ -1,0 +1,2 @@
+(init-fontset :fetcher github
+              :repo "fenril058/init-fontset.el")

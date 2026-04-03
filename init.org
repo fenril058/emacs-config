@@ -7,6 +7,14 @@ I use home-manager to install the configuration.
 
 Note: This configuration is currently built and tested only on Windows Subsystem for Linux (WSL).
 
+Caution: this repository is still alpha version.
+I sometime use =git rebase -i= to clean up the history. Therefore, you need to execute script below to reset your repository.
+
+#+BEGIN_SRC sh
+  git fetch origin master
+  git reset --hard origin/master
+#+END_SRC
+
 *** Commands
 
 In zsh, you need to use a backslash before the #.
@@ -1064,6 +1072,16 @@ Nix3.el integration for Magit
 
 #+end_src
 
+*** oblique-strategies-ed5
+#+begin_src emacs-lisp
+  (setup (:package oblique-strategies-ed5))
+#+end_src
+
+*** init-fontset
+#+begin_src emacs-lisp
+  (setup (:package init-fontset))
+#+end_src
+
 ** unicode
 
 *** uniletter
@@ -1930,6 +1948,7 @@ Consult integration for Embark
 *** Weekly report mode
 #+begin_src emacs-lisp
   (setup (:package wkr-mode)
+    (:opt wkr-preview-email-script "~/OneDrive/Documents/MyWeeklyReport/outlook.sh")
     (add-to-list 'auto-mode-alist
                  (cons "/MyWeeklyReport/CY[0-9]+/.*\\.txt$" 'wkr-mode)))
 #+end_src

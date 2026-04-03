@@ -353,6 +353,12 @@
       repo = "inheritenv";
       type = "github";
     };
+    init-fontset = {
+      flake = false;
+      owner = "fenril058";
+      repo = "init-fontset.el";
+      type = "github";
+    };
     io-mode = {
       flake = false;
       owner = "superbobry";
@@ -491,6 +497,12 @@
       flake = false;
       owner = "emacs-twist";
       repo = "nix3.el";
+      type = "github";
+    };
+    oblique-strategies-ed5 = {
+      flake = false;
+      owner = "fenril058";
+      repo = "oblique-strategies-ed5.el";
       type = "github";
     };
     open-junk-file = {
@@ -705,6 +717,12 @@
       flake = false;
       owner = "magit";
       repo = "with-editor";
+      type = "github";
+    };
+    wkr-mode = {
+      flake = false;
+      owner = "fenril058";
+      repo = "wkr-mode";
       type = "github";
     };
     yadmacro = {

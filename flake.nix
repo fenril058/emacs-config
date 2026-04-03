@@ -81,17 +81,10 @@
               root = inputs.self;
               include = [ "site-lisp" ];
             };
-          };
-          wkr-mode = _: _: {
-            src = inputs.nix-filter.lib {
-              root = inputs.self;
-              include = [ "site-lisp" ];
-            };
-          };
+          };          
         };
         localPackages = [
           "myutils"
-          "wkr-mode"
         ];
       })
         .overrideScope (_tself: tsuper: {

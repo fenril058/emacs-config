@@ -1,4 +1,3 @@
 (wkr-mode :fetcher github
-          :repo "fenril058/emacs-config"
-          :files ("site-lisp/wkr-mode.el"))
+          :repo "fenril058/wkr-mode")
 
