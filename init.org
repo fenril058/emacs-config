@@ -77,19 +77,79 @@ The example of =flake.nix= is below:
 - [[https://github.com/akirak/emacs-config][akirak/emacs-config]]
 - [[https://deepwiki.com/emacs-twist/twist.nix][DeepWiki emacs-twist/twist.nix]]
 
+
 ** initial settings
+
+*** header
 #+begin_src emacs-lisp
   ;;; init.el --- user init file -*- lexical-binding: t; no-byte-compile: t; -*-
+#+end_src
 
-  ;;; Optimize native compilation
+*** Profiler
+- [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4/viewer/4d0a9dde1043c6eaffad][チューニングの効果を検証する｜Emacs の起動時間を""詰める""]]
+- [[https://zenn.dev/takeokunn/articles/56010618502ccc][Emacsを世界最速級で起動する方法]]
+
+#+begin_src emacs-lisp
+  ;;; Profiler
+  (require 'profiler)
+  (profiler-start 'cpu)
+
+  ;; enable debug
+  ;; (setq debug-on-error  t
+  ;;       init-file-debug t)
+
+  ;; Track `load-file-name'
+  ;; The result will be shown in the buffer named *setup-tracker*.
+  (defvar setup-tracker--level 0)
+  (defvar setup-tracker--parents nil)
+  (defvar setup-tracker--times nil)
+
+  (when load-file-name
+    (push load-file-name setup-tracker--parents)
+    (push (current-time) setup-tracker--times)
+    (setq setup-tracker--level (1+ setup-tracker--level)))
+
+  (add-variable-watcher
+   'load-file-name
+   (lambda (_ v &rest __)
+     (cond ((equal v (car setup-tracker--parents))
+            nil)
+           ((equal v (cadr setup-tracker--parents))
+            (setq setup-tracker--level (1- setup-tracker--level))
+            (let* ((now (current-time))
+                   (start (pop setup-tracker--times))
+                   (elapsed (+ (* (- (nth 1 now) (nth 1 start)) 1000)
+                               (/ (- (nth 2 now) (nth 2 start)) 1000))))
+              (with-current-buffer (get-buffer-create "*setup-tracker*")
+                (save-excursion
+                  (goto-char (point-min))
+                  (dotimes (_ setup-tracker--level) (insert "> "))
+                  (insert
+                   (file-name-nondirectory (pop setup-tracker--parents))
+                   " (" (number-to-string elapsed) " msec)\n")))))
+           (t
+            (push v setup-tracker--parents)
+            (push (current-time) setup-tracker--times)
+            (setq setup-tracker--level (1+ setup-tracker--level))))))
+#+end_src
+
+
+*** Optimize native compilation
+#+begin_src emacs-lisp
   (with-eval-after-load 'comp-run
     (setopt native-comp-async-jobs-number 8)
     (setopt native-comp-speed 2))         ; if 3, puni-splice doesn't work.
+#+end_src
 
-    ;;; custom-file
+*** custom-file
+#+begin_src emacs-lisp
   (setopt custom-file (locate-user-emacs-file "custom.el"))
+#+end_src
 
-    ;;; Conditional-case macros
+
+*** Conditional-case macros
+
+#+begin_src emacs-lisp
   (defmacro when-wsl (&rest body)
     (when (and (string= system-type "gnu/linux")
                (string-match "microsoft" (shell-command-to-string "uname -r")))
@@ -100,7 +160,6 @@ The example of =flake.nix= is below:
     (declare (indent defun))
     (when (string= (system-name) name)
       `(progn ,@body)))
-
 #+end_src
 
 ** Setup.el
@@ -825,7 +884,8 @@ Nix3.el integration for Magit
 
 *** theme
 #+begin_src emacs-lisp
-  (add-hook 'emacs-startup-hook (lambda () (load-theme 'modus-operandi)))
+  (when window-system
+    (add-hook 'emacs-startup-hook (lambda () (load-theme 'modus-operandi))))
 #+end_src
 
 ** paren
@@ -1013,8 +1073,9 @@ Nix3.el integration for Magit
                        " --group-directories-first"))))))
 
   (setup (:package nerd-icons-dired)
-    (:hook-into dired-mode)
-    (:blackout nerd-icons-dired-mode))
+    (when window-system
+      (:hook-into dired-mode)
+      (:blackout nerd-icons-dired-mode)))
 
   (setup (:package dired-preview)
     (:bind "SPC" dired-preview-page-down
@@ -1331,7 +1392,8 @@ Provide detailed information about Unicode characters.
 #+begin_src emacs-lisp
   (setup (:package marginalia)
     (:hook-into after-init-hook)
-    (:hook nerd-icons-completion-marginalia-setup))
+    (when window-system
+      (:hook nerd-icons-completion-marginalia-setup)))
 
   (setup (:package nerd-icons-completion))
 #+end_src
