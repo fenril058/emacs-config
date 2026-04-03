@@ -11,8 +11,8 @@ Caution: this repository is still alpha version.
 I sometime use =git rebase -i= to clean up the history. Therefore, you need to execute script below to reset your repository.
 
 #+BEGIN_SRC sh
-  git fetch origin master
-  git reset --hard origin/master
+  git fetch origin main
+  git reset --hard origin/main
 #+END_SRC
 
 *** Commands
@@ -83,6 +83,7 @@ The example of =flake.nix= is below:
 *** header
 #+begin_src emacs-lisp
   ;;; init.el --- user init file -*- lexical-binding: t; no-byte-compile: t; -*-
+
 #+end_src
 
 *** Profiler
@@ -131,6 +132,7 @@ The example of =flake.nix= is below:
             (push v setup-tracker--parents)
             (push (current-time) setup-tracker--times)
             (setq setup-tracker--level (1+ setup-tracker--level))))))
+
 #+end_src
 
 
@@ -139,11 +141,13 @@ The example of =flake.nix= is below:
   (with-eval-after-load 'comp-run
     (setopt native-comp-async-jobs-number 8)
     (setopt native-comp-speed 2))         ; if 3, puni-splice doesn't work.
+
 #+end_src
 
 *** custom-file
 #+begin_src emacs-lisp
   (setopt custom-file (locate-user-emacs-file "custom.el"))
+
 #+end_src
 
 
@@ -160,6 +164,7 @@ The example of =flake.nix= is below:
     (declare (indent defun))
     (when (string= (system-name) name)
       `(progn ,@body)))
+
 #+end_src
 
 ** Setup.el
@@ -197,6 +202,7 @@ The example of =flake.nix= is below:
               "Fake installation of PACKAGE."
               :repeatable t
               :shorthand cadr))
+
 #+end_src
 
 *** :auto-insert
@@ -219,6 +225,7 @@ The example of =flake.nix= is below:
                                    (lambda ()
                                      (run-with-timer ,seconds nil
                                                      ,(or func (setup-get 'hook)))))))
+
 #+end_src
 
 *** :global-keymap
@@ -231,6 +238,7 @@ The example of =flake.nix= is below:
       :debug '(form sexp)
       :ensure '(nil func)
       :repeatable t))
+
 #+end_src
 
 *** :keymap
@@ -242,6 +250,7 @@ The example of =flake.nix= is below:
      :after-loaded t
      :repeatable t
      `(keymap-set ,(setup-get 'map) ,key ,command)))
+
 #+end_src
 
 *** :keymap-unset
@@ -253,9 +262,11 @@ The example of =flake.nix= is below:
      :after-loaded t
      :repeatable t
      `(keymap-unset ,(setup-get 'map) ,key)))
+
 #+end_src
 
 *** :mode-repl
+
 #+begin_src emacs-lisp
   (eval-when-compile
     (defsetup
@@ -267,6 +278,15 @@ The example of =flake.nix= is below:
                 rtog/mode-repl-alist))
         (add-hook ',(setup-get 'hook)
                   #'repl-toggle-mode))))
+
+  (setup (:package repl-toggle)
+    (:opt rtog/fullscreen nil
+          rtog/goto-buffer-fun akirak/display-popup-window-function)
+
+    ;; Unbind the default key
+    (:keymap-unset "C-c C-z")
+    (:global-keymap "C-<return>" #'rtog/toggle-repl))
+
 #+end_src
 
 
@@ -280,6 +300,7 @@ The example of =flake.nix= is below:
 *** :reformatter
 #+begin_src emacs-lisp
   (setup (:package reformatter))
+  (eval-when-compile (require 'reformatter))
 
   (eval-when-compile
     (defsetup
@@ -290,6 +311,7 @@ The example of =flake.nix= is below:
         (mapcar (pcase-lambda (`(,name . ,args))
                   `(reformatter-define ,name ,@args))
                 entries)))))
+
 #+end_src
 
 *** :opt
@@ -302,6 +324,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
         `(setopt ,@pairs))
       :documentation "Set the option NAME to VAL using `setopt'."
       :after-loaded t))
+
 #+end_src
 
 *** :overriding-map
@@ -313,6 +336,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
       :debug '(form sexp)
       :ensure '(kbd func)
       :repeatable t)
+
 #+end_src
 
 *** :blackout
@@ -323,6 +347,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
         `(blackout ',modes))
       :after-loaded t
       :repeatable t))
+
 #+end_src
 
 *** :foreach
@@ -338,6 +363,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
                    (eval list))))
       :documentation "Eval BODY for each elements in LIST. The current element can
   be referred with `,it'. Originally define in another `seup.el' by zk-phi."))
+
 #+end_src
 
 ** emacsclient
@@ -349,6 +375,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
       (unless (server-running-p) (server-start)))
     (:with-hook after-init-hook
       (:hook server--init)))
+
 #+end_src
 
 ** editing remotefile
@@ -366,6 +393,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
   (setup tramp-sh
     (:when-loaded (cl-pushnew 'tramp-own-remote-path tramp-remote-path)))
+
 #+end_src
 
 ** keymap
@@ -384,6 +412,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
   (setup (:package key-chord)
     (:hook-into after-init-hook))
+
 #+end_src
 
 *** basic keybind
@@ -396,6 +425,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
   ;; show character name when `C-x ='
   (setopt what-cursor-show-names t)
+
 #+end_src
 
 *** ffap
@@ -413,6 +443,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 #+begin_src emacs-lisp
   (setup (:package duplicate-thing)
     (:global-keymap "C-c d" 'duplicate-thing))
+
 #+end_src
 
 *** fcopy
@@ -424,6 +455,7 @@ https://github.com/ataka/fcopy/tree/e355f6ec889d8ecbdb096019c2dc660b1cec4941
 #+begin_src emacs-lisp
   (setup (:package fcopy)
     (:global-keymap "C-c k" 'fcopy))
+
 #+end_src
 
 *** iedit
@@ -436,6 +468,7 @@ https://github.com/victorhge/iedit/tree/main
   (setup (:package iedit)
     (:global-keymap "C-=" iedit-mode)
     (setq iedit-toggle-key-default (kbd "C-="))) ; type warning
+
 #+end_src
 
 *** wgrep
@@ -443,6 +476,7 @@ https://github.com/victorhge/iedit/tree/main
   (setup wgrep
     (:opt wgrep-enable-key "r"
           wgrep-auto-save-buffer t))
+
 #+end_src
 
 *** yadmacro
@@ -454,6 +488,7 @@ Yet another dmacro
 #+begin_src emacs-lisp
   (setup (:package yadmacro)
     (:global-keymap "<f9>" yadmacro))
+
 #+end_src
 
 *** Sequential command
@@ -504,6 +539,7 @@ Yet another dmacro
         (key-combo-define org-mode-map "\\(" "\\(`!!'\\)")
         (key-combo-define org-mode-map "\\[" "\\[`!!'\\]")
         (key-combo-define org-mode-map "\\{" "\\{`!!'\\}"))))
+
 #+end_src
 
 *** which-key
@@ -515,6 +551,7 @@ Yet another dmacro
       (setopt which-key-side-window-max-height 0.6
               which-key-idle-delay 0.6)
       (which-key-setup-side-window-bottom)))
+
 #+end_src
 
 ** Japanese
@@ -561,6 +598,7 @@ Yet another dmacro
                               'magit-insert-modules
                               'magit-insert-stashes
                               'append)))
+
 #+end_src
 
 ** Twist
@@ -573,6 +611,7 @@ Hot-reload packages with twist
   (setup (:package twist)
     (add-hook 'emacs-startup-hook #'twist-watch-mode)
     (:global-keymap "<f12> e R" #'twist-update))
+
 #+end_src
 
 *** nix3
@@ -589,7 +628,7 @@ Frontend to experimental commands of Nix
 
     (defun akirak/nix3-flake-maybe-update-from-pins ()
       "Generate flake.lock from the pins."
-      (when (not (file-exists-p "flake.lock"))
+      (unless (file-exists-p "flake.lock")
         (akirak/nix3-flake-update-from-pins)))
 
     (defun akirak/nix3-flake-update-from-pins ()
@@ -622,6 +661,7 @@ Frontend to experimental commands of Nix
                     "M-g M-f" #'nix3-flake-edit
                     "<f12> n l" #'nix3-registry-list
                     "<f12> n n" #'nix3-flake-show-url))
+
 #+end_src
 
 *** magit-nix3
@@ -634,6 +674,7 @@ Nix3.el integration for Magit
   (setup (:package magit-nix3)
     (with-eval-after-load 'magit-diff
       (magit-nix3-flake-lock-mode t)))
+
 #+end_src
 
 ** appearance
@@ -683,6 +724,7 @@ Nix3.el integration for Magit
   ;; Toggle uncloaking of invisible text near point (Reveal mode).
   (setup reveal
     (:blackout reveal-mode))
+
 #+end_src
 
 
@@ -694,6 +736,7 @@ Nix3.el integration for Magit
                                "%*"
                                " %q of %I"
                                " - GNU Emacs " emacs-version " [%s]"))
+
 #+end_src
 
 **** font and size
@@ -806,6 +849,7 @@ Nix3.el integration for Magit
             '((which-function-mode ("" which-func-format " ")))))
     (:with-hook after-init-hook
       (:hook which-function-mode)))
+
 #+end_src
 
 *** diff
@@ -825,11 +869,13 @@ Nix3.el integration for Magit
     (:when-loaded
       (set-face-attribute 'smerge-refined-removed nil :extend t)
       (set-face-attribute 'smerge-refined-added   nil :extend t)))
+
 #+end_src
 
 *** generic-x
 #+begin_src emacs-lisp
-  (require 'generic-x)
+  (when window-system (require 'generic-x))
+
 #+end_src
 
 *** rainbow-delimiters
@@ -863,7 +909,8 @@ Nix3.el integration for Magit
 #+begin_src emacs-lisp
   (setup (:package goggles)
     (:blackout goggles-mode)
-    (:hook-into prog-mode text-mode)
+    (when window-system
+      (:hook-into prog-mode text-mode))
     (:opt goggles-pulse-iterations 1     ; 色を薄くする回数、1で即消える
           goggles-pulse-delay 0.1)       ; 色を薄くする1回ごとの秒数
     (defvar store-goggles-mode nil)
@@ -1003,6 +1050,7 @@ Nix3.el integration for Magit
 #+begin_src emacs-lisp
   (setup isearch
     (:opt isearch-allow-scroll t))
+
 #+end_src
 
 *** migemo
@@ -1021,6 +1069,7 @@ Nix3.el integration for Magit
           migemo-regex-dictionary nil)
     (:when-loaded
       (migemo-init)))
+
 #+end_src
 
 ** replace
@@ -1034,6 +1083,7 @@ Nix3.el integration for Magit
           anzu-mode-lighter "")
     (:with-hook after-init-hook
       (:hook global-anzu-mode)))
+
 #+end_src
 
 ** time-stamp
@@ -1086,11 +1136,13 @@ Nix3.el integration for Magit
 
   (setup (:package dired-sidebar)
     (:global-keymap "<f5>" dired-sidebar-toggle-sidebar))
+
 #+end_src
 
 ** my utility tools
 #+begin_src emacs-lisp
-  (setup (:package myutils))
+  (setup (:package myutils)
+    (:nixpkgs espeak))
 
   (setup my-font-utils
     (autoload 'print-all-available-fontsets "my-font-utils"
@@ -1136,11 +1188,17 @@ Nix3.el integration for Magit
 *** oblique-strategies-ed5
 #+begin_src emacs-lisp
   (setup (:package oblique-strategies-ed5))
+
 #+end_src
 
 *** init-fontset
+#+begin_quote
+[[https://qiita.com/jado4810/items/5dd9f1b41ea5d1a4ec74][Unicode時代のCJKT環境におけるEmacsのフォント設定 #Emacs - Qiita]]
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package init-fontset))
+
 #+end_src
 
 ** unicode
@@ -1160,6 +1218,7 @@ https://github.com/zonuexe/uniletter.el
     (autoload 'uniletter-insert-mode-select-style "uniletter" "" t)
     (:when-loaded
       (setq uniletter-insert-mode-style 'math-double-struck)))
+
 #+end_src
 
 *** unicode-inspector
@@ -1171,20 +1230,38 @@ Provide detailed information about Unicode characters.
 #+begin_src emacs-lisp
   (setup (:package unicode-inspector)
     (:opt unicode-inspector-unique-input t))
+
 #+end_src
 
 ** decolation
+
+*** boxes
 #+begin_src emacs-lisp
-  (setup (:package boxes))
+  (setup (:package boxes)
+    (:nixpkgs boxes))
 
-  (setup (:package cowsay))
+#+end_src
 
+*** cowsay
+#+begin_src emacs-lisp
+  (setup (:package cowsay)
+    (:nixpkgs cowsay))
+
+#+end_src
+
+*** figlet
+#+begin_src emacs-lisp
   (setup (:package figlet)
+    (:nixpkgs figlet)
     (autoload 'figlet-message "figlet-message"
       "Inserts large message of text in ASCII font into current buffer" t))
+
 #+end_src
 
 ** Complement
+#+begin_quote
+COmpletion in Region FUnction https://github.com/minad/corfu
+#+end_quote
 
 *** corfu
 #+begin_src emacs-lisp
@@ -1225,6 +1302,7 @@ Provide detailed information about Unicode characters.
       (setup kind-icon
         (setopt kind-icon-default-face 'corfu-default)
         (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))))
+
 #+end_src
 
 *** cape
@@ -1632,12 +1710,13 @@ Consult integration for Embark
 
 *** Python
 #+begin_src emacs-lisp
-  (eval-when-compile (require 'reformatter))
-
   (setup python
     (:hook (lambda () (setq-local tab-always-indent t)))
     (:when-loaded
-      (setopt python-indent-guess-indent-offset-verbose nil)))
+      (setopt python-indent-guess-indent-offset-verbose nil))
+    (:reformatters (ruff-format
+                   :program "ruff"
+                   :args `("format" "--stdin-filename" ,buffer-file-name "-"))))
 
   (setup python-ts-mode
     (:also-load reformatter ruff-format)
@@ -1645,12 +1724,6 @@ Consult integration for Embark
            flymake-ruff-load
            ruff-format-on-save-mode
            (lambda () (setq-local tab-always-indent t))))
-
-  (setup (:package reformatter)
-    (:when-loaded
-      (reformatter-define ruff-format
-        :program "ruff"
-        :args `("format" "--stdin-filename" ,buffer-file-name "-"))))
 
   (setup (:package highlight-indent-guides)
     (:hook-into python-mode-hook
@@ -1660,67 +1733,6 @@ Consult integration for Embark
           highlight-indent-guides-method 'fill))
 
   (setup (:package flymake-ruff))
-#+end_src
-
-*** Jupyter
-#+begin_quote
-[[https://zenn.dev/nonamecat/articles/6d7d3a7fbe6cbd][pythonデータ分析のためのemacs設定の大枠とemacs-jupyterによるjupyter-REPLの紹介]]
-#+end_quote
-
-#+begin_src emacs-lisp
-  ;; (setup (:package jupyter)
-  ;;   (:also-load zmq)
-  ;;   (:opt jupyter-repl-echo-eval-p t)
-  ;;   (:when-loaded
-  ;;     (defun my-jupyter-image-save ()
-  ;;       "Save the image under point to the '.fig' directory with a timestamp filename.
-  ;; Creates the '.fig' directory if it doesn't exist.
-  ;; Copies the full path of the saved image to the clipboard."
-  ;;       (interactive)
-  ;;       (let* ((fig-dir ".fig")
-  ;;              (out-f (format-time-string (concat fig-dir "/%Y%m%d-%H%M%S.png")))
-  ;;              (full-path (expand-file-name out-f)))
-  ;;         ;; Create '.fig' directory if it doesn't exist
-  ;;         (unless (file-exists-p fig-dir)
-  ;;           (make-directory fig-dir t)
-  ;;           (message "Created directory: %s" (expand-file-name fig-dir)))
-  ;;         ;; Save the image
-  ;;         (my-jupyter-image-save-with-arg out-f)
-  ;;         ;; Copy the full path to clipboard
-  ;;         (kill-new full-path)
-  ;;         ;; Message to inform user
-  ;;         (message "Image saved and full path copied to clipboard: %s" full-path)
-  ;;         ;; Return the full path of the saved image
-  ;;         full-path))
-  ;;     (defun my-jupyter-image-save-with-arg (&optional file)
-  ;;       "Save the image under point.
-  ;; This writes the original image data to a file.  Rotating or
-  ;; changing the displayed image size does not affect the saved image.
-  ;; If FILE is provided, save to that file. Otherwise, prompt for a filename."
-  ;;       (interactive)
-  ;;       (let ((image (image--get-image)))
-  ;;         (with-temp-buffer
-  ;;           (let ((image-file (plist-get (cdr image) :file)))
-  ;;             (if image-file
-  ;;                 (if (not (file-exists-p image-file))
-  ;;                     (error "File %s no longer exists" image-file)
-  ;;                   (insert-file-contents-literally image-file))
-  ;;               (insert (plist-get (cdr image) :data))))
-  ;;           (let ((save-file (or file
-  ;;                                (read-file-name "Write image to file: "))))
-  ;;             (write-region (point-min) (point-max) save-file)
-  ;;             (message "Image saved to %s" save-file)))))
-  ;;     (defun my-jupyter-image-yank ()
-  ;;       "Insert an Org mode file link for the image path in the clipboard
-  ;; at the current cursor position.  Only insert if the file is an
-  ;; image (png, jpg, jpeg, gif, or svg)."
-  ;;       (interactive)
-  ;;       (let ((file-path (substring-no-properties (current-kill 0))))
-  ;;         (if (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\)$" file-path)
-  ;;             (let ((relative-path (file-relative-name file-path)))
-  ;;               (insert (format "#+ATTR_HTML: :width 300\n[[file:%s]]" relative-path))
-  ;;               (org-redisplay-inline-images))
-  ;;           (message "Clipboard content is not a supported image file path. No insertion performed."))))))
 #+end_src
 
 *** Nix
@@ -1932,6 +1944,19 @@ Consult integration for Embark
     (:opt open-junk-file-format "~/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
 #+end_src
 
+
+*** csv-mode
+#+begin_quote
+Major mode for editing comma/char separated values
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package csv-mode)
+    (:file-match "\\.csv\\'"))
+
+#+end_src
+
+
 *** TeX/LaTeX
 #+begin_src emacs-lisp
   (setup (:package auctex))
@@ -1996,6 +2021,7 @@ Consult integration for Embark
       (:hook pdf-loader-install))
     (:with-map pdf-view-mode-map
       (:bind "C-s" isearch-forward)))
+
 #+end_src
 
 *** Markdown
@@ -2005,6 +2031,7 @@ Consult integration for Embark
     (:bind "C-c RET" compile)
     (:when-loaded
       (setopt markdown-fontify-code-blocks-natively t)))
+
 #+end_src
 
 *** Weekly report mode
@@ -2013,6 +2040,7 @@ Consult integration for Embark
     (:opt wkr-preview-email-script "~/OneDrive/Documents/MyWeeklyReport/outlook.sh")
     (add-to-list 'auto-mode-alist
                  (cons "/MyWeeklyReport/CY[0-9]+/.*\\.txt$" 'wkr-mode)))
+
 #+end_src
 
 *** Org-mode
@@ -2224,6 +2252,7 @@ Consult integration for Embark
                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
+
 #+end_src
 
 *** HOWM
@@ -2303,9 +2332,11 @@ Hitori otegaru wiki modoki
       (persp-switch "1"))
     (:with-hook after-init-hook
       (:hook persp-after-init-hooks)))
+
 #+end_src
 
-** View mode
+** Browsing
+*** View mode
 #+begin_src emacs-lisp
   ;;; View mode
   (setup (:package viewer)
@@ -2327,6 +2358,15 @@ Hitori otegaru wiki modoki
       (:hook viewer-change-modeline-color-setup))
     (:with-hook read-only-mode-hook
       (:hook viewer-stay-in-setup)))
+#+end_src
+*** rfc-mode
+#+begin_quote
+RFC document browser and viewer https://github.com/galdor/rfc-mode
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package rfc-mode)
+    (:set rfc-mode-directory (locate-user-emacs-file "rfc/")))
 
 #+end_src
 
@@ -2364,7 +2404,9 @@ Hitori otegaru wiki modoki
           (when holiday-list
             (message "%s: %s" date-string (mapconcat #'identity holiday-list "; ")))))
       (add-hook 'calendar-move-hook 'my/japanese-holiday-show)))
+
 #+end_src
+
 *** calfw
 #+begin_src emacs-lisp
     (setup (:package calfw)
@@ -2396,18 +2438,21 @@ Hitori otegaru wiki modoki
     (setup (:package calfw-howm))
     (setup (:package calfw-cal))
     (setup (:package calfw-ical))
+
 #+end_src
 
 ** LLM
 
 - chat models
-  - https://ollama.com/library/qwen3.5
-    - qwen3.5:9b
-  - https://ollama.com/library/qwen3-embedding
-    - qwen3-embedding:8b
--  embedding models
   - https://ollama.com/library/gpt-oss
     - gpt-oss:20b
+  - https://ollama.com/library/qwen3.5
+    - qwen3.5:9b
+  - https://ollama.com/library/gemma4
+    - gemma4:e4b
+- embedding models
+  - https://ollama.com/library/qwen3-embedding
+    - qwen3-embedding:8b
   - https://ollama.com/library/nomic-embed-text-v2-moe
     - nomic-embed-text-v2-moe
 - =:default-chat-non-standard-params= : parameters of ollama
@@ -2462,4 +2507,5 @@ Hitori otegaru wiki modoki
                               :embedding-model "nomic-embed-text-v2-moe")))))
     (with-eval-after-load 'embark
       (keymap-set embark-region-map "T" #'ellama-translate)))
+
 #+end_src
