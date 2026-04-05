@@ -36,7 +36,6 @@
       self,
       nixpkgs,
       flake-utils,
-      nix-filter,
       ...
     }:
     let
@@ -44,9 +43,6 @@
       homeModules = {
         twist =
           {
-            config,
-            lib,
-            pkgs,
             ...
           }:
           {
