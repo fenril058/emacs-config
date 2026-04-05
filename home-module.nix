@@ -1,4 +1,9 @@
-{ config, pkgs, flake, ... }:
+{
+  config,
+  pkgs,
+  flake,
+  ...
+}:
 let
   system = pkgs.stdenv.hostPlatform.system;
 in
@@ -20,7 +25,11 @@ in
     icon = "${pkgs.emacs-gtk}/share/icons/hicolor/128x128/apps/emacs.png";
     terminal = false;
     startupNotify = true;
-    categories = [ "Utility" "Development" "TextEditor" ];
+    categories = [
+      "Utility"
+      "Development"
+      "TextEditor"
+    ];
     mimeType = [
       "text/plain"
       "text/x-makefile"
@@ -34,7 +43,7 @@ in
     };
   };
 
-  home.packages =  with pkgs; [
+  home.packages = with pkgs; [
     just
     nixd
     # Packages below are managed in init.org

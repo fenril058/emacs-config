@@ -107,10 +107,13 @@
             ];
           }).overrideScope
             (import ./nix/overrides.nix { inherit pkgs; });
+
+        formatter = pkgs.callPackage ./formatter.nix { };
       in
       {
         packages.default = package;
         apps = package.makeApps { lockDirName = "lock"; };
+        formatter = formatter;
         earlyInitEl = profile.earlyInitFile; # home-moduleから参照できるように
       }
     )
