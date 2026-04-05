@@ -1744,6 +1744,9 @@ Consult integration for Embark
     (:nixpkgs nixfmt)
     (:reformatters
      (nixfmt :program "nixfmt")))
+
+  ;; for nix-repl
+  (setup (:package nix-mode))
 #+end_src
 
 *** Rust
