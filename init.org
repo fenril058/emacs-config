@@ -265,53 +265,11 @@ The example of =flake.nix= is below:
 
 #+end_src
 
-*** :mode-repl
-
-#+begin_src emacs-lisp
-  (eval-when-compile
-    (defsetup
-     :mode-repl (repl-fn)
-     "Add an entry to `rtog/mode-repl-alist'."
-     `(progn
-        (with-eval-after-load 'repl-toggle
-          (push (cons ',(setup-get 'mode) ',repl-fn)
-                rtog/mode-repl-alist))
-        (add-hook ',(setup-get 'hook)
-                  #'repl-toggle-mode))))
-
-  (setup (:package repl-toggle)
-    (:opt rtog/fullscreen nil
-          rtog/goto-buffer-fun akirak/display-popup-window-function)
-
-    ;; Unbind the default key
-    (:keymap-unset "C-c C-z")
-    (:global-keymap "C-<return>" #'rtog/toggle-repl))
-
-#+end_src
-
-
 *** :nixpkgs
 #+begin_src emacs-lisp
   (eval-when-compile
     (defsetup :nixpkgs (&rest nixpkgs)
               "Fake installation of packages from NIXPKGS for executables."))
-#+end_src
-
-*** :reformatter
-#+begin_src emacs-lisp
-  (setup (:package reformatter))
-  (eval-when-compile (require 'reformatter))
-
-  (eval-when-compile
-    (defsetup
-     :reformatters (&rest entries)
-     "Define reformatters."
-     (let ((feature (setup-get 'feature)))
-       (macroexp-progn
-        (mapcar (pcase-lambda (`(,name . ,args))
-                  `(reformatter-define ,name ,@args))
-                entries)))))
-
 #+end_src
 
 *** :opt
@@ -363,6 +321,47 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
                    (eval list))))
       :documentation "Eval BODY for each elements in LIST. The current element can
   be referred with `,it'. Originally define in another `seup.el' by zk-phi."))
+
+#+end_src
+
+*** :reformatter
+#+begin_src emacs-lisp
+  (setup (:package reformatter))
+  (eval-when-compile (require 'reformatter))
+
+  (eval-when-compile
+    (defsetup
+     :reformatters (&rest entries)
+     "Define reformatters."
+     (let ((feature (setup-get 'feature)))
+       (macroexp-progn
+        (mapcar (pcase-lambda (`(,name . ,args))
+                  `(reformatter-define ,name ,@args))
+                entries)))))
+
+#+end_src
+
+*** :mode-repl
+
+#+begin_src emacs-lisp
+  (eval-when-compile
+    (defsetup
+     :mode-repl (repl-fn)
+     "Add an entry to `rtog/mode-repl-alist'."
+     `(progn
+        (with-eval-after-load 'repl-toggle
+          (push (cons ',(setup-get 'mode) ',repl-fn)
+                rtog/mode-repl-alist))
+        (add-hook ',(setup-get 'hook)
+                  #'repl-toggle-mode))))
+
+  (setup (:package repl-toggle)
+    (:opt rtog/fullscreen nil
+          rtog/goto-buffer-fun akirak/display-popup-window-function)
+
+    ;; Unbind the default key
+    (:keymap-unset "C-c C-z")
+    (:global-keymap "C-<return>" #'rtog/toggle-repl))
 
 #+end_src
 
@@ -1952,7 +1951,7 @@ Major mode for editing comma/char separated values
 
 #+begin_src emacs-lisp
   (setup (:package csv-mode)
-    (:file-match "\\.csv\\'"))
+    (:match-file "*.csv"))
 
 #+end_src
 
@@ -2366,7 +2365,7 @@ RFC document browser and viewer https://github.com/galdor/rfc-mode
 
 #+begin_src emacs-lisp
   (setup (:package rfc-mode)
-    (:set rfc-mode-directory (locate-user-emacs-file "rfc/")))
+    (:opt rfc-mode-directory (locate-user-emacs-file "rfc/")))
 
 #+end_src
 
