@@ -739,6 +739,22 @@
         "type": "github"
       }
     },
+    "fullframe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1614337055,
+        "narHash": "sha256-S2UagqTTgAZQIuOSfpD4YZbkEiG/yu8/dKk/tcY1R+A=",
+        "owner": "~tomterl",
+        "repo": "fullframe",
+        "rev": "886b831c001b44ec95aec4ff36e8bc1b3003c786",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~tomterl",
+        "repo": "fullframe",
+        "type": "sourcehut"
+      }
+    },
     "gdb-x": {
       "flake": false,
       "locked": {
@@ -840,13 +856,13 @@
       "locked": {
         "lastModified": 1770036215,
         "narHash": "sha256-+jOqcMBYnHcAO8c4FzRtj4G1veL6giYioYdvmO60lJE=",
-        "owner": "DarthFennec",
+        "owner": "bumblepup",
         "repo": "highlight-indent-guides",
         "rev": "802fb2eaf67ead730d7e3483b9a1e9639705f267",
         "type": "github"
       },
       "original": {
-        "owner": "DarthFennec",
+        "owner": "bumblepup",
         "repo": "highlight-indent-guides",
         "type": "github"
       }
@@ -1577,6 +1593,38 @@
         "type": "github"
       }
     },
+    "repl-toggle": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1663660366,
+        "narHash": "sha256-MelfD/GTlRFyiGt3wA5lTTRfR5QZ+Qb1KhVZm//GDzw=",
+        "owner": "emacsmirror",
+        "repo": "repl-toggle",
+        "rev": "e05996b4a2b988f93ccce67f933cfad00064360f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacsmirror",
+        "repo": "repl-toggle",
+        "type": "github"
+      }
+    },
+    "rfc-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769537260,
+        "narHash": "sha256-gASi0Wd79DSKbP6717V7AsfK6ojJyP06XjYNeMEqMEM=",
+        "owner": "galdor",
+        "repo": "rfc-mode",
+        "rev": "2d3dcd649e291eeb93091560b504f96162371c32",
+        "type": "github"
+      },
+      "original": {
+        "owner": "galdor",
+        "repo": "rfc-mode",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ace-window": "ace-window",
@@ -1625,6 +1673,7 @@
         "flycheck": "flycheck",
         "flycheck-inline": "flycheck-inline",
         "flymake-ruff": "flymake-ruff",
+        "fullframe": "fullframe",
         "gdb-x": "gdb-x",
         "gnuplot": "gnuplot",
         "goggles": "goggles",
@@ -1677,6 +1726,8 @@
         "puni": "puni",
         "rainbow-delimiters": "rainbow-delimiters",
         "reformatter": "reformatter",
+        "repl-toggle": "repl-toggle",
+        "rfc-mode": "rfc-mode",
         "rust-mode": "rust-mode",
         "s": "s",
         "savekill": "savekill",

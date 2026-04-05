@@ -1,4 +1,20 @@
 {
+  "csv-mode": {
+    "archive": {
+      "narHash": "sha256-PtjgfRM88oS0RLE9MMSXdu1LzecMgXbiftH86Qs6R2k=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/csv-mode-1.27.0.20250307.75451.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "cl-lib": "0.5",
+      "emacs": "27.1"
+    },
+    "version": "1.27.0.20250307.75451"
+  },
   "rainbow-mode": {
     "archive": {
       "narHash": "sha256-XMJ1pjGBISLllFwOcH9nA8xu9qYo1xsiqQ5XH/4XHCU=",

@@ -277,6 +277,12 @@
       repo = "flymake-ruff";
       type = "github";
     };
+    fullframe = {
+      flake = false;
+      owner = "~tomterl";
+      repo = "fullframe";
+      type = "sourcehut";
+    };
     gdb-x = {
       flake = false;
       type = "git";
@@ -313,7 +319,7 @@
     };
     highlight-indent-guides = {
       flake = false;
-      owner = "DarthFennec";
+      owner = "bumblepup";
       repo = "highlight-indent-guides";
       type = "github";
     };
@@ -590,6 +596,18 @@
       flake = false;
       owner = "purcell";
       repo = "emacs-reformatter";
+      type = "github";
+    };
+    repl-toggle = {
+      flake = false;
+      owner = "emacsmirror";
+      repo = "repl-toggle";
+      type = "github";
+    };
+    rfc-mode = {
+      flake = false;
+      owner = "galdor";
+      repo = "rfc-mode";
       type = "github";
     };
     rust-mode = {

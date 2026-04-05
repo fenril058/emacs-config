@@ -2504,6 +2504,9 @@ RFC document browser and viewer https://github.com/galdor/rfc-mode
       (setopt ellama-providers
               '(("gpt-oss" . (make-llm-ollama
                               :chat-model "gpt-oss"
+                              :embedding-model "nomic-embed-text-v2-moe"))
+                ("gemma4" . (make-llm-ollama
+                              :chat-model "gpt-oss"
                               :embedding-model "nomic-embed-text-v2-moe")))))
     (with-eval-after-load 'embark
       (keymap-set embark-region-map "T" #'ellama-translate)))

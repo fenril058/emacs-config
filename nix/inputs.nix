@@ -9,6 +9,14 @@
     };
   };
 
+  repl-toggle = _: _: {
+    origin = {
+      type = "github";
+      owner = "emacsmirror";
+      repo = "repl-toggle";
+    };
+  };
+
   async = _: super: {
     files = builtins.removeAttrs super.files [
       "tests/test-async.el"
