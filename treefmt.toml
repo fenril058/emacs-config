@@ -2,4 +2,4 @@ excludes = ["lock/**"]
 
 [formatter.nixfmt]
 command = "nixfmt"
-includes = ["*.nix"]
+includes = ["**/*.nix"]
