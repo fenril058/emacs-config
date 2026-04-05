@@ -357,7 +357,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
   (setup (:package repl-toggle)
     (:opt rtog/fullscreen nil
-          rtog/goto-buffer-fun akirak/display-popup-window-function)
+          rtog/goto-buffer-fun #'pop-to-buffer)
 
     ;; Unbind the default key
     (:keymap-unset "C-c C-z")
