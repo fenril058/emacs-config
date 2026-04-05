@@ -1,4 +1,4 @@
-{ config, lib, pkgs, flake, ... }:
+{ config, pkgs, flake, ... }:
 let
   system = pkgs.stdenv.hostPlatform.system;
 in
@@ -11,7 +11,7 @@ in
     config = flake.packages.${system}.default;
     earlyInitFile = flake.earlyInitEl.${system};
   };
-  
+
   xdg.desktopEntries.emacs-nix = {
     name = "Emacs (nix)";
     genericName = "Text Editor";
@@ -33,7 +33,7 @@ in
       StartupWMClass = "Emacs";
     };
   };
-  
+
   home.packages =  with pkgs; [
     just
     nixd
