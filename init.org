@@ -77,6 +77,19 @@ The example of =flake.nix= is below:
 - [[https://github.com/akirak/emacs-config][akirak/emacs-config]]
 - [[https://deepwiki.com/emacs-twist/twist.nix][DeepWiki emacs-twist/twist.nix]]
 
+*** Digression
+
+Initially, I was using rubikitch's auto-install
+([[https://rubikitch.hatenadiary.org/entry/20091221/autoinstall][auto-install.elでEmacsLispパッケージを自動インストール→anything.el関連を一括インストール - http://rubikitch.com/に移転しました]]).
+
+Soon after, I started using Emacs's package.el in conjunction with it.
+It was included by default in Emacs-24.
+While melp has many packages, I was dissatisfied with the fact that package.el doesn't allow you to revert to previous versions.
+
+I found [[https://github.com/emacscollective/borg?tab=readme-ov-file][emacscollective/borg]] and started using it, but cloning the entire repository felt like overkill.
+
+Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started using that.
+
 
 ** initial settings
 
