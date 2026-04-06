@@ -900,6 +900,22 @@
         "type": "github"
       }
     },
+    "htmlize": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764532141,
+        "narHash": "sha256-TUJy4ZkbUjUMC/FTHY+92S4OCygh6/B38+r1u7AzFfY=",
+        "owner": "emacsorphanage",
+        "repo": "htmlize",
+        "rev": "fa644880699adea3770504f913e6dddbec90c076",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacsorphanage",
+        "repo": "htmlize",
+        "type": "github"
+      }
+    },
     "hydra": {
       "flake": false,
       "locked": {
@@ -1432,6 +1448,22 @@
         "type": "github"
       }
     },
+    "ox-rss": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680923250,
+        "narHash": "sha256-kFRO/YebtrB21Cuq4SrE2y0rs24UPfJ+UuJTsUZlPl4=",
+        "owner": "BenedictHW",
+        "repo": "ox-rss",
+        "rev": "d2964eca3614f84db85b498d065862a1e341868d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BenedictHW",
+        "repo": "ox-rss",
+        "type": "github"
+      }
+    },
     "pdf-tools": {
       "flake": false,
       "locked": {
@@ -1699,6 +1731,7 @@
         "highlight-indent-guides": "highlight-indent-guides",
         "hiwin": "hiwin",
         "howm": "howm",
+        "htmlize": "htmlize",
         "hydra": "hydra",
         "iedit": "iedit",
         "imaxima": "imaxima",
@@ -1732,6 +1765,7 @@
         "open-junk-file": "open-junk-file",
         "orderless": "orderless",
         "org": "org",
+        "ox-rss": "ox-rss",
         "pdf-tools": "pdf-tools",
         "perspective": "perspective",
         "plz": "plz",

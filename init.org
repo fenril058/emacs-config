@@ -2191,7 +2191,11 @@ Major mode for editing comma/char separated values
                                     "** %?\n %i\n   %T\n   %a\n")
                                    ("R" "To Read" entry (file+headline "~/memo/someday.org" "Books to Read")
                                     "** %?\n %i\n   %T\n   %a\n"))))
+#+end_src
 
+
+**** org-export-html
+#+begin_src emacs-lisp
   (setup ox-html
     (:opt org-html-mathjax-template "<script>
     window.MathJax = {
@@ -2241,6 +2245,12 @@ Major mode for editing comma/char separated values
                                       (tagindent ".8em")
                                       (tagside "right"))))
 
+  (setup (:package htmlize))
+
+#+end_src
+
+**** org-export-latex
+#+begin_src emacs-lisp
   (setup ox-latex
     (:opt org-export-with-author t
           org-latex-default-class "jlreq"
@@ -2268,6 +2278,11 @@ Major mode for editing comma/char separated values
                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
 
+#+end_src
+
+**** org-export-rss
+#+begin_src emacs-lisp
+  (setup (:package ox-rss))
 #+end_src
 
 *** HOWM

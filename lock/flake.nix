@@ -336,6 +336,12 @@
       repo = "howm";
       type = "github";
     };
+    htmlize = {
+      flake = false;
+      owner = "emacsorphanage";
+      repo = "htmlize";
+      type = "github";
+    };
     hydra = {
       flake = false;
       owner = "abo-abo";
@@ -535,6 +541,12 @@
       owner = "elpa-mirrors";
       ref = "bugfix";
       repo = "org-mode";
+      type = "github";
+    };
+    ox-rss = {
+      flake = false;
+      owner = "BenedictHW";
+      repo = "ox-rss";
       type = "github";
     };
     pdf-tools = {
