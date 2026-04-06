@@ -2032,6 +2032,9 @@ Major mode for editing comma/char separated values
     (setopt kinsoku-limit 10))
 
   (setup (:package pdf-tools)
+    (:opt pdf-info-epdfinfo-program
+          (expand-file-name "build/server/epdfinfo"
+                            (file-name-directory (locate-library "pdf-tools"))))
     (:with-hook after-init-hook
       (:hook pdf-loader-install))
     (:with-map pdf-view-mode-map

@@ -44,6 +44,30 @@ _tself: tsuper: {
           install-info $out/share/info/preview-latex.info $out/share/info/dir || true
         '';
       });
+
+      pdf-tools = esuper.pdf-tools.overrideAttrs (old: {
+        outputs = [ "out" ];
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+          pkgs.pkg-config
+          pkgs.autoconf
+          pkgs.automake
+          pkgs.gcc
+        ];
+        buildInputs = (old.buildInputs or [ ]) ++ [
+          pkgs.poppler
+          pkgs.libpng
+          pkgs.zlib
+        ];
+        buildPhase = (old.buildPhase or "") + ''
+          runHook preBuild
+          cd build/server
+          autoreconf -i
+          ./configure --prefix=$out --bindir=$out/bin
+          make
+          cd ../..
+          runHook postBuild
+        '';
+      });
     }
   );
 }
