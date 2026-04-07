@@ -316,9 +316,10 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 #+end_quote
 
 #+begin_src emacs-lisp
-  (setup-define :mode-remap
-    (lambda (src-mode)
-      `(add-to-list 'major-mode-remap-alist '(,src-mode . ,(setup-get 'feature)))))
+  (eval-when-compile
+    (setup-define :mode-remap
+      (lambda (src-mode)
+        `(add-to-list 'major-mode-remap-alist '(,src-mode . ,(setup-get 'feature))))))
 
 #+end_src
 
@@ -1756,6 +1757,7 @@ Consult integration for Embark
           highlight-indent-guides-method 'fill))
 
   (setup (:package flymake-ruff))
+
 #+end_src
 
 *** Nix
@@ -1771,6 +1773,7 @@ Consult integration for Embark
 
   ;; for nix-repl
   (setup (:package nix-mode))
+
 #+end_src
 
 *** Rust
@@ -1779,6 +1782,7 @@ Consult integration for Embark
     (:option rust-format-on-save t
              rust-mode-treesitter-derive t)
     (:hook eglot-ensure))
+
 #+end_src
 
 *** Typescript
@@ -1792,6 +1796,7 @@ Consult integration for Embark
 
   (setup js
     (:opt js-indent-level 2))
+
 #+end_src
 
 *** Go
@@ -1808,6 +1813,7 @@ Consult integration for Embark
 #+begin_src emacs-lisp
   (setup (:package erlang-ts)
     (:match-file "*.erl"))
+
 #+end_src
 
 ***  Haskel
@@ -1816,24 +1822,28 @@ Consult integration for Embark
     (:hook eglot-ensure))
   (setup (:package haskell-ts-mode)
     (:hook eglot-ensure))
+
 #+end_src
 
 *** Clojure
 #+begin_src emacs-lisp
     (setup (:package clojure-ts-mode)
     (:hook eglot-ensure))
+
 #+end_src
 
 *** Scala
 #+begin_src emacs-lisp
   (setup (:package scala-ts-mode)
     (:hook eglot-ensure))
+
 #+end_src
 
 *** IO language
 
 #+begin_src emacs-lisp
   (setup (:package io-mode))
+
 #+end_src
 
 *** Prolog
@@ -1846,6 +1856,7 @@ Consult integration for Embark
     (:bind "C-c C-e" 'ediprolog-dwim)
     (:opt prolog-system 'swi
           ediprolog-system 'swi))
+
 #+end_src
 
 *** BNF
@@ -1864,22 +1875,26 @@ Consult integration for Embark
       (modify-syntax-entry ?\( "()1" ebnf-mode-syntax-table)
       (modify-syntax-entry ?* ". 23" ebnf-mode-syntax-table)
       (modify-syntax-entry ?\) ")(4" ebnf-mode-syntax-table)))
+
 #+end_src
 
 *** SQL
 #+begin_src emacs-lisp
   (setup sql (:opt sql-product "postgres"))
+
 #+end_src
 
 ***  Gnuplot
 #+begin_src emacs-lisp
   (setup (:package gnuplot)
     (:match-file "*.plt"))
+
 #+end_src
 
 *** Powershell script
 #+begin_src emacs-lisp
   (setup (:package powershell))
+
 #+end_src
 
 *** YAML
@@ -1895,6 +1910,7 @@ Consult integration for Embark
 #+begin_src emacs-lisp
   (setup toml-ts-mode
     (:mode-remap conf-toml-mode))
+
 #+end_src
 
 
