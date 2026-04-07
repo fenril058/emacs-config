@@ -310,14 +310,15 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
 #+end_src
 
-*** :blackout
+*** :mode-remap
+#+begin_quote
+[[https://apribase.net/2024/06/12/emacs-treesit-ts-mode/][Emacs Tree-Sitter による新しいモード達を使う ||| Apribase]]
+#+end_quote
+
 #+begin_src emacs-lisp
-  (eval-when-compile
-    (setup-define :blackout
-      (lambda (modes)
-        `(blackout ',modes))
-      :after-loaded t
-      :repeatable t))
+  (setup-define :mode-remap
+    (lambda (src-mode)
+      `(add-to-list 'major-mode-remap-alist '(,src-mode . ,(setup-get 'feature)))))
 
 #+end_src
 
@@ -334,6 +335,18 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
                    (eval list))))
       :documentation "Eval BODY for each elements in LIST. The current element can
   be referred with `,it'. Originally define in another `seup.el' by zk-phi."))
+
+#+end_src
+
+*** :blackout
+#+begin_src emacs-lisp
+  (setup (:package blackout)
+  (eval-when-compile
+    (setup-define :blackout
+      (lambda (modes)
+        `(blackout ',modes))
+      :after-loaded t
+      :repeatable t))
 
 #+end_src
 
@@ -837,8 +850,6 @@ Nix3.el integration for Magit
   (defsubst mode-line-flush--dark-green () (mode-line-flush-color "dark green"))
   (defsubst mode-line-flush--purple1 () (mode-line-flush-color "purple1"))
   (add-hook 'after-save-hook 'mode-line-flush--dark-green)
-
-  (setup (:package blackout))
 
   (setup (:package yawc-mode)
     (:hook-into org-mode markdown-mode)
@@ -1870,6 +1881,22 @@ Consult integration for Embark
 #+begin_src emacs-lisp
   (setup (:package powershell))
 #+end_src
+
+*** YAML
+#+begin_src emacs-lisp
+  (setup yaml-ts-mode
+    (:nixpkgs yaml-language-server)
+    (:match-file "*.yml")
+    (:hook eglot-ensure))
+
+#+end_src
+
+*** TOML
+#+begin_src emacs-lisp
+  (setup toml-ts-mode
+    (:mode-remap conf-toml-mode))
+#+end_src
+
 
 ** Shell
 #+begin_src emacs-lisp
