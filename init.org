@@ -341,7 +341,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
 *** :blackout
 #+begin_src emacs-lisp
-  (setup (:package blackout)
+  (setup (:package blackout))
   (eval-when-compile
     (setup-define :blackout
       (lambda (modes)
