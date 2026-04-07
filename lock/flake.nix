@@ -383,6 +383,12 @@
       repo = "japanese-holidays";
       type = "github";
     };
+    just-mode = {
+      flake = false;
+      owner = "leon-barrett";
+      repo = "just-mode.el";
+      type = "github";
+    };
     key-chord = {
       flake = false;
       owner = "emacsorphanage";

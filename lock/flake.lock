@@ -1028,6 +1028,22 @@
         "type": "github"
       }
     },
+    "just-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763749614,
+        "narHash": "sha256-QPorbwC5b7r/+ixEJ8IYh8UlJzg79aOqOJ21qdI57rM=",
+        "owner": "leon-barrett",
+        "repo": "just-mode.el",
+        "rev": "b6173c7bf4d8d28e0dbd80fa41b9c75626885b4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "leon-barrett",
+        "repo": "just-mode.el",
+        "type": "github"
+      }
+    },
     "key-chord": {
       "flake": false,
       "locked": {
@@ -1739,6 +1755,7 @@
         "init-fontset": "init-fontset",
         "io-mode": "io-mode",
         "japanese-holidays": "japanese-holidays",
+        "just-mode": "just-mode",
         "key-chord": "key-chord",
         "key-combo": "key-combo",
         "lispy": "lispy",

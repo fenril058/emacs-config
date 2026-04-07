@@ -90,7 +90,6 @@ I found [[https://github.com/emacscollective/borg?tab=readme-ov-file][emacscolle
 
 Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started using that.
 
-
 ** initial settings
 
 *** header
@@ -801,7 +800,7 @@ Nix3.el integration for Magit
       (setup font
         (:with-hook after-init-hook
           (:hook (lambda ()
-                   (set-frame-font "-GOOG-Noto Sans Mono CJK JP-regular-normal-normal-*-12-*-*-*-*-0-iso10646-1")
+                   (set-frame-font "-GOOG-Noto Sans Mono CJK JP-regular-normal-normal-*-14-*-*-*-*-0-iso10646-1")
                    (set-fontset-font nil 'unicode (font-spec :family "Noto Sans Mono CJK JP") nil 'prepend)
                    (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
         (setup face-remap
@@ -1669,6 +1668,12 @@ Consult integration for Embark
   (setup (:package cmake-mode))
 #+end_src
 
+*** Just
+#+begin_src emacs-lisp
+  (setup (:package just-mode))
+#+end_src
+
+
 *** LISP
 #+begin_src emacs-lisp
   (setup (:package elispxmp)
@@ -1912,7 +1917,6 @@ Consult integration for Embark
     (:mode-remap conf-toml-mode))
 
 #+end_src
-
 
 ** Shell
 #+begin_src emacs-lisp
