@@ -2572,7 +2572,7 @@ RFC document browser and viewer https://github.com/galdor/rfc-mode
                :default-chat-non-standard-params '(("num_ctx" . 32768))))
       (setopt ellama-coding-provider
               (make-llm-ollama
-               :chat-model "qwen2.5-coder:3b"
+               :chat-model "qwen3.5"
                :embedding-model "qwen3-embedding"
                :default-chat-non-standard-params '(("num_ctx" . 32768))))
       (setopt ellama-translation-provider
