@@ -77,6 +77,16 @@ The example of =flake.nix= is below:
 - [[https://github.com/akirak/emacs-config][akirak/emacs-config]]
 - [[https://deepwiki.com/emacs-twist/twist.nix][DeepWiki emacs-twist/twist.nix]]
 
+*** Startup time
+
+The current launch time (as reported by =M-x emacs-init-time=) is approximately:
+- 0.3 seconds for GUI Emacs
+- 0.1 seconds for Emacs in terminal mode (=emacs -nw=)
+
+Reference:
+- =emacs -nw -Q= takes 0.003 seconds (!)
+- =emacs -Q= takes 0.1 seconds
+
 *** Digression
 
 Initially, I was using rubikitch's auto-install
