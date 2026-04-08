@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t; -*-
+;;; my-blog-utils.el -*- lexical-binding: t; -*-
 
 ;;;### autoload
 (defvar my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"

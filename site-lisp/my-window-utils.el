@@ -1,16 +1,18 @@
-;;; -*- lexical-binding: t; -*-
+;;; my-window-utils.el -*- lexical-binding: t; -*-
 
+;;;###autoload
 (defun check-frame-parameters ()
-    "現在のframeのtop,left,height,widthを表示する."
-    (interactive)
-    (let ((param-alist (frame-parameters))
-          (params (list 'top 'left 'width 'height))
-          (retval))
-      (while params
-        (push (assq (car params) param-alist) retval)
-        (setq params (cdr params)))
-      (message "%s" retval)))
+  "現在のframeのtop,left,height,widthを表示する."
+  (interactive)
+  (let ((param-alist (frame-parameters))
+        (params (list 'top 'left 'width 'height))
+        (retval))
+    (while params
+      (push (assq (car params) param-alist) retval)
+      (setq params (cdr params)))
+    (message "%s" retval)))
 
+;;;###autoload
 (defun split-window-vertically-n (num_wins)
   "Split the current frame vertically into `NUM_WINS'."
   (interactive "p")
@@ -21,6 +23,7 @@
        (- (window-height) (/ (window-height) num_wins)))
       (split-window-vertically-n (- num_wins 1)))))
 
+;;;###autoload
 (defun split-window-horizontally-n (num_wins)
   "Split the current frame horizontally into `NUM_WINS'."
   (interactive "p")
@@ -31,12 +34,14 @@
        (- (window-width) (/ (window-width) num_wins)))
       (split-window-horizontally-n (- num_wins 1)))))
 
+;;;###autoload
 (defun other-window-or-split ()
   "If the current frame has only one window, split horizontaly."
   (interactive)
   (when (one-window-p) (split-window-horizontally))
   (other-window 1))
 
+;;;###autoload
 (defun other-window-or-split-2 ()
   "Split the current window into two or three siede-by-side windows.
 If the frame column is less then 270, split into two windows,

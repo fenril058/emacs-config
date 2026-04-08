@@ -90,6 +90,11 @@ I found [[https://github.com/emacscollective/borg?tab=readme-ov-file][emacscolle
 
 Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started using that.
 
+I once used [[https://github.com/jwiegley/use-package][jwiegley/use-package]] to write my .emacs/.emacs.el/init.el,
+and then move to [[https://github.com/conao3/leaf.el][conao3/leaf.el]].
+However its function is too complicated for me.
+Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup.el]], though I was curious about [[https://github.com/zonuexe/emacs-wiz/tree/master][zonuexe/emacs-wiz.]]
+
 ** initial settings
 
 *** header
@@ -1218,39 +1223,52 @@ Nix3.el integration for Magit
 ** my utility tools
 #+begin_src emacs-lisp
   (setup (:package myutils)
-    (:nixpkgs espeak))
+    (:nixpkgs espeak)) ; espeak-ng (original espeak is referred to as espeak-classic)
 
   (setup my-font-utils
-    (autoload 'print-all-available-fontsets "my-font-utils"
-      "使用可能なfont-setをすべて表示する." t)
-    (autoload 'print-all-available-font-familes "my-font-utils"
-      "使用可能なfont-familyをすべて表示する." t)
-    (autoload 'check-font-here "my-font-utils"
-      "カーソルの位置のフォントを確認する."t)
     (:global-keymap "C-c f" check-font-here
                     "C-c F" describe-text-properties))
 
   (setup my-blog-utils
-    (autoload 'replace-markdown-links-to-org "my-blog-utils" "" t)
-    (autoload 'create-blog-article "my-blog-utils" "" t)
     (:global-keymap "C-c b" create-blog-article)
     (setup org
       (:bind "C-c 1"  replace-markdown-links-to-org)))
 
-  (setup 'my-copy-kill-utils
-    (autoload 'kill-matching-lines "my-copy-kill-utils" "" t))
+  (setup 'my-copy-kill-utils)
 
+  (setup my-window-utils)
+
+#+end_src
+
+*** paste image utility
+
+#+begin_src emacs-lisp
   (setup my-image-utils
-    (autoload 'insert-clipboard-image-as-markdown-or-org-style
-      "my-image-utils" "" t)
     (:global-keymap
      "C-c m" insert-clipboard-image-as-markdown-or-org-style))
 
-  (setup my-window-utils
-    (autoload 'check-frame-parameters "my-window-utils"
-      "現在のframeのtop,left,height,widthを表示する."
-      t))
+#+end_src
 
+This tool depends on =xclip= on Linux, =pngpaste= on MacOS, and =paste_image.ps1= on WSL.
+
+#+srcname: paste_image.ps1
+#+begin_src powershell
+Param ($FileName)
+
+Add-Type -AssemblyName System.Windows.Forms
+
+If ([Windows.Forms.Clipboard]::ContainsImage() -eq $True) {
+  $Image = [Windows.Forms.Clipboard]::GetImage()
+  $FilePath = "."
+  $ImagePath = Join-Path $FilePath $FileName
+  $Image.Save($ImagePath, [System.Drawing.Imaging.ImageFormat]::Png)
+}
+#+end_src
+
+=paste_image.ps1= must be in Windows side, and in $PATH.
+
+*** delete-trailing-whitespace-mode
+#+begin_src emacs-lisp
   (setup (:package dtw-mode)
     (:opt dtw-use-disable-list t
           dtw-disable-modes '(fundamental-mode
@@ -1723,11 +1741,13 @@ Consult integration for Embark
     (:hook (lambda () (indent-tabs-mode 1))))
 
   (setup (:package cmake-mode))
+
 #+end_src
 
 *** Just
 #+begin_src emacs-lisp
   (setup (:package just-mode))
+
 #+end_src
 
 
@@ -1759,6 +1779,7 @@ Consult integration for Embark
   ;;   (:opt geiser-repl-use-other-window nil
   ;;         geiser-mode-auto-p t
   ;;         geiser-mode-start-repl-p t))
+
 #+end_src
 
 *** C/C++

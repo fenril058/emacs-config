@@ -1,12 +1,12 @@
-;;; my-say.el --- Text-to-speech using macOS `say` command -*- lexical-binding: t; -*-
+;;; my-say.el --- Text-to-speech using `say` command -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2025  Your Name
+;; Copyright (C) 2025  ril
 
 ;; Author: Your Name <yamatakau08@gmail.com>
-;; Maintainer: Your Name <yamatakau08@gmail.com>
+;; Maintainer: ril <fenri.nh@gmail.com>
 ;; Created: 2025-10-31
-;; Version: 0.1
-;; Keywords: multimedia, macOS, speech, convenience
+;; Version: 0.2
+;; Keywords: multimedia, speech, convenience
 ;; URL: https://github.com/yamatakau08/.emacs.d/tree/master/my-say
 ;; Package-Requires: ((emacs "26.1"))
 
@@ -29,7 +29,11 @@
 ;;; Commentary:
 
 ;; This package provides simple commands to make Emacs speak text aloud
-;; using the macOS `say` command.
+;; using a command.  You can use:
+;; - say (macOS)
+;; - espeak <https://espeak.sourceforge.net/>
+;; - espeak-ng <https://github.com/espeak-ng/espeak-ng>
+;;
 ;;
 ;; Example usage:
 ;;   M-x my-say-word
@@ -91,7 +95,7 @@ If there is no word at point, display a message instead."
   (interactive)
   (let ((word (thing-at-point 'word t)))
     (if word
-	    (my-say--execute my-say-voice my-say-rate word)
+        (my-say--execute my-say-voice my-say-rate word)
       (message "No word at point."))))
 
 ;;;###autoload
@@ -108,7 +112,7 @@ Newlines are replaced with spaces before speaking."
   (interactive "r")
   (if (use-region-p)
       (let ((region (replace-regexp-in-string "\n" " " (buffer-substring-no-properties beg end))))
-	    (my-say--execute my-say-voice my-say-rate region))
+        (my-say--execute my-say-voice my-say-rate region))
     (message "No region selected.")))
 
 ;;;###autoload
@@ -117,7 +121,7 @@ Newlines are replaced with spaces before speaking."
   (interactive)
   (let ((buffer (replace-regexp-in-string "\n" " " (buffer-substring-no-properties (point-min) (point-max)))))
     (if buffer
-	    (my-say--execute my-say-voice my-say-rate buffer)
+        (my-say--execute my-say-voice my-say-rate buffer)
       (message "Buffer is empty."))))
 
 ;;;###autoload

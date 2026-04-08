@@ -1,4 +1,4 @@
-;;; Font   -*- lexical-binding: t; -*-
+;;; my-font-utils.el   -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun check-font-here ()

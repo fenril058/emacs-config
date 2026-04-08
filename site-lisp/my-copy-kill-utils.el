@@ -1,4 +1,4 @@
-;;; Copy & Kill  -*- lexical-binding: t; -*-
+;;; my-copy-kill-utils.el  -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun copy-whole-line (&optional arg)
