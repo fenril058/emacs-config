@@ -1480,6 +1480,22 @@
         "type": "github"
       }
     },
+    "ox-zenn": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767074366,
+        "narHash": "sha256-qqYtsNXu5msttxEDeFY2suO+SWYlxGlvw+EGQgLwspc=",
+        "owner": "conao3",
+        "repo": "ox-zenn.el",
+        "rev": "8992eadd03738dc0c0a3929eca3fc14ce1e4025e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "conao3",
+        "repo": "ox-zenn.el",
+        "type": "github"
+      }
+    },
     "pdf-tools": {
       "flake": false,
       "locked": {
@@ -1783,6 +1799,7 @@
         "orderless": "orderless",
         "org": "org",
         "ox-rss": "ox-rss",
+        "ox-zenn": "ox-zenn",
         "pdf-tools": "pdf-tools",
         "perspective": "perspective",
         "plz": "plz",

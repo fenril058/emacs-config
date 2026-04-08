@@ -555,6 +555,12 @@
       repo = "ox-rss";
       type = "github";
     };
+    ox-zenn = {
+      flake = false;
+      owner = "conao3";
+      repo = "ox-zenn.el";
+      type = "github";
+    };
     pdf-tools = {
       flake = false;
       owner = "vedang";

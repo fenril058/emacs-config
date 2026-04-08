@@ -2346,7 +2346,7 @@ Zenn-flavored Markdown export backend for Org mode.  https://github.com/conao3/o
 #+end_quote
 
 #+begin_src emacs-lisp
-  (setup (:pacakge ox-zenn))
+  (setup (:package ox-zenn))
 
 #+end_src
 
