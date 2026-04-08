@@ -5,9 +5,20 @@
   from [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][Early Init File (GNU Emacs Manual)]]
 #+end_quote
 
-
 #+begin_src emacs-lisp
   ;;; early-init.el --- user early-init file -*- lexical-binding: t; no-byte-compile: t; -*-
+
+  ;; Temporarily disabe `setopt' because it is slower than `setq'
+  (fset 'real-setopt (symbol-function 'setopt))
+  (defmacro setopt (&rest args)
+    "setopt を setq に一時的に変えるためのマクロ."
+    `(setq ,@args))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (fset 'setopt (symbol-function 'real-setopt))
+              (fmakunbound 'real-setopt)
+              ;; (message "setopt has been restored!")
+              ))
 
   (setopt load-prefer-newer t)
 

@@ -229,15 +229,18 @@ Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started 
 #+end_src
 
 *** :defer
+#+begin_quote
+  [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4/viewer/c47f8eb7cd547b95ba91][擬似非同期ロードによる"待たされ感"改善｜Emacs の起動時間を""詰める""]]
+#+end_quote
+
 #+begin_src emacs-lisp
   (eval-when-compile
-    (defsetup :defer (seconds &optional func)
+    (defsetup :defer (seconds func)
                         "Call a function at N seconds after init."
                         `(add-hook 'after-init-hook
                                    (lambda ()
-                                     (run-with-timer ,seconds nil
+                                     (run-with-timer ,seconds 0.1
                                                      ,(or func (setup-get 'hook)))))))
-
 #+end_src
 
 *** :global-keymap
@@ -285,7 +288,11 @@ Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started 
 #+end_src
 
 *** :opt
-Generally speaking, =setopt= is slower down startup perfomance than =setq=, but safer.
+
+Generally speaking, =setopt= is slower than =setq=, but, of course,  it is safer.
+I alias =setopt= to =setq= while =early-init.el= and =init.el= are being loaded,
+and then, restore the original =setopt= after startup process.
+This setting is in [[./early-init.org]].
 
 #+begin_src emacs-lisp
   (eval-when-compile
@@ -398,8 +405,7 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
     (defun server--init ()
       (require 'server)
       (unless (server-running-p) (server-start)))
-    (:with-hook after-init-hook
-      (:hook server--init)))
+    (:defer 1 #'server--init))
 
 #+end_src
 
@@ -455,14 +461,28 @@ Generally speaking, =setopt= is slower down startup perfomance than =setq=, but 
 
 *** ffap
 #+begin_src emacs-lisp
-  (setup builtin
+  (setup ffap
     (ffap-bindings)
-    (find-function-setup-keys)
-    (:with-mode global-auto-revert-mode
-      (:hook-into after-init-hook))
+    (find-function-setup-keys))
+
+#+end_src
+
+*** auto-revert-mode
+#+begin_src emacs-lisp
+  (setup autorevert
+    (:defer 1 #'global-auto-revert-mode))
+
+#+end_src
+
+*** delete-selection-mode
+#+begin_src emacs-lisp
+  (setup delsel
     (:with-mode delete-selection-mode
       (:hook-into after-init-hook)))
+
 #+end_src
+
+
 
 *** duplicate-thing
 #+begin_src emacs-lisp
@@ -522,10 +542,10 @@ Yet another dmacro
     (:when-loaded
       (setopt seq-cmd-home-prefer-back-to-indentation t
               seq-cmd-end-prefer-end-of-code t))
-    (:with-hook after-init-hook
-      (:hook (lambda ()
-      (require 'sequential-command-config)
-      (sequential-command-setup-keys)))))
+    (:defer 0.1
+            (lambda ()
+              (require 'sequential-command-config)
+              (sequential-command-setup-keys))))
 
   (setup (:package key-combo)
     (:opt key-combo-common-mode-hooks '(c-mode-common-hook
@@ -704,9 +724,11 @@ Nix3.el integration for Magit
 
 ** appearance
 
+*** Basic (builtin)
 #+begin_src emacs-lisp
   ;; regionを可視化
-  (setup simple (transient-mark-mode 1))
+  (setup simple
+    (:defer 0.5 (lambda () (transient-mark-mode 1))))
 
   ;; バッファ内のキーワードをいい感じに強調する
   (setup hi-lock)
@@ -732,23 +754,32 @@ Nix3.el integration for Magit
                           :background unspecified
                           :foreground "Darkred"))
                         nil)))
-    (add-hook 'after-init-hook #'global-whitespace-mode))
+    (:with-hook after-init-hook
+      (:hook global-whitespace-mode)))
 
+  ;; Toggle uncloaking of invisible text near point (Reveal mode).
+  (setup reveal
+    (:blackout reveal-mode))
+
+#+end_src
+
+*** hiwin-mode
+#+begin_src emacs-lisp
   (setup (:package hiwin)
     (:opt hiwin-mode-lighter "")
     (:when-loaded
       (custom-set-faces '(hiwin-face ((((class color) (background light))
                                        (:background "gray90")))
                                      nil)))
-    (:hook-into after-init-hook))
+    (:defer 2 #'hiwin-mode))
 
+#+end_src
+
+**** rainvow-mode
+#+begin_src emacs-lisp
   (setup (:package rainbow-mode)
     (:blackout rainbow-mode)
     (:hook-into prog-mode org-mode markdown-mode))
-
-  ;; Toggle uncloaking of invisible text near point (Reveal mode).
-  (setup reveal
-    (:blackout reveal-mode))
 
 #+end_src
 
