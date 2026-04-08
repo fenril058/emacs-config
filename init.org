@@ -99,51 +99,57 @@ Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started 
 #+end_src
 
 *** Profiler
+#+begin_quote
 - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4/viewer/4d0a9dde1043c6eaffad][チューニングの効果を検証する｜Emacs の起動時間を""詰める""]]
 - [[https://zenn.dev/takeokunn/articles/56010618502ccc][Emacsを世界最速級で起動する方法]]
+#+end_quote
 
+When emacs launched by =emacs --deubg-init=, then profiler starts.
 #+begin_src emacs-lisp
   ;;; Profiler
-  (require 'profiler)
-  (profiler-start 'cpu)
 
   ;; enable debug
   ;; (setq debug-on-error  t
   ;;       init-file-debug t)
 
-  ;; Track `load-file-name'
-  ;; The result will be shown in the buffer named *setup-tracker*.
-  (defvar setup-tracker--level 0)
-  (defvar setup-tracker--parents nil)
-  (defvar setup-tracker--times nil)
+  (when init-file-debug
+    (require 'profiler)
+    (profiler-start 'cpu)
 
-  (when load-file-name
-    (push load-file-name setup-tracker--parents)
-    (push (current-time) setup-tracker--times)
-    (setq setup-tracker--level (1+ setup-tracker--level)))
 
-  (add-variable-watcher
-   'load-file-name
-   (lambda (_ v &rest __)
-     (cond ((equal v (car setup-tracker--parents))
-            nil)
-           ((equal v (cadr setup-tracker--parents))
-            (setq setup-tracker--level (1- setup-tracker--level))
-            (let* ((now (current-time))
-                   (start (pop setup-tracker--times))
-                   (elapsed (+ (* (- (nth 1 now) (nth 1 start)) 1000)
-                               (/ (- (nth 2 now) (nth 2 start)) 1000))))
-              (with-current-buffer (get-buffer-create "*setup-tracker*")
-                (save-excursion
-                  (goto-char (point-min))
-                  (dotimes (_ setup-tracker--level) (insert "> "))
-                  (insert
-                   (file-name-nondirectory (pop setup-tracker--parents))
-                   " (" (number-to-string elapsed) " msec)\n")))))
-           (t
-            (push v setup-tracker--parents)
-            (push (current-time) setup-tracker--times)
-            (setq setup-tracker--level (1+ setup-tracker--level))))))
+    ;; Track `load-file-name'
+    ;; The result will be shown in the buffer named *setup-tracker*.
+    (defvar setup-tracker--level 0)
+    (defvar setup-tracker--parents nil)
+    (defvar setup-tracker--times nil)
+
+    (when load-file-name
+      (push load-file-name setup-tracker--parents)
+      (push (current-time) setup-tracker--times)
+      (setq setup-tracker--level (1+ setup-tracker--level)))
+
+    (add-variable-watcher
+     'load-file-name
+     (lambda (_ v &rest __)
+       (cond ((equal v (car setup-tracker--parents))
+              nil)
+             ((equal v (cadr setup-tracker--parents))
+              (setq setup-tracker--level (1- setup-tracker--level))
+              (let* ((now (current-time))
+                     (start (pop setup-tracker--times))
+                     (elapsed (+ (* (- (nth 1 now) (nth 1 start)) 1000)
+                                 (/ (- (nth 2 now) (nth 2 start)) 1000))))
+                (with-current-buffer (get-buffer-create "*setup-tracker*")
+                  (save-excursion
+                    (goto-char (point-min))
+                    (dotimes (_ setup-tracker--level) (insert "> "))
+                    (insert
+                     (file-name-nondirectory (pop setup-tracker--parents))
+                     " (" (number-to-string elapsed) " msec)\n")))))
+             (t
+              (push v setup-tracker--parents)
+              (push (current-time) setup-tracker--times)
+              (setq setup-tracker--level (1+ setup-tracker--level)))))))
 
 #+end_src
 
@@ -235,12 +241,15 @@ Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started 
 
 #+begin_src emacs-lisp
   (eval-when-compile
-    (defsetup :defer (seconds func)
-                        "Call a function at N seconds after init."
-                        `(add-hook 'after-init-hook
-                                   (lambda ()
-                                     (run-with-timer ,seconds 0.1
-                                                     ,(or func (setup-get 'hook)))))))
+    (defsetup
+     :defer (sec &optional func)
+     "Call a function at N seconds after init."
+     `(add-hook 'after-init-hook
+                (lambda nil
+                  (run-with-timer ,sec nil
+                                  ,(or func
+                                       `(function ,(setup-get 'mode))))))))
+
 #+end_src
 
 *** :global-keymap
@@ -306,15 +315,34 @@ This setting is in [[./early-init.org]].
 
 *** :overriding-map
 #+begin_src emacs-lisp
+  (eval-when-compile
     (setup-define :override-map
       (lambda (key command)
         `(define-key overriding-minor-mode-map ,key ,command))
       :documentation "Bind KEY to COMMAND in `overriding-minor-mode-map'."
       :debug '(form sexp)
       :ensure '(kbd func)
-      :repeatable t)
+      :repeatable t))
 
 #+end_src
+
+*** :key-chord
+
+#+begin_src emacs-lisp
+  (setup (:package key-chord)
+    (:defer 0.3))
+
+  (eval-when-compile
+    (setup-define :key-chord
+      (lambda (key cmd)
+        `(key-chord-define-global ,key ,cmd))
+      :documentation "Define a key-chord of the two keys in KEYS starting a CMD."
+      :debug '(form sexp)
+      :ensure '(kbd func)
+      :repeatable t))
+
+#+end_src
+
 
 *** :mode-remap
 #+begin_quote
@@ -440,10 +468,6 @@ This setting is in [[./early-init.org]].
       :init-value t
       :lighter ""
       :keymap overriding-minor-mode-map))
-
-  (setup (:package key-chord)
-    (:hook-into after-init-hook))
-
 #+end_src
 
 *** basic keybind
@@ -462,8 +486,10 @@ This setting is in [[./early-init.org]].
 *** ffap
 #+begin_src emacs-lisp
   (setup ffap
-    (ffap-bindings)
-    (find-function-setup-keys))
+    (:defer 0.4
+            (lambda ()
+              (ffap-bindings)
+              (find-function-setup-keys))))
 
 #+end_src
 
@@ -477,8 +503,7 @@ This setting is in [[./early-init.org]].
 *** delete-selection-mode
 #+begin_src emacs-lisp
   (setup delsel
-    (:with-mode delete-selection-mode
-      (:hook-into after-init-hook)))
+    (:defer 0.6 #'delete-selection-mode))
 
 #+end_src
 
@@ -591,7 +616,7 @@ Yet another dmacro
 #+begin_src emacs-lisp
   (setup (:package which-key)
     (:opt which-key-lighter "")
-    (:hook-into after-init-hook)
+    (:defer 2.5)
     (:when-loaded
       (setopt which-key-side-window-max-height 0.6
               which-key-idle-delay 0.6)
@@ -754,8 +779,7 @@ Nix3.el integration for Magit
                           :background unspecified
                           :foreground "Darkred"))
                         nil)))
-    (:with-hook after-init-hook
-      (:hook global-whitespace-mode)))
+    (:defer 1 #'global-whitespace-mode))
 
   ;; Toggle uncloaking of invisible text near point (Reveal mode).
   (setup reveal
@@ -771,7 +795,7 @@ Nix3.el integration for Magit
       (custom-set-faces '(hiwin-face ((((class color) (background light))
                                        (:background "gray90")))
                                      nil)))
-    (:defer 2 #'hiwin-mode))
+    (:defer 2))
 
 #+end_src
 
@@ -901,8 +925,7 @@ Nix3.el integration for Magit
             (assq-delete-all 'which-function-mode mode-line-misc-info))
       (:opt header-line-format            ; header-line に表示する
             '((which-function-mode ("" which-func-format " ")))))
-    (:with-hook after-init-hook
-      (:hook which-function-mode)))
+    (:defer 1.6 #'which-function-mode))
 
 #+end_src
 
@@ -1135,8 +1158,7 @@ Nix3.el integration for Magit
     (:opt anzu-deactivate-region t
           anzu-search-threshold 1000
           anzu-mode-lighter "")
-    (:with-hook after-init-hook
-      (:hook global-anzu-mode)))
+    (:defer 2 #'global-anzu-mode))
 
 #+end_src
 
@@ -1234,8 +1256,7 @@ Nix3.el integration for Magit
           dtw-disable-modes '(fundamental-mode
                               latex-mode)
           dtw-mode-lighter "")
-    (:with-hook after-init-hook
-      (:hook global-dtw-mode)))
+    (:defer 2 #'global-dtw-mode))
 
 #+end_src
 
@@ -1392,7 +1413,11 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 *** yasnippet
 #+begin_src emacs-lisp
   (setup (:package yasnippet)
-    (:with-hook after-init-hook (:hook yas-global-mode))
+    (:opt )
+    (:defer 1
+            (lambda ()
+              (let ((yas-verbosity 2))
+                (yas-global-mode 1))))
     (:when-loaded
       (setup warning
         (add-to-list 'warning-suppress-types '(yasnippet backquote-change))))
@@ -1544,6 +1569,7 @@ from =helm-descbinds= to =embark-bindings=
      "C-." embark-act
      "C-;" embark-dwim
      "<f1> b" embark-bindings)
+    (:key-chord "df" #'embark-bindings)
     (:when-loaded
       (setopt prefix-help-command #'embark-prefix-help-command
               embark-mixed-indicator-delay 0.1)))
@@ -1632,7 +1658,7 @@ Consult integration for Embark
     (add-hook 'prog-mode-hook #'hs-minor-mode))
 
   (setup eldoc
-    (add-hook 'after-init-hook #'global-eldoc-mode))
+    (:defer 2 #'global-eldoc-mode))
 
   (setup treesit
     (:nixpkgs tree-sitter)
@@ -2113,8 +2139,7 @@ Major mode for editing comma/char separated values
     (:opt pdf-info-epdfinfo-program
           (expand-file-name "build/server/epdfinfo"
                             (file-name-directory (locate-library "pdf-tools"))))
-    (:with-hook after-init-hook
-      (:hook pdf-loader-install))
+    (:defer 1.5 #'pdf-loader-install)
     (:with-map pdf-view-mode-map
       (:bind "C-s" isearch-forward)))
 
@@ -2125,6 +2150,8 @@ Major mode for editing comma/char separated values
   (setup (:package markdown-mode)
     (:match-file "*.md")
     (:bind "C-c RET" compile)
+    (:with-map markdown-mode-command-map
+      (:bind "a" markdown-table-align))
     (:when-loaded
       (setopt markdown-fontify-code-blocks-natively t)))
 
@@ -2452,13 +2479,12 @@ howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
          (global-set-key (kbd (format "M-%d" i))
                          (num-persp-local-switch-workspace i)))
        num-persp-number-sequence))
-    (defun persp-after-init-hooks ()
-      (persp-mode 1)
-      (num-persp-generate-perspective)
-      (num-persp-assign-keys)
-      (persp-switch "1"))
     (:with-hook after-init-hook
-      (:hook persp-after-init-hooks)))
+      (:hook (lambda ()
+               (persp-mode 1)
+               (num-persp-generate-perspective)
+               (num-persp-assign-keys)
+               (persp-switch "1")))))
 
 #+end_src
 
@@ -2467,7 +2493,7 @@ howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
 #+begin_src emacs-lisp
   ;;; View mode
   (setup (:package viewer)
-    (key-chord-define-global "kj" 'view-mode)
+    (:key-chord "kj" #'view-mode)
     (:with-mode view-mode
       (:bind
        "h" backward-char
