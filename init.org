@@ -2331,13 +2331,29 @@ Major mode for editing comma/char separated values
 #+end_src
 
 **** org-export-rss
+#+begin_quote
+   RSS 2.0 Back-End for Org Export Engine. https://github.com/emacsmirror/ox-rss
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package ox-rss))
+
 #+end_src
+
+**** org-export-zenn
+#+begin_quote
+Zenn-flavored Markdown export backend for Org mode.  https://github.com/conao3/ox-zenn.el
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:pacakge ox-zenn))
+
+#+end_src
+
 
 *** HOWM
 #+begin_quote
-Hitori otegaru wiki modoki
+howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
 #+end_quote
 
 #+begin_src emacs-lisp
