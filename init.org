@@ -1792,13 +1792,10 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
   (setup ispell
     (:opt ispell-program-name "hunspell"
           ispell-really-hunspell t
+          ispell-local-dictionary "en_US"
           ispell-personal-dictionary "~/.hunspell_default"
           ispell-alternate-dictionary nil)
     (:when-loaded
-      (unless (getenv "DICTIONARY")
-        (setenv "DICTIONARY" "en_US"))    ; equivalent to -d en_US
-      (unless (getenv "WORDLIST")
-        (setenv "WORDLIST" "~/.hunspell_default")) ; equivalent to -p $HOME/.hunspell_default
       (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+") )))
 
 #+end_src
