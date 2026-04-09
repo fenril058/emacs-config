@@ -832,6 +832,9 @@ Nix3.el integration for Magit
                                " %q of %I"
                                " - GNU Emacs " emacs-version " [%s]"))
 
+  (setup display-line-numbers
+    (:hook-into after-init-hook))
+
 #+end_src
 
 **** font and size
@@ -938,7 +941,6 @@ Nix3.el integration for Magit
 
   (setup simple
     (size-indication-mode 1)            ;ファイルサイズを表示
-    (line-number-mode 1)
     (column-number-mode 1))
 
   ;; save時mode-lineを光らせる
@@ -1527,7 +1529,8 @@ Search and navigate via completing-read. https://github.com/minad/consult
                        '("j" . consult-org-heading))
           (add-to-list 'org-speed-commands
                        '("J" .  org-goto)))))
-    (:override-map "C-'" consult-buffer)
+    (:override-map "C-'" consult-buffer
+                   "C-c h" consult-buffer)
     (:also-load affe consult-xref consult-ghq)
 
     (:with-mode completion-list-mode-hook
@@ -1570,8 +1573,12 @@ Search and navigate via completing-read. https://github.com/minad/consult
     (:also-load yasnippet)
     (:global-keymap "C-c y" consult-yasnippet))
 
+  (setup (:package consult-flyspell))
+
   (setup (:package consult-flycheck))
+
   (setup (:package consult-ghq))
+
 #+end_src
 
 *** affe
@@ -1788,15 +1795,6 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
                   line-end))
         :modes (text-mode org-mode markdown-mode review-starter-mode LaTeX-mode))
       (add-to-list 'flycheck-checkers 'textlint )))
-
-  (setup ispell
-    (:opt ispell-program-name "hunspell"
-          ispell-really-hunspell t
-          ispell-local-dictionary "en_US"
-          ispell-personal-dictionary "~/.hunspell_default"
-          ispell-alternate-dictionary nil)
-    (:when-loaded
-      (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+") )))
 
 #+end_src
 
@@ -2149,6 +2147,27 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
     (:opt open-junk-file-format "~/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
 #+end_src
 
+*** Spell check
+
+**** ispell
+#+begin_src emacs-lisp
+  (setup ispell
+    (:opt ispell-program-name "hunspell"
+          ispell-really-hunspell t
+          ispell-local-dictionary "en_US"
+          ispell-personal-dictionary "~/.hunspell_default"
+          ispell-alternate-dictionary nil)
+    (:when-loaded
+      (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+") )))
+
+#+end_src
+
+**** flyspell-correct
+#+begin_src emacs-lisp
+  (setup (:package flyspell-correct)
+    (setup flyspell (:bind "C-;" #'flyspell-correct-wrapper)))
+
+#+end_src
 
 *** csv-mode
 #+begin_quote
@@ -2784,5 +2803,5 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 
 #+end_src
 
-** desktop-save                                                    :not:used:
-I am now stop =desktop-save=.
+** desktop-save
+I do not use =desktop-save= now.

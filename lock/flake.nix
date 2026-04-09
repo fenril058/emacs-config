@@ -122,6 +122,12 @@
       repo = "consult-flycheck";
       type = "github";
     };
+    consult-flyspell = {
+      flake = false;
+      owner = "OlMon";
+      repo = "consult-flyspell";
+      type = "gitlab";
+    };
     consult-ghq = {
       flake = false;
       owner = "tomoya";
@@ -281,6 +287,12 @@
       flake = false;
       owner = "erickgnavar";
       repo = "flymake-ruff";
+      type = "github";
+    };
+    flyspell-correct = {
+      flake = false;
+      owner = "d12frosted";
+      repo = "flyspell-correct";
       type = "github";
     };
     fullframe = {

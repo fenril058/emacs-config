@@ -323,6 +323,22 @@
         "type": "github"
       }
     },
+    "consult-flyspell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1679450693,
+        "narHash": "sha256-hE2/aREFJjVPQtmnXDumRpjz02S6+BSX3rQzOkh49ic=",
+        "owner": "OlMon",
+        "repo": "consult-flyspell",
+        "rev": "7011e6634598530ea2d874e7e7389dc1bb94e1ca",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "OlMon",
+        "repo": "consult-flyspell",
+        "type": "gitlab"
+      }
+    },
     "consult-ghq": {
       "flake": false,
       "locked": {
@@ -752,6 +768,22 @@
       "original": {
         "owner": "erickgnavar",
         "repo": "flymake-ruff",
+        "type": "github"
+      }
+    },
+    "flyspell-correct": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770050332,
+        "narHash": "sha256-uRl522GfjY+fsxwXBUyIxwNYiVLLahyZtEgdaaBnWSw=",
+        "owner": "d12frosted",
+        "repo": "flyspell-correct",
+        "rev": "c6dfb9bebb90ecbcaa3fbd4d747a677e17698e02",
+        "type": "github"
+      },
+      "original": {
+        "owner": "d12frosted",
+        "repo": "flyspell-correct",
         "type": "github"
       }
     },
@@ -1759,6 +1791,7 @@
         "cond-let": "cond-let",
         "consult": "consult",
         "consult-flycheck": "consult-flycheck",
+        "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",
         "consult-yasnippet": "consult-yasnippet",
         "corfu": "corfu",
@@ -1786,6 +1819,7 @@
         "flycheck": "flycheck",
         "flycheck-inline": "flycheck-inline",
         "flymake-ruff": "flymake-ruff",
+        "flyspell-correct": "flyspell-correct",
         "fullframe": "fullframe",
         "gdb-x": "gdb-x",
         "gnuplot": "gnuplot",
