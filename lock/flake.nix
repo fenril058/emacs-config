@@ -158,6 +158,12 @@
       repo = "dash.el";
       type = "github";
     };
+    diff-hl = {
+      flake = false;
+      owner = "dgutov";
+      repo = "diff-hl";
+      type = "github";
+    };
     dired-hacks-utils = {
       flake = false;
       owner = "Fuco1";

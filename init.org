@@ -985,7 +985,10 @@ Nix3.el integration for Magit
       (set-face-attribute 'diff-refine-removed nil :extend t)
       (set-face-attribute 'diff-refine-added   nil :extend t)))
 
+#+end_src
+
 **** smerge-mode
+
 #+begin_src emacs-lisp
   (setup smerge-mode
     (:when-loaded

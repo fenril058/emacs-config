@@ -419,6 +419,22 @@
         "type": "github"
       }
     },
+    "diff-hl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774725944,
+        "narHash": "sha256-OAtiqcsjXyDsWnJ2OwCR+kvEwbeOMALJ0w9YTghztR4=",
+        "owner": "dgutov",
+        "repo": "diff-hl",
+        "rev": "b965e19e6e7f9933199e421849a49229207c1c9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dgutov",
+        "repo": "diff-hl",
+        "type": "github"
+      }
+    },
     "dired-hacks-utils": {
       "flake": false,
       "locked": {
@@ -1797,6 +1813,7 @@
         "corfu": "corfu",
         "cowsay": "cowsay",
         "dash": "dash",
+        "diff-hl": "diff-hl",
         "dired-hacks-utils": "dired-hacks-utils",
         "dired-preview": "dired-preview",
         "dired-sidebar": "dired-sidebar",
