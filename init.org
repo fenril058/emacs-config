@@ -876,6 +876,37 @@ Nix3.el integration for Magit
         (setup face-remap
           (:when-loaded
             (set-face-attribute 'variable-pitch nil :family "Noto Serif CJK JP"))))))
+
+  (setup setup-letters-width
+    (defun setup-Greek-letters-narrow ()
+      "To treat Greek letters as narrow characters.
+  ギリシャ文字の範囲（U+0370 - U+03FF）を幅1に設定"
+      (interactive)
+      (let ((i #x0370))
+        (while (<= i #x03FF)
+          (set-char-table-range char-width-table i 1)
+          (setq i (1+ i)))))
+
+    (defun setup-Greek-letters-wide ()
+      "To treat Greek letters as wide characters.
+  ギリシャ文字の範囲（U+0370 - U+03FF）を幅2に設定"
+      (interactive)
+      (let ((i #x0370))
+        (while (<= i #x03FF)
+          (set-char-table-range char-width-table i 2)
+          (setq i (1+ i)))))
+
+    (defun setup-inequality-sign-narrow ()
+      (set-char-table-range char-width-table
+                            ;; ≦, ≧, ≦̸, ≧̸
+                            '(#x2266 . #x2269) 1))
+
+    (:defer 2 (lambda ()
+                (setup-inequality-sign-narrow)
+                (setup-Greek-letters-narrow))))
+
+
+
 #+end_src
 
 *** mode-line
@@ -1231,35 +1262,30 @@ Nix3.el integration for Magit
 #+end_src
 
 ** my utility tools
+
+My utility tools consists of these files:
+- =my-blog-utils.el=
+- =my-copy-kill-utils.el=
+- =my-font-utils.el=
+- =my-image-utils.el=
+  - depends on =xclip= on Linux, =pngpaste= on MacOS, and =paste_image.ps1= on WSL.
+- =my-say.el=
+  - depens on =espeak-ng= on Linux and =say= on MacOS.
+- =my-window-utils.el=
+
 #+begin_src emacs-lisp
   (setup (:package myutils)
-    (:nixpkgs espeak)) ; espeak-ng (original espeak is referred to as espeak-classic)
-
-  (setup my-font-utils
+    (:nixpkgs espeak) ; espeak-ng (original espeak is referred to as espeak-classic)
     (:global-keymap "C-c f" check-font-here
-                    "C-c F" describe-text-properties))
-
-  (setup my-blog-utils
-    (:global-keymap "C-c b" create-blog-article)
+                    "C-c F" describe-text-properties
+                    "C-c b" create-blog-article
+                    "C-c m" insert-clipboard-image-as-markdown-or-org-style)
     (setup org
       (:bind "C-c 1"  replace-markdown-links-to-org)))
 
-  (setup 'my-copy-kill-utils)
-
-  (setup my-window-utils)
-
 #+end_src
 
-*** paste image utility
-
-#+begin_src emacs-lisp
-  (setup my-image-utils
-    (:global-keymap
-     "C-c m" insert-clipboard-image-as-markdown-or-org-style))
-
-#+end_src
-
-This tool depends on =xclip= on Linux, =pngpaste= on MacOS, and =paste_image.ps1= on WSL.
+=paste_image.ps1= must be in Windows side, and must be in =PATH=.
 
 #+srcname: paste_image.ps1
 #+begin_src powershell
@@ -1275,7 +1301,6 @@ If ([Windows.Forms.Clipboard]::ContainsImage() -eq $True) {
 }
 #+end_src
 
-=paste_image.ps1= must be in Windows side, and in $PATH.
 
 *** delete-trailing-whitespace-mode
 #+begin_src emacs-lisp
@@ -1402,7 +1427,7 @@ COmpletion in Region FUnction https://github.com/minad/corfu
     (:hook corfu-popupinfo-mode)
     (setup global-corfu-mode (:hook-into after-init-hook))
     (:when-loaded
-      (setup kind-icon
+      (setup (:package kind-icon)
         (setopt kind-icon-default-face 'corfu-default)
         (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))))
 
@@ -1429,6 +1454,10 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 #+end_src
 
 *** tempel
+#+begin_quote
+Simple templates for Emacs. https://github.com/minad/tempel
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package tempel)
     (:also-load cape)
@@ -1455,6 +1484,10 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 #+end_src
 
 *** vertico
+#+begin_quote
+VERTical Interactive COmpletion. https://github.com/minad/vertico
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package vertico)
     (setup vertico-mode (:hook-into after-init-hook))
@@ -1474,6 +1507,9 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 #+end_src
 
 *** consult
+#+begin_quote
+Search and navigate via completing-read. https://github.com/minad/consult
+#+end_quote
 
 - from =helm-swoop= tp =consult-line=
 
@@ -1574,6 +1610,17 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 #+end_src
 
 *** marginalia
+#+begin_quote
+Marginalia in the minibuffer. https://github.com/minad/marginalia
+
+[[https://en.wikipedia.org/wiki/Marginalia][Marginalia]] are marks or annotations placed at the margin of the page
+of a book or in this case helpful colorful annotations placed at the
+margin of the minibuffer for your completion candidates. Marginalia
+can only add annotations to the completion candidates. It cannot
+modify the appearance of the candidates themselves, which are shown
+unaltered as supplied by the original command.
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package marginalia)
     (:hook-into after-init-hook)
@@ -1621,6 +1668,10 @@ Consult integration for Embark
 #+end_src
 
 ** avy
+#+begin_quote
+Jump to things in Emacs tree-style.  https://github.com/abo-abo/avy
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package avy)
     (:bind-into isearch
@@ -1638,6 +1689,10 @@ Consult integration for Embark
 #+end_src
 
 ** ace-window
+#+begin_quote
+Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package ace-window)
     (defun ace-window-advice (&rest _r)
@@ -1656,7 +1711,7 @@ Consult integration for Embark
 
 ** Coding
 #+begin_src emacs-lisp
-  (setopt indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
 
   (setup (:package envrc)
     (:with-mode envrc-global-mode
@@ -2177,18 +2232,31 @@ Major mode for editing comma/char separated values
 #+end_src
 
 *** Markdown
+#+begin_quote
+Major mode for Markdown-formatted text.  https://jblevins.org/projects/markdown-mode/
+#+end_quote
+
+
 #+begin_src emacs-lisp
   (setup (:package markdown-mode)
     (:match-file "*.md")
-    (:bind "C-c RET" compile)
+    (:bind "C-c RET" compile
+           "C-c '" markdown-edit-code-block)
     (:with-map markdown-mode-command-map
       (:bind "a" markdown-table-align))
     (:when-loaded
       (setopt markdown-fontify-code-blocks-natively t)))
 
+  (setup (:package edit-indirect))        ; markdown-edit-code-block requires
+
 #+end_src
 
 *** Weekly report mode
+#+begin_quote
+
+#+end_quote
+
+
 #+begin_src emacs-lisp
   (setup (:package wkr-mode)
     (:opt wkr-preview-email-script "~/OneDrive/Documents/MyWeeklyReport/outlook.sh")
@@ -2198,8 +2266,8 @@ Major mode for editing comma/char separated values
 #+end_src
 
 *** Org-mode
+
 #+begin_src emacs-lisp
-  ;;; Org-mode
   (setup (:package org)
     (:match-file "*.org_archive")
     (:global-keymap "C-c a" org-agenda
@@ -2249,6 +2317,11 @@ Major mode for editing comma/char separated values
                         (string-to-number (format-time-string "%d" (org-time-string-to-time date)))
                         (format-time-string "%a" (org-time-string-to-time date)))))))
 
+#+end_src
+
+**** org-agenda
+
+#+begin_src emacs-lisp
   (setup org-agenda
     (defun open-my-agenda-file ()
       "Open `org-default-notes-file'."
@@ -2263,7 +2336,7 @@ Major mode for editing comma/char separated values
         (require 'org-agenda))
       (org-agenda nil (kbd "A")))
     (:global-keymap "C-c g" open-my-agenda-file
-             "<f6>" org-agenda-default)
+                    "<f6>" org-agenda-default)
     (:when-loaded
       (defun my-agenda-skip-function ()
         (let ((subtree-end (save-excursion (org-end-of-subtree t)))
@@ -2282,7 +2355,7 @@ Major mode for editing comma/char separated values
           org-agenda-files `(,org-default-notes-file
                              "~/memo/birthday.org"
                              "~/memo/daily-projects.org")
-          ;; GTD context & org習慣仕事術 by rubikitch
+          ;; GTD context
           org-agenda-custom-commands '(("A" "Agenda and all Tasks"
                                         ((tags "project"
                                                ((org-agenda-skip-function 'my-agenda-skip-function)))
@@ -2315,6 +2388,10 @@ Major mode for editing comma/char separated values
                                          (todo "CANCEL")
                                          (todo "DONE"))))))
 
+#+end_src
+
+**** org-capture
+#+begin_src emacs-lisp
   (setup org-capture
     (:opt org-capture-templates  '(("n" "Note" entry (file+headline "~/memo/agenda.org" "Inbox")
                                     "** %?\n %i\n   %T\n   %a\n")
@@ -2421,7 +2498,7 @@ Major mode for editing comma/char separated values
 
 **** org-export-rss
 #+begin_quote
-   RSS 2.0 Back-End for Org Export Engine. https://github.com/emacsmirror/ox-rss
+RSS 2.0 Back-End for Org Export Engine. https://github.com/emacsmirror/ox-rss
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -2439,10 +2516,9 @@ Zenn-flavored Markdown export backend for Org mode.  https://github.com/conao3/o
 
 #+end_src
 
-
 *** HOWM
 #+begin_quote
-howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
+howm: Hitori otegaru wiki modoki. https://kaorahi.github.io/howm/index-j.html
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -2482,6 +2558,11 @@ howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
 #+end_src
 
 ** Perspective
+#+begin_quote
+Perspective for Emacs. https://github.com/nex3/perspective-el
+#+end_quote
+
+This setting is inspired by [[https://qiita.com/atsisy/items/1b7249bf3cd6046b5681][Emacsのperspective.elワークスペースをもっと使いやすく #Linux - Qiita]].
 #+begin_src emacs-lisp
   (setup (:package perspective)
     (:when-loaded
@@ -2520,6 +2601,7 @@ howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
 #+end_src
 
 ** Browsing
+
 *** View mode
 #+begin_src emacs-lisp
   ;;; View mode
@@ -2543,6 +2625,7 @@ howm: Hitori otegaru wiki modoki https://kaorahi.github.io/howm/index-j.html
     (:with-hook read-only-mode-hook
       (:hook viewer-stay-in-setup)))
 #+end_src
+
 *** rfc-mode
 #+begin_quote
 RFC document browser and viewer https://github.com/galdor/rfc-mode
@@ -2592,6 +2675,10 @@ RFC document browser and viewer https://github.com/galdor/rfc-mode
 #+end_src
 
 *** calfw
+#+begin_quote
+Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
+#+end_quote
+
 #+begin_src emacs-lisp
     (setup (:package calfw)
       (:also-load calfw-org calfw-howm calfw-cal calfw-ical)

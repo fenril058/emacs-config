@@ -547,6 +547,22 @@
         "type": "github"
       }
     },
+    "edit-indirect": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706404789,
+        "narHash": "sha256-FC8QDeRitLstVACn7jpdQblxaDiYRbSAtRAAhhyEVuI=",
+        "owner": "Fanael",
+        "repo": "edit-indirect",
+        "rev": "82a28d8a85277cfe453af464603ea330eae41c05",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Fanael",
+        "repo": "edit-indirect",
+        "type": "github"
+      }
+    },
     "elispxmp": {
       "flake": false,
       "locked": {
@@ -1074,6 +1090,22 @@
         "owner": "fenril058",
         "ref": "develop",
         "repo": "key-combo",
+        "type": "github"
+      }
+    },
+    "kind-icon": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741706818,
+        "narHash": "sha256-hxcm/6jVy4s+JRJV7zLX6V8+hzpCihKsMAbWH1H7KhA=",
+        "owner": "jdtsmith",
+        "repo": "kind-icon",
+        "rev": "556b0fb92aac24979b2c501431c7d48f75a5169f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jdtsmith",
+        "repo": "kind-icon",
         "type": "github"
       }
     },
@@ -1741,6 +1773,7 @@
         "eat": "eat",
         "ebnf-mode": "ebnf-mode",
         "ediprolog": "ediprolog",
+        "edit-indirect": "edit-indirect",
         "elispxmp": "elispxmp",
         "ellama": "ellama",
         "embark": "embark",
@@ -1774,6 +1807,7 @@
         "just-mode": "just-mode",
         "key-chord": "key-chord",
         "key-combo": "key-combo",
+        "kind-icon": "kind-icon",
         "lispy": "lispy",
         "llama": "llama",
         "llm": "llm",
@@ -1820,6 +1854,7 @@
         "sequential-command": "sequential-command",
         "setup": "setup",
         "shell-pop": "shell-pop",
+        "svg-lib": "svg-lib",
         "tablist": "tablist",
         "tempel": "tempel",
         "transient": "transient",
@@ -1954,6 +1989,22 @@
       "original": {
         "owner": "kyagi",
         "repo": "shell-pop-el",
+        "type": "github"
+      }
+    },
+    "svg-lib": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755867539,
+        "narHash": "sha256-G3nfchjjQnVOcBD28JbZF8dnORFXLIq+zXVamAr3PFg=",
+        "owner": "rougier",
+        "repo": "svg-lib",
+        "rev": "925ed4a0215c197ba836e7810a93905b34bea777",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rougier",
+        "repo": "svg-lib",
         "type": "github"
       }
     },

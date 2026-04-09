@@ -205,6 +205,12 @@
       repo = "ediprolog";
       type = "github";
     };
+    edit-indirect = {
+      flake = false;
+      owner = "Fanael";
+      repo = "edit-indirect";
+      type = "github";
+    };
     elispxmp = {
       flake = false;
       owner = "fenril058";
@@ -400,6 +406,12 @@
       owner = "fenril058";
       ref = "develop";
       repo = "key-combo";
+      type = "github";
+    };
+    kind-icon = {
+      flake = false;
+      owner = "jdtsmith";
+      repo = "kind-icon";
       type = "github";
     };
     lispy = {
@@ -681,6 +693,12 @@
       flake = false;
       owner = "kyagi";
       repo = "shell-pop-el";
+      type = "github";
+    };
+    svg-lib = {
+      flake = false;
+      owner = "rougier";
+      repo = "svg-lib";
       type = "github";
     };
     tablist = {

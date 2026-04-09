@@ -1,10 +1,9 @@
 ;;; my-blog-utils.el -*- lexical-binding: t; -*-
 
-;;;### autoload
-(defvar my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"
+(defcustom my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"
   "Source directory of my blog")
 
-;;;### autoload
+;;;###autoload
 (defun create-blog-article (title)
   "Blog記事を生成する。"
   (interactive "sWrite article title: ")
@@ -35,7 +34,7 @@
                     ))
     (org-mode-restart)))
 
-;;;### autoload
+;;;###autoload
 (defun replace-markdown-links-to-org ()
   "Replace Markdown links with Org-mode links.
 If region active, do in the active region, else do in the entire buffer.
@@ -53,7 +52,7 @@ this function repalce the link."
           (unless (when (eq major-mode 'org-mode) (org-in-src-block-p))
             (replace-match (format "[[%s][%s]]" url text))))))))
 
-;;;### autoload
+;;;###autoload
 (defun format-elfeed-header-for-blog ()
   "Format elfeed's header for my blog."
   (interactive)
