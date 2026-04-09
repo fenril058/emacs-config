@@ -1301,7 +1301,6 @@ If ([Windows.Forms.Clipboard]::ContainsImage() -eq $True) {
 }
 #+end_src
 
-
 *** delete-trailing-whitespace-mode
 #+begin_src emacs-lisp
   (setup (:package dtw-mode)
@@ -1328,6 +1327,9 @@ If ([Windows.Forms.Clipboard]::ContainsImage() -eq $True) {
   (setup (:package init-fontset))
 
 #+end_src
+
+[[https://github.com/protesilaos/fontaine][protesilaos/fontaine: Set Emacs font configurations using presets]] is probably a better choice.
+I found the package via [[https://qiita.com/terzacommune/items/7e3e025754376fb22d17][emacsのライティング環境整備 2026 春 #Emacs - Qiita]].
 
 ** unicode
 
@@ -1788,6 +1790,8 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
       (add-to-list 'flycheck-checkers 'textlint )))
 
   (setup ispell
+    (:nixpkgs hunspell
+              hunspellDicts.en_US)
     (:opt ispell-program-name "hunspell"
           ispell-really-hunspell t
           ispell-personal-dictionary "~/.hunspell_dict"
@@ -2783,3 +2787,6 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
       (keymap-set embark-region-map "T" #'ellama-translate)))
 
 #+end_src
+
+** desktop-save                                                    :not:used:
+I am now stop =desktop-save=.
