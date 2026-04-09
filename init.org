@@ -168,7 +168,6 @@ When emacs launched by =emacs --deubg-init=, then profiler starts.
 
 #+end_src
 
-
 *** Optimize native compilation
 #+begin_src emacs-lisp
   (with-eval-after-load 'comp-run
@@ -182,7 +181,6 @@ When emacs launched by =emacs --deubg-init=, then profiler starts.
   (setopt custom-file (locate-user-emacs-file "custom.el"))
 
 #+end_src
-
 
 *** Conditional-case macros
 
@@ -203,7 +201,7 @@ When emacs launched by =emacs --deubg-init=, then profiler starts.
 ** Setup.el
 
 #+begin_quote
-  [[https://codeberg.org/pkal/setup.el][setup.el]] provides a macro to ease repetitive configuration patterns in Emacs. This is done by providing context sensitive local macros, that expand to regular, pure EmacsLisp.
+[[https://codeberg.org/pkal/setup.el][setup.el]] provides a macro to ease repetitive configuration patterns in Emacs. This is done by providing context sensitive local macros, that expand to regular, pure Emacs Lisp.
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -251,7 +249,7 @@ When emacs launched by =emacs --deubg-init=, then profiler starts.
 
 *** :defer
 #+begin_quote
-  [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4/viewer/c47f8eb7cd547b95ba91][擬似非同期ロードによる"待たされ感"改善｜Emacs の起動時間を""詰める""]]
+[[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4/viewer/c47f8eb7cd547b95ba91][擬似非同期ロードによる"待たされ感"改善｜Emacs の起動時間を""詰める""]]
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -545,8 +543,7 @@ https://github.com/ataka/fcopy/tree/e355f6ec889d8ecbdb096019c2dc660b1cec4941
 
 *** iedit
 #+begin_quote
-Edit multiple occurrences in the same way simultaneously.
-https://github.com/victorhge/iedit/tree/main
+Edit multiple occurrences in the same way simultaneously. https://github.com/victorhge/iedit/tree/main
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -566,8 +563,7 @@ https://github.com/victorhge/iedit/tree/main
 
 *** yadmacro
 #+begin_quote
-Yet another dmacro
-[[https://github.com/fenril058/yadmacro]]
+Yet another dmacro.  [[https://github.com/fenril058/yadmacro]]
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -628,6 +624,7 @@ Yet another dmacro
 #+end_src
 
 *** which-key
+
 #+begin_src emacs-lisp
   (setup (:package which-key)
     (:opt which-key-lighter "")
@@ -640,6 +637,7 @@ Yet another dmacro
 #+end_src
 
 ** Japanese
+
 #+begin_src emacs-lisp
   (setopt system-time-locale "ja_JP.utf8")
 
@@ -675,6 +673,7 @@ Yet another dmacro
 #+end_src
 
 ** magit
+
 #+begin_src emacs-lisp
   (setup (:package transient))
   (setup (:package magit)
@@ -978,22 +977,33 @@ Nix3.el integration for Magit
 #+end_src
 
 *** diff
-#+begin_src emacs-lisp
-  (setup diff-hl
-    (:opt diff-hl-draw-borders nil)
-    (:when-loaded
-      (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh t)))
 
+#+begin_src emacs-lisp
   (setup diff-mode
     (:when-loaded
       (set-face-attribute 'diff-refine-changed nil :extend t)
       (set-face-attribute 'diff-refine-removed nil :extend t)
       (set-face-attribute 'diff-refine-added   nil :extend t)))
 
+**** smerge-mode
+#+begin_src emacs-lisp
   (setup smerge-mode
     (:when-loaded
       (set-face-attribute 'smerge-refined-removed nil :extend t)
       (set-face-attribute 'smerge-refined-added   nil :extend t)))
+
+#+end_src
+
+**** diff-hl
+#+begin_quote
+Highlights uncommitted changes on the side of the window.  https://github.com/dgutov/diff-hl
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package diff-hl)
+    (:opt diff-hl-draw-borders nil)
+    (:when-loaded
+      (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh t)))
 
 #+end_src
 
@@ -2149,7 +2159,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 
 *** Spell check
 
-**** ispell
+**** Ispell
 #+begin_src emacs-lisp
   (setup ispell
     (:opt ispell-program-name "hunspell"
@@ -2165,7 +2175,13 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 **** flyspell-correct
 #+begin_src emacs-lisp
   (setup (:package flyspell-correct)
-    (setup flyspell (:bind "C-;" #'flyspell-correct-wrapper)))
+    (setup flyspell
+      (defun flyspell-goto-prev-error ()
+        (interactive)
+        (flyspell-goto-next-error 4))
+      (:bind "M-n" flyspell-goto-next-error
+             "M-p" flyspell-goto-prev-error
+             "C-;" flyspell-correct-wrapper)))
 
 #+end_src
 
