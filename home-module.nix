@@ -46,6 +46,9 @@ in
   home.packages = with pkgs; [
     just
     nixd
+    hunspell
+    hunspellDicts.en_US
+
     # Packages below are managed in init.org
     # tree-sitter
     # nixfmt
