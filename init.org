@@ -52,18 +52,21 @@ The example of =flake.nix= is below:
     };
 
     outputs = { nixpkgs, home-manager, emacs-config,... }:
-    let
-      system = "x86_64-linux";    # or other system
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-      {
-        homeConfigurations."your_user_name" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            emacs-config.homeModules.twist
-          ];
+      let
+        system = "x86_64-linux";    # or other system
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+        {
+          homeConfigurations."your_user_name" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              emacs-config.homeModules.twist
+              {
+                programs.emacs-twist.enable = true;
+              }
+            ];
+          };
         };
-      };
   }
 #+END_SRC
 
