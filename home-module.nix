@@ -7,20 +7,8 @@
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
-  inherit (lib) types;
 in
 {
-
-  options = {
-    programs.emacs-twist.settings = {
-      extraFeatures = lib.mkOption {
-        type = types.listOf types.str;
-        description = "List of options";
-        default = [ ];
-      };
-    };
-  };
-
   config = lib.mkIf config.programs.emacs-twist.enable {
     programs.emacs-twist = {
       emacsclient.enable = true;
