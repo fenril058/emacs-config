@@ -493,6 +493,12 @@
       repo = "markdown-mode";
       type = "github";
     };
+    maxima = {
+      flake = false;
+      owner = "sasanidas";
+      repo = "maxima";
+      type = "gitlab";
+    };
     migemo = {
       flake = false;
       owner = "emacs-jp";
@@ -729,6 +735,12 @@
       flake = false;
       owner = "minad";
       repo = "tempel";
+      type = "github";
+    };
+    test-simple = {
+      flake = false;
+      owner = "rocky";
+      repo = "emacs-test-simple";
       type = "github";
     };
     transient = {

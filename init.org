@@ -15,6 +15,12 @@ I sometime use =git rebase -i= to clean up the history. Therefore, you need to e
   git reset --hard origin/main
 #+END_SRC
 
+You may need to run these commands when you start Emacs for the first time.
+
+- =treesit-auto-install-all=
+- =nerd-icons-install-fonts=
+- =eat-compile-terminfo=
+
 *** Commands
 
 In zsh, you need to use a backslash before the #.
@@ -2075,20 +2081,63 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 
 #+end_src
 
-** Shell
+** Terminal emulator and utilities
+
+*** eat
+#+begin_quote
+Emulate A Terminal, in a region, in a buffer and in Eshell.
+https://codeberg.org/akib/emacs-eat
+#+end_quote
+
+=eat= has four modes. See reference.
+
+- semi-char-mode
+- emacs-mode
+- char mode
+- line mode
+
 #+begin_src emacs-lisp
-  ;;; Shell
   (setup (:package eat))
+#+end_src
 
+*** vterm
+#+begin_quote
+fully-fledged terminal emulator inside GNU Emacs based on libvterm, a C library.
+https://github.com/akermu/emacs-libvterm
+#+end_quote
+
+=vterm= has two modes. See reference.
+
+- vterm-mode
+- vterm-copy-mode
+
+#+begin_src emacs-lisp
   (setup (:package vterm))
+#+end_src
 
+*** mistty
+#+begin_quote
+Shell/Comint alternative with a fully functional terminal for Emacs 29.1 and later.
+https://github.com/szermatt/mistty
+#+end_quote
+
+#+begin_src emacs-lisp
   (setup (:package mistty))
+#+end_src
 
+*** shell-pop
+#+begin_quote
+shell-pop.el helps you to use shell easily on Emacs. Only one key action to work.
+https://github.com/kyagi/shell-pop-el
+#+end_quote
+
+#+begin_src emacs-lisp
   (setup (:package shell-pop)
     (:global-keymap "C-c s" shell-pop)
     (:opt shell-pop-window-size 50
-          shell-pop-shell-type '("shell" "*shell*" (lambda () (shell)))
+          shell-pop-shell-type '("shell" "*shell*" (lambda () (shell shell-pop-term-shell)))
           shell-pop-window-position "bottom"
+          shell-pop-full-span t
           shell-pop-universal-key "C-c s")
     (setup dired
       (:bind [remap dired-do-shell-command] dired-start-shell)
@@ -2147,6 +2196,18 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 #+end_src
 
 ** Maxima
+#+begin_quote
+Maxima is a system for the manipulation of symbolic and numerical expressions, including differentiation, integration, Taylor series, Laplace transforms, ordinary differential equations, systems of linear equations, polynomials, sets, lists, vectors, matrices and tensors.  https://maxima.sourceforge.io/
+#+end_quote
+
+*** imaxima
+#+begin_quote
+Imaxima.el provides support for interacting with the computer algebra system Maxima in an Emacs buffer.
+[[https://maxima.sourceforge.io/relatedprojects.html][Maxima – Projects Related to Maxima]]
+#+end_quote
+
+This package is now officially maintained as part of Maxima. https://sourceforge.net/p/maxima/code/ci/master/tree/
+
 #+begin_src emacs-lisp
   (setup (:package imaxima)
     (autoload 'imaxima "imaxima" "Frontend of Maxima CAS" t)
@@ -2154,6 +2215,15 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
     (autoload 'imath-mode "imath" "Interactive Math mode" t)
     (:opt imaxima-use-maxima-mode-flag t
           imaxima-latex-preamble "\\usepackage{amsmath}\n"))
+
+#+end_src
+
+*** maxima.el
+This package was originally hosted at[[https://gitlab.com/sasanidas/maxima][FMF / maxima.el · GitLab]] ,
+but it has been archived and likely moved to [[https://github.com/emacsmirror/maxima][emacsmirror/maxima: Major mode for Maxima]].
+#+begin_src emacs-lisp
+  (setup (:package maxima))
+
 #+end_src
 
 ** Documentation
@@ -2163,6 +2233,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
   (setup (:package open-junk-file)
     (:global-keymap "C-c z" open-junk-file)
     (:opt open-junk-file-format "~/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
+
 #+end_src
 
 *** Spell check

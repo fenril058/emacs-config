@@ -1318,6 +1318,22 @@
         "type": "github"
       }
     },
+    "maxima": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1685379481,
+        "narHash": "sha256-t0pHUywEycZf9j/qY/8MKcdOFqFuv9lPfZOaRF6rTb4=",
+        "owner": "sasanidas",
+        "repo": "maxima",
+        "rev": "2de798f6644753772553cd0420d3c419ed50dd0b",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "sasanidas",
+        "repo": "maxima",
+        "type": "gitlab"
+      }
+    },
     "migemo": {
       "flake": false,
       "locked": {
@@ -1869,6 +1885,7 @@
         "magit-section": "magit-section",
         "marginalia": "marginalia",
         "markdown-mode": "markdown-mode",
+        "maxima": "maxima",
         "migemo": "migemo",
         "mistty": "mistty",
         "mozc": "mozc",
@@ -1908,6 +1925,7 @@
         "svg-lib": "svg-lib",
         "tablist": "tablist",
         "tempel": "tempel",
+        "test-simple": "test-simple",
         "transient": "transient",
         "treesit-auto": "treesit-auto",
         "twist": "twist",
@@ -2089,6 +2107,22 @@
       "original": {
         "owner": "minad",
         "repo": "tempel",
+        "type": "github"
+      }
+    },
+    "test-simple": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768772487,
+        "narHash": "sha256-AxmpCeaBszNZJVRRntHKlbKoFEeFyOAb+8v/tJ6e5eI=",
+        "owner": "rocky",
+        "repo": "emacs-test-simple",
+        "rev": "502b0d299724256b1bbb08dcff227ac528f1a01a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rocky",
+        "repo": "emacs-test-simple",
         "type": "github"
       }
     },
