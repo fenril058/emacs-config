@@ -779,6 +779,12 @@
       repo = "viewer";
       type = "github";
     };
+    vterm = {
+      flake = false;
+      owner = "akermu";
+      repo = "emacs-libvterm";
+      type = "github";
+    };
     vui = {
       flake = false;
       owner = "d12frosted";

@@ -1916,6 +1916,7 @@
         "uniletter": "uniletter",
         "vertico": "vertico",
         "viewer": "viewer",
+        "vterm": "vterm",
         "vui": "vui",
         "vundo": "vundo",
         "which-key": "which-key",
@@ -2217,6 +2218,22 @@
         "owner": "fenril058",
         "ref": "develop",
         "repo": "viewer",
+        "type": "github"
+      }
+    },
+    "vterm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775439296,
+        "narHash": "sha256-ZSkGvKPhX4yZ2HNeNuHI7a01kjzBNBTdsWTj7y/xi8s=",
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
+        "rev": "54c29d14bca05bdd8ae60cda01715d727831e3f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akermu",
+        "repo": "emacs-libvterm",
         "type": "github"
       }
     },

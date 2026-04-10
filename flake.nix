@@ -5,6 +5,7 @@
 
     # Emacs Twist
     twist.url = "github:emacs-twist/twist.nix";
+    twist-overrides.url = "github:emacs-twist/overrides"; # to built vterm
     org-babel.url = "github:emacs-twist/org-babel";
 
     # Package registries for Twist
@@ -106,7 +107,11 @@
               "myutils"
             ];
           }).overrideScope
-            (import ./nix/overrides.nix { inherit pkgs; });
+            (
+              pkgs.lib.composeExtensions inputs.twist-overrides.overlays.twistScope (
+                import ./nix/overrides.nix { inherit pkgs; }
+              )
+            );
 
         formatter = pkgs.callPackage ./formatter.nix { };
       in

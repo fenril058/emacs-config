@@ -2080,6 +2080,8 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
   ;;; Shell
   (setup (:package eat))
 
+  (setup (:package vterm))
+
   (setup (:package mistty))
 
   (setup (:package shell-pop)

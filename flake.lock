@@ -170,7 +170,8 @@
         "nixpkgs": "nixpkgs",
         "nongnu": "nongnu",
         "org-babel": "org-babel",
-        "twist": "twist"
+        "twist": "twist",
+        "twist-overrides": "twist-overrides"
       }
     },
     "systems": {
@@ -203,6 +204,21 @@
       "original": {
         "owner": "emacs-twist",
         "repo": "twist.nix",
+        "type": "github"
+      }
+    },
+    "twist-overrides": {
+      "locked": {
+        "lastModified": 1722071850,
+        "narHash": "sha256-lyVZGFJo9mgKUGWtMGqGq6T3wQnzQwemNryM2USEKMc=",
+        "owner": "emacs-twist",
+        "repo": "overrides",
+        "rev": "9dcd55a44ed7bf2324a1d2dc4579d5389ecac6b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-twist",
+        "repo": "overrides",
         "type": "github"
       }
     }
