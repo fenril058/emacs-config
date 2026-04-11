@@ -1948,6 +1948,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 #+begin_src emacs-lisp
   (setup (:package rust-mode)
     (:option rust-format-on-save t
+             rust-mode-indent-offset 2
              rust-mode-treesitter-derive t)
     (:hook eglot-ensure))
 
