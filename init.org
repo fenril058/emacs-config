@@ -843,8 +843,8 @@ Nix3.el integration for Magit
                                " %q of %I"
                                " - GNU Emacs " emacs-version " [%s]"))
 
-  (setup display-line-numbers
-    (:hook-into after-init-hook))
+  (setup global-display-line-numbers-mode
+    (:hook-into after-startup-hook))
 
 #+end_src
 
