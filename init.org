@@ -494,7 +494,10 @@ This setting is in [[./early-init.org]].
 
 *** basic keybind
 #+begin_src emacs-lisp
-  (keyboard-translate ?\C-h ?\C-?)
+  ;; 文字レベルで C-h (ASCII 8) を C-? (ASCII 127 = Delete) に変換
+  ;; (keyboard-translate ?\C-h ?\C-?)
+  ;; key-translation-mapを使うほうがmodernか。
+  (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
   (setup key
     (:global-keymap "M-n" scroll-down-line
@@ -1949,6 +1952,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
   (setup (:package rust-mode)
     (:option rust-format-on-save t
              rust-mode-indent-offset 2
+             rust-ts-mode-indent-offset 2
              rust-mode-treesitter-derive t)
     (:hook eglot-ensure))
 
