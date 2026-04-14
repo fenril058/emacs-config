@@ -365,7 +365,6 @@ This setting is in [[./early-init.org]].
 
 #+end_src
 
-
 *** :mode-remap
 #+begin_quote
 [[https://apribase.net/2024/06/12/emacs-treesit-ts-mode/][Emacs Tree-Sitter による新しいモード達を使う ||| Apribase]]
@@ -531,7 +530,6 @@ This setting is in [[./early-init.org]].
     (:defer 0.6 #'delete-selection-mode))
 
 #+end_src
-
 
 
 *** duplicate-thing
@@ -832,7 +830,6 @@ Nix3.el integration for Magit
     (:hook-into prog-mode org-mode markdown-mode))
 
 #+end_src
-
 
 *** frame
 #+begin_src emacs-lisp
@@ -1838,7 +1835,6 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 
 #+end_src
 
-
 *** LISP
 #+begin_src emacs-lisp
   (setup (:package elispxmp)
@@ -2057,7 +2053,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 
 #+end_src
 
-***  Gnuplot
+*** Gnuplot
 #+begin_src emacs-lisp
   (setup (:package gnuplot)
     (:match-file "*.plt"))
@@ -2068,6 +2064,24 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 #+begin_src emacs-lisp
   (setup (:package powershell))
 
+#+end_src
+
+*** sgml
+#+begin_quote
+Configurable major mode for editing document in the SGML standard general
+markup language.  As an example contains a mode for editing the derived
+HTML hypertext markup language.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup sgml
+    (:opt sgml-basic-offset 2))           ; default?
+#+end_src
+
+*** CSS
+#+begin_src emacs-lisp
+  (setup css
+    (:opt css-indent-offset 2))
 #+end_src
 
 *** YAML
@@ -2279,7 +2293,6 @@ Major mode for editing comma/char separated values
     (:match-file "*.csv"))
 
 #+end_src
-
 
 *** TeX/LaTeX
 #+begin_src emacs-lisp
@@ -2527,7 +2540,6 @@ Major mode for Markdown-formatted text.  https://jblevins.org/projects/markdown-
                                    ("R" "To Read" entry (file+headline "~/memo/someday.org" "Books to Read")
                                     "** %?\n %i\n   %T\n   %a\n"))))
 #+end_src
-
 
 **** org-export-html
 #+begin_src emacs-lisp
