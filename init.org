@@ -1537,27 +1537,15 @@ VERTical Interactive COmpletion. https://github.com/minad/vertico
 Search and navigate via completing-read. https://github.com/minad/consult
 #+end_quote
 
-- from =helm-swoop= tp =consult-line=
-
 #+begin_src emacs-lisp
   (setup (:package consult)
-    (:global-keymap "C-x b" consult-buffer
-                    "C-c i" consult-line-thing-at-point
-                    "<remap> <goto-line>" consult-goto-line)
-    (:when-loaded
-      (setup org
-        (:when-loaded
-          (add-to-list 'org-speed-commands ; default `org-goto'
-                       '("j" . consult-org-heading))
-          (add-to-list 'org-speed-commands
-                       '("J" .  org-goto)))))
+    (:also-load affe consult-xref consult-ghq)
     (:override-map "C-'" consult-buffer
                    "C-c h" consult-buffer)
-    (:also-load affe consult-xref consult-ghq)
-
+    (:global-keymap "C-x b" consult-buffer
+                    "<remap> <goto-line>" consult-goto-line)
     (:with-mode completion-list-mode-hook
       (:hook consult-preview-at-point-mode))
-
     (:opt consult-preview-key '(:debounce 0.5 any)
           consult-ripgrep-args (concat "rg "
                                        ;; -u がないと .gitignore のせいで何もヒットしないことがある.
@@ -1566,66 +1554,20 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                        "--line-buffered "
                                        "--color=never "
                                        "--max-columns=1000 "
-                                       "--path-separator /\ "
+                                       "--path-separator / "
                                        "--smart-case "
                                        "--no-heading "
                                        "--with-filename "
                                        "--line-number "
-                                       "--search-zip "))
+                                       "--search-zip ")))
+
+  (setup org
+    (:also-load consult)
     (:when-loaded
-      (defcustom consult-line-thing-at-point '(region symbol word)
-        "List of things to try for `consult-line-thing-at-point'.
-
-  Each element is a symbol accepted by `bounds-of-thing-at-point'.
-  If the list contains `region' and the region is active, then
-  text from the active region is used."
-        :type '(repeat symbol))
-
-      (defun consult-line-thing-at-point ()
-        "Run `consult-line' with the \"thing\" near point as initial input.
-
-  The \"thing\" is searched by trying each symbol in
-  `consult-line-thing-at-point' with `bounds-of-thing-at-point'.  The
-  function depends on `thingatpt.el' and `seq.el' and is derived from
-  `isearch-forward-thing-at-point'"
-        (interactive)
-        (let* ((bounds (seq-some (lambda (thing)
-                                   (bounds-of-thing-at-point thing))
-                                 consult-line-thing-at-point))
-               (initial (and bounds
-                             (buffer-substring-no-properties (car bounds) (cdr bounds)))))
-          (cond
-           (initial
-            ;; isearch-forward-thing-at-point にならってregion解除
-            (when (use-region-p)
-              (deactivate-mark))
-            ;; “近くの thing” がpointより前なら先頭へ移動（見た目を揃える用・必須ではない）
-            (when (< (car bounds) (point))
-              (goto-char (car bounds)))
-            ;; consult-lineにINITIALを渡す
-            (consult-line initial))
-           (t
-            ;; 見つからなければ普通に consult-line
-            ;; (message "No thing at point")
-            (consult-line)))))
-
-      (defun consult-ripgrep-single-file ()
-        "Call `consult-ripgrep' for the current buffer (a single file)."
-        (interactive)
-        (let ((consult-project-function (lambda (_) nil))
-              (consult-ripgrep-args
-               (concat "rg "
-                       "--null "
-                       "--line-buffered "
-                       "--color=never "
-                       "--line-number "
-                       "--smart-case "
-                       "--no-heading "
-                       "--max-columns=1000 "
-                       "--max-columns-preview "
-                       "--with-filename "
-                       (shell-quote-argument buffer-file-name))))
-          (consult-ripgrep)))))
+      (add-to-list 'org-speed-commands    ; default `org-goto'
+                   '("j" . consult-org-heading))
+      (add-to-list 'org-speed-commands
+                   '("J" .  org-goto))))
 
   (setup (:package consult-yasnippet)
     (:also-load yasnippet)
@@ -1636,6 +1578,9 @@ Search and navigate via completing-read. https://github.com/minad/consult
   (setup (:package consult-flycheck))
 
   (setup (:package consult-ghq))
+
+  (setup (:package consult-line-thing-at-point)
+    (:global-keymap "C-c i" consult-line-thing-at-point))
 
 #+end_src
 

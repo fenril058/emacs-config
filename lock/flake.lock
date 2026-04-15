@@ -355,6 +355,22 @@
         "type": "github"
       }
     },
+    "consult-line-thing-at-point": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776270106,
+        "narHash": "sha256-MflX3N2U4/+CbJlrUaXiPecCwBKb2ss/ZDZ3glLJdMg=",
+        "owner": "fenril058",
+        "repo": "consult-line-thing-at-point",
+        "rev": "e5a205784a3ee8634564100697b0c7b98f3e9ef3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenril058",
+        "repo": "consult-line-thing-at-point",
+        "type": "github"
+      }
+    },
     "consult-yasnippet": {
       "flake": false,
       "locked": {
@@ -1825,6 +1841,7 @@
         "consult-flycheck": "consult-flycheck",
         "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",
+        "consult-line-thing-at-point": "consult-line-thing-at-point",
         "consult-yasnippet": "consult-yasnippet",
         "corfu": "corfu",
         "cowsay": "cowsay",
