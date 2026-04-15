@@ -1542,7 +1542,7 @@ Search and navigate via completing-read. https://github.com/minad/consult
 #+begin_src emacs-lisp
   (setup (:package consult)
     (:global-keymap "C-x b" consult-buffer
-                    "C-c i" consult-line
+                    "C-c i" consult-line-thing-at-point
                     "<remap> <goto-line>" consult-goto-line)
     (:when-loaded
       (setup org
@@ -1573,6 +1573,42 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                        "--line-number "
                                        "--search-zip "))
     (:when-loaded
+      (defcustom consult-line-thing-at-point '(region symbol word)
+        "List of things to try for `consult-line-thing-at-point'.
+
+  Each element is a symbol accepted by `bounds-of-thing-at-point'.
+  If the list contains `region' and the region is active, then
+  text from the active region is used."
+        :type '(repeat symbol))
+
+      (defun consult-line-thing-at-point ()
+        "Run `consult-line' with the \"thing\" near point as initial input.
+
+  The \"thing\" is searched by trying each symbol in
+  `consult-line-thing-at-point' with `bounds-of-thing-at-point'.  The
+  function depends on `thingatpt.el' and `seq.el' and is derived from
+  `isearch-forward-thing-at-point'"
+        (interactive)
+        (let* ((bounds (seq-some (lambda (thing)
+                                   (bounds-of-thing-at-point thing))
+                                 consult-line-thing-at-point))
+               (initial (and bounds
+                             (buffer-substring-no-properties (car bounds) (cdr bounds)))))
+          (cond
+           (initial
+            ;; isearch-forward-thing-at-point にならってregion解除
+            (when (use-region-p)
+              (deactivate-mark))
+            ;; “近くの thing” がpointより前なら先頭へ移動（見た目を揃える用・必須ではない）
+            (when (< (car bounds) (point))
+              (goto-char (car bounds)))
+            ;; consult-lineにINITIALを渡す
+            (consult-line initial))
+           (t
+            ;; 見つからなければ普通に consult-line
+            ;; (message "No thing at point")
+            (consult-line)))))
+
       (defun consult-ripgrep-single-file ()
         "Call `consult-ripgrep' for the current buffer (a single file)."
         (interactive)
