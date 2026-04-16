@@ -2849,51 +2849,137 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
     - =stop=
     - =seed=
     - and so on
+- [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]
+  - ~magit-status~ → push ~s~ to staging → ~migit-commit-create~ → ~ellama-generate-commit-message~
+  - I adopt [[https://www.conventionalcommits.org/ja/v1.0.0/][Conventional Commits]] now.
 
 #+begin_src emacs-lisp
   (setup (:package ellama)
+    (:also-load llm-ollama)
     (:global-keymap "C-c e" ellama-transient-main-menu)
-    (:when-loaded
-      (require 'llm-ollama)
-      (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
-      (setopt ellama-language "Japanese")
-      (setopt ellama-auto-scroll t)
-      (setopt ellama-provider             ; 既定プロバイダ
-              (make-llm-ollama
-               :chat-model "qwen3.5"
-               :embedding-model "qwen3-embedding"
-               :default-chat-non-standard-params '(("num_ctx" . 8192))))
-      (setopt ellama-naming-provider
-              (make-llm-ollama
-               :chat-model "qwen3.5"
-               :embedding-model "qwen3-embedding"
-               :default-chat-non-standard-params '(("stop" . ("\n")))))
-      (setopt ellama-summarization-provider
-              (make-llm-ollama
-               :chat-model "qwen3.5"
-               :embedding-model "qwen3-embedding"
-               :default-chat-non-standard-params '(("num_ctx" . 32768))))
-      (setopt ellama-coding-provider
-              (make-llm-ollama
-               :chat-model "qwen3.5"
-               :embedding-model "qwen3-embedding"
-               :default-chat-non-standard-params '(("num_ctx" . 32768))))
-      (setopt ellama-translation-provider
-              (make-llm-ollama
-               :chat-model "qwen3.5"
-               :embedding-model "nomic-embed-text"
-               :default-chat-non-standard-params
-               '(("num_ctx" . 32768))))
-      (setopt ellama-providers
-              '(("gpt-oss" . (make-llm-ollama
-                              :chat-model "gpt-oss"
-                              :embedding-model "nomic-embed-text-v2-moe"))
-                ("gemma4" . (make-llm-ollama
-                              :chat-model "gpt-oss"
-                              :embedding-model "nomic-embed-text-v2-moe")))))
-    (with-eval-after-load 'embark
-      (keymap-set embark-region-map "T" #'ellama-translate)))
 
+    (:opt ellama-naming-scheme 'ellama-generate-name-by-llm
+          ellama-language "Japanese"
+          ellama-auto-scroll t
+          ;; 既定プロバイダ
+          ellama-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5"
+           :embedding-model "qwen3-embedding"
+           :default-chat-non-standard-params '(("num_ctx" . 8192)))
+          ;; 他のプロバイダ
+          ellama-providers
+          '(("gpt-oss" . (make-llm-ollama
+                          :chat-model "gpt-oss"
+                          :embedding-model "nomic-embed-text-v2-moe"))
+            ("gemma4" . (make-llm-ollama
+                         :chat-model "gpt-oss"
+                         :embedding-model "nomic-embed-text-v2-moe")))
+          ;; 名前生成
+          ellama-naming-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5"
+           :embedding-model "qwen3-embedding"
+           :default-chat-non-standard-params '(("stop" . ("\n"))))
+          ;; 要約
+          ellama-summarization-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5"
+           :embedding-model "qwen3-embedding"
+           :default-chat-non-standard-params '(("num_ctx" . 32768)))
+          ;; coding
+          ellama-coding-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5"
+           :embedding-model "qwen3-embedding"
+           :default-chat-non-standard-params '(("num_ctx" . 32768)))
+          ;; 翻訳
+          ellama-translation-provider
+          (make-llm-ollama
+           :chat-model "qwen3.5"
+           :embedding-model "nomic-embed-text"
+           :default-chat-non-standard-params
+           '(("num_ctx" . 32768)))
+          ;; commit messageをConventional Commitsに
+          ellama-generate-commit-message-template
+          "<INSTRUCTIONS>
+  You are a professional software developer.
+
+  You MUST output a commit message that strictly follows the Conventional Commits specification:
+
+  <FORMAT>
+  <type>[optional scope][optional !]: <description>
+
+  [optional body]
+
+  [optional footer(s)]
+  </FORMAT>
+
+  RULES (MUST / MUST NOT):
+  - The first line MUST match exactly:
+    <type>[optional(scope)][optional!]: <description>
+  - After the subject line, you MUST insert ONE empty line if you add a body.
+  - After the body, you MUST insert ONE empty line if you add footers.
+  - You MUST reply with the commit message ONLY (no quotes, no code fences, no explanations).
+  - You MUST NOT add any leading or trailing text around the commit message.
+
+  TYPE SELECTION (choose exactly one):
+  - Use feat if the diff adds a new user-facing feature.
+  - Use fix if the diff fixes a bug.
+  - Otherwise you MAY use: docs, refactor, test, chore, ci, build, perf, style.
+
+  SCOPE (OPTIONAL, but RECOMMENDED):
+  - If you can infer a clear scope from file paths or modules, you SHOULD include it.
+  - Scope MUST be a noun in parentheses, e.g. fix(parser): ...
+  - If there are multiple scopes, choose the most relevant one (the area with the biggest change).
+  - If you cannot infer a scope confidently, omit it.
+
+  DESCRIPTION (subject line):
+  - Description MUST be a short summary of the change.
+  - Use the imperative mood in English (e.g., \"add\", \"fix\", \"update\", \"remove\").
+  - Keep it concise (aim <= 72 characters).
+  - Do NOT end the subject line with a period.
+
+  BODY (OPTIONAL):
+  - Body MAY be multiple paragraphs separated by blank lines.
+  - Body SHOULD explain what and why (not how), based on the diff.
+  - Wrap lines at ~72 characters where reasonable.
+
+  BREAKING CHANGES (MUST be indicated):
+  - If the diff introduces a breaking change, you MUST indicate it EITHER:
+    (A) with '!' before the colon in the subject, e.g. feat(api)!: ...
+    OR
+    (B) with a footer 'BREAKING CHANGE: <explanation>'
+  - If you use '!' in the subject, you MAY omit the BREAKING CHANGE footer,
+    but then the subject and/or body MUST clearly describe the breaking impact.
+
+  FOOTERS (OPTIONAL):
+  - Each footer MUST be one token followed by \": \" or \" #\" and a value.
+    Examples: \"Refs: #123\", \"Closes #123\", \"Acked-by: Name\"
+  - Footer tokens MUST use hyphen instead of spaces (except BREAKING CHANGE).
+  - If the diff references issue/PR numbers, you SHOULD add an appropriate footer
+    like \"Refs: #123\" or \"Closes #123\".
+
+  OUTPUT EXAMPLES (do not copy verbatim; follow the structure):
+  feat(parser): add support for nested expressions
+
+  Handle nested AST nodes and improve error messages when parsing fails.
+
+  Refs: #123
+
+  fix!: remove deprecated config keys
+
+  Migrate to the new configuration schema; old keys are no longer recognized.
+  </INSTRUCTIONS>
+
+  <DIFF>
+  %s
+  </DIFF>"
+          ))
+
+  (setup embark
+    (:with-map embark-region-map
+      (:bind  "T" #'ellama-translate)))
 #+end_src
 
 ** desktop-save
