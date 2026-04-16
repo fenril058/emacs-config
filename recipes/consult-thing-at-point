@@ -1,0 +1,2 @@
+(consult-thing-at-point :fetcher github
+                        :repo "fenril058/consult-line-thing-at-point")

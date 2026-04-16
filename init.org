@@ -1579,7 +1579,7 @@ Search and navigate via completing-read. https://github.com/minad/consult
 
   (setup (:package consult-ghq))
 
-  (setup (:package consult-line-thing-at-point)
+  (setup (:package consult-thing-at-point)
     (:global-keymap "C-c i" consult-line-thing-at-point))
 
 #+end_src
