@@ -134,7 +134,7 @@
       repo = "consult-ghq";
       type = "github";
     };
-    consult-line-thing-at-point = {
+    consult-thing-at-point = {
       flake = false;
       owner = "fenril058";
       repo = "consult-line-thing-at-point";
