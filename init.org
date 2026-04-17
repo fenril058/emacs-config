@@ -2287,8 +2287,9 @@ Major mode for editing comma/char separated values
     (:opt reftex-plug-into-AUCTeX t
           reftex-insert-label-flags '("s" "sfte")
           TeX-default-mode 'japanese-latex-mode
-          japanese-LaTeX-default-style "jsarticle"
+          japanese-LaTeX-default-style "jlreq"
           japanese-TeX-engine-default 'uptex
+          TeX-engine 'luatex
           TeX-command-output-list '(("LaTeXMk" ("pdf"))
                                     ("LuaLaTeX" ("pdf")))
           TeX-electric-sub-and-superscript t
@@ -2301,22 +2302,34 @@ Major mode for editing comma/char separated values
           TeX-electric-math '("$" . "$")
           TeX-master nil
           TeX-auto-untabify nil
+          TeX-command-extra-options "-synctex=1 -interaction=nonstopmode -file-line-error"
           TeX-view-program-selection '((output-pdf "PDF Tools")
                                        (output-dvi "xdvi")))
     (:when-loaded
       (:foreach '(("make" "make"
-                   TeX-run-command nil t :help "Run Make")
-                  ("Latexmk" "latexmk -pdfdvi %t"
-                   TeX-run-TeX nil (latex-mode) :help "Run LaTeXmk")
-                  ("LuaLaTeX" "lualatex %t"
-                   TeX-run-TeX nil (latex-mode) :help "Run LuaLaTeX")
+                   TeX-run-command nil
+                   t :help "Run Make")
+                  ("Latexmk" "latexmk -pdfdvi %(extraopts) %t"
+                   TeX-run-TeX nil
+                   (latex-mode) :help "Run LaTeXmk with -pdfdvi")
+                  ("LuaLatexmk" "latexmk -lualatex %(extraopts) %t"
+                   TeX-run-TeX nil
+                   (latex-mode) :help "Run LaTeXmk with -lualatex")
+                  ("LuaLaTeX" "lualatex %(extraopts) %t"
+                   TeX-run-TeX nil
+                   (latex-mode) :help "Run LuaLaTeX")
                   ("pBibTeX" "pbibtex -kanji=utf8 %s"
-                   TeX-run-BibTeX nil t :help "Run pBibTeX")
+                   TeX-run-BibTeX nil
+                   t :help "Run pBibTeX")
                   ("upBibTeX" "upbibtex %s"
-                   TeX-run-BibTeX nil t :help "Run upBibTeX")
+                   TeX-run-BibTeX nil
+                   t :help "Run upBibTeX")
                   ("Mendex" "mendex -U %s"
                    TeX-run-command nil t
                    :help "Create index file with mendex")
+                  ("SumatraPDF"
+                   "SumatraPDF.exe -reuse-instance %o -forward-search %b %n"
+                   TeX-run-discard-or-function t t :help "Forward search with SumatraPDF")
                   ("Okular"
                    "okular --unique \"file:\"%s.pdf\"#src:%n %a\""
                    TeX-run-discard-or-function t t :help "Forward search with Okular"))
@@ -2849,9 +2862,12 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
     - =stop=
     - =seed=
     - and so on
-- [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]
-  - ~magit-status~ → push ~s~ to staging → ~migit-commit-create~ → ~ellama-generate-commit-message~
-  - I adopt [[https://www.conventionalcommits.org/ja/v1.0.0/][Conventional Commits]] now.
+- Generete commit massage by LLM (ref: [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]).
+  1. push =C-x g= to execute ~magit-status~
+  2. push =s= to staging
+  3. push =c c= to execute ~migit-commit-create~
+  4. ~ellama-generate-commit-message~
+- I adopt [[https://www.conventionalcommits.org/ja/v1.0.0/][Conventional Commits]] as ~ellama-generate-commit-message-template~
 
 #+begin_src emacs-lisp
   (setup (:package ellama)
@@ -2974,8 +2990,7 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 
   <DIFF>
   %s
-  </DIFF>"
-          ))
+  </DIFF>"))
 
   (setup embark
     (:with-map embark-region-map
