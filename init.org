@@ -1541,6 +1541,7 @@ Search and navigate via completing-read. https://github.com/minad/consult
   (setup (:package consult)
     (:also-load affe consult-xref consult-ghq)
     (:override-map "C-'" consult-buffer
+                   "C-c i" consult-line-thing-at-point
                    "C-c h" consult-buffer)
     (:global-keymap "C-x b" consult-buffer
                     "<remap> <goto-line>" consult-goto-line)
@@ -1559,7 +1560,22 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                        "--no-heading "
                                        "--with-filename "
                                        "--line-number "
-                                       "--search-zip ")))
+                                       "--search-zip "))
+
+    (defmacro define-consult-thing-at-point (name base &optional types)
+      "Define NAME as alias of BASE with thing-at-point initial input."
+      (let ((types (or types '(region symbol word))))
+        `(progn
+           (defalias ',name #',base)
+           (with-eval-after-load 'consult
+             (consult-customize
+              ,name
+              :initial
+              (seq-some #'thing-at-point ',types))))))
+    (define-consult-thing-at-point consult-line-thing-at-point consult-line)
+    (define-consult-thing-at-point consult-line-grep-thing-at-point consult-grep)
+    (define-consult-thing-at-point consult-line-git-grep-thing-at-point consult-git-grep)
+    (define-consult-thing-at-point consult-line-ripgrep-thing-at-point consult-ripgrep))
 
   (setup org
     (:also-load consult)
@@ -1578,9 +1594,6 @@ Search and navigate via completing-read. https://github.com/minad/consult
   (setup (:package consult-flycheck))
 
   (setup (:package consult-ghq))
-
-  (setup (:package consult-thing-at-point)
-    (:global-keymap "C-c i" consult-line-thing-at-point))
 
 #+end_src
 

@@ -134,12 +134,6 @@
       repo = "consult-ghq";
       type = "github";
     };
-    consult-thing-at-point = {
-      flake = false;
-      owner = "fenril058";
-      repo = "consult-line-thing-at-point";
-      type = "github";
-    };
     consult-yasnippet = {
       flake = false;
       owner = "mohkale";
