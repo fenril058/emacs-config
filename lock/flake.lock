@@ -307,6 +307,38 @@
         "type": "github"
       }
     },
+    "consult-eglot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756632318,
+        "narHash": "sha256-T6ZYTnc9tqwU+UE7f7Yk74mgPg8O5S9rnNZOQs5seBA=",
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "rev": "d8b444aac39edfc6473ffbd228df3e9119451b51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "type": "github"
+      }
+    },
+    "consult-eglot-embark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756632318,
+        "narHash": "sha256-T6ZYTnc9tqwU+UE7f7Yk74mgPg8O5S9rnNZOQs5seBA=",
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "rev": "d8b444aac39edfc6473ffbd228df3e9119451b51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "type": "github"
+      }
+    },
     "consult-flycheck": {
       "flake": false,
       "locked": {
@@ -1822,6 +1854,8 @@
         "compat": "compat",
         "cond-let": "cond-let",
         "consult": "consult",
+        "consult-eglot": "consult-eglot",
+        "consult-eglot-embark": "consult-eglot-embark",
         "consult-flycheck": "consult-flycheck",
         "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",

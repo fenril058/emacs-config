@@ -840,8 +840,9 @@ Nix3.el integration for Magit
                                " %q of %I"
                                " - GNU Emacs " emacs-version " [%s]"))
 
-  (setup global-display-line-numbers-mode
-    (:hook-into after-startup-hook))
+  (setup display-line-numbers
+    (:with-hook emacs-startup-hook
+      (:hook (lambda () (global-display-line-numbers-mode +1)))))
 
 #+end_src
 
@@ -1539,7 +1540,7 @@ Search and navigate via completing-read. https://github.com/minad/consult
 
 #+begin_src emacs-lisp
   (setup (:package consult)
-    (:also-load affe consult-xref consult-ghq)
+    (:also-load affe consult-xref)
     (:override-map "C-'" consult-buffer
                    "C-c i" consult-line-thing-at-point
                    "C-c h" consult-buffer)
@@ -1561,7 +1562,11 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                        "--with-filename "
                                        "--line-number "
                                        "--search-zip "))
-
+    (:with-feature consult-imenu
+      (:global-keymap "<remap> <imenu>" #'consult-imenu))
+    (:with-feature consult-xref
+      (:opt xref-show-xrefs-function #'consult-xref
+            xref-show-definitions-function #'consult-xref))
     (defmacro define-consult-thing-at-point (name base &optional types)
       "Define NAME as alias of BASE with thing-at-point initial input."
       (let ((types (or types '(region symbol word))))
@@ -1584,15 +1589,43 @@ Search and navigate via completing-read. https://github.com/minad/consult
                    '("j" . consult-org-heading))
       (add-to-list 'org-speed-commands
                    '("J" .  org-goto))))
+#+end_src
 
+**** consult-yasnippet
+#+begin_src emacs-lisp
   (setup (:package consult-yasnippet)
     (:also-load yasnippet)
     (:global-keymap "C-c y" consult-yasnippet))
+#+end_src
 
+**** consult-eglot
+#+begin_quote
+A consulting-read interface for eglot. https://github.com/mohkale/consult-eglot
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package consult-eglot)
+    (:also-load consult-eglot)
+    (:when-loaded (consult-eglot-embark-mode)))
+
+  (setup (:package consult-eglot-embark))
+
+#+end_src
+
+**** consult-flyspell
+#+begin_src emacs-lisp
   (setup (:package consult-flyspell))
 
+#+end_src
+
+**** consult-flycheck
+#+begin_src emacs-lisp
   (setup (:package consult-flycheck))
 
+#+end_src
+
+**** consult-ghq
+#+begin_src emacs-lisp
   (setup (:package consult-ghq))
 
 #+end_src
@@ -1600,7 +1633,7 @@ Search and navigate via completing-read. https://github.com/minad/consult
 *** affe
 #+begin_src emacs-lisp
   (setup (:package affe)
-    (:also-load orderless)
+    (:also-load orderless consult)
     (:when-loaded
       (defun affe-orderless-regexp-compiler (input _type _ignorecase)
         (setq input (cdr (orderless-compile input)))
@@ -1610,7 +1643,6 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                                  (executable-find "fdfind"))))
                                      (when fd
                                        (concat fd " --color=never --full-path"))))
-      ;; expand (consult-customize affe-grep :preview-key "M-.")
       (consult--customize-put '(affe-grep) :preview-key '"M-.")))
 #+end_src
 

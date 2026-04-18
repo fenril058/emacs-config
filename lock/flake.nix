@@ -116,6 +116,18 @@
       repo = "consult";
       type = "github";
     };
+    consult-eglot = {
+      flake = false;
+      owner = "mohkale";
+      repo = "consult-eglot";
+      type = "github";
+    };
+    consult-eglot-embark = {
+      flake = false;
+      owner = "mohkale";
+      repo = "consult-eglot";
+      type = "github";
+    };
     consult-flycheck = {
       flake = false;
       owner = "minad";
