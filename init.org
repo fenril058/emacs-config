@@ -2110,6 +2110,14 @@ HTML hypertext markup language.
     (:opt css-indent-offset 2))
 #+end_src
 
+*** dockerfile-ts-mode
+#+begin_src emacs-lisp
+  (setup dockerfile-ts-mode
+    (:match-file "Dockerfile\\|.dockerfile\\|Containerfile"))
+
+#+end_src
+
+
 *** YAML
 #+begin_src emacs-lisp
   (setup yaml-ts-mode
