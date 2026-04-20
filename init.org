@@ -840,8 +840,9 @@ Nix3.el integration for Magit
                                " %q of %I"
                                " - GNU Emacs " emacs-version " [%s]"))
 
-  (setup global-display-line-numbers-mode
-    (:hook-into after-startup-hook))
+  (setup display-line-numbers
+    (:with-hook emacs-startup-hook
+      (:hook (lambda () (global-display-line-numbers-mode +1)))))
 
 #+end_src
 
@@ -1539,8 +1540,9 @@ Search and navigate via completing-read. https://github.com/minad/consult
 
 #+begin_src emacs-lisp
   (setup (:package consult)
-    (:also-load affe consult-xref consult-ghq)
+    (:also-load affe consult-xref)
     (:override-map "C-'" consult-buffer
+                   "C-c i" consult-line-thing-at-point
                    "C-c h" consult-buffer)
     (:global-keymap "C-x b" consult-buffer
                     "<remap> <goto-line>" consult-goto-line)
@@ -1559,7 +1561,26 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                        "--no-heading "
                                        "--with-filename "
                                        "--line-number "
-                                       "--search-zip ")))
+                                       "--search-zip "))
+    (:with-feature consult-imenu
+      (:global-keymap "<remap> <imenu>" #'consult-imenu))
+    (:with-feature consult-xref
+      (:opt xref-show-xrefs-function #'consult-xref
+            xref-show-definitions-function #'consult-xref))
+    (defmacro define-consult-thing-at-point (name base &optional types)
+      "Define NAME as alias of BASE with thing-at-point initial input."
+      (let ((types (or types '(region symbol word))))
+        `(progn
+           (defalias ',name #',base)
+           (with-eval-after-load 'consult
+             (consult-customize
+              ,name
+              :initial
+              (seq-some #'thing-at-point ',types))))))
+    (define-consult-thing-at-point consult-line-thing-at-point consult-line)
+    (define-consult-thing-at-point consult-line-grep-thing-at-point consult-grep)
+    (define-consult-thing-at-point consult-line-git-grep-thing-at-point consult-git-grep)
+    (define-consult-thing-at-point consult-line-ripgrep-thing-at-point consult-ripgrep))
 
   (setup org
     (:also-load consult)
@@ -1568,26 +1589,51 @@ Search and navigate via completing-read. https://github.com/minad/consult
                    '("j" . consult-org-heading))
       (add-to-list 'org-speed-commands
                    '("J" .  org-goto))))
+#+end_src
 
+**** consult-yasnippet
+#+begin_src emacs-lisp
   (setup (:package consult-yasnippet)
     (:also-load yasnippet)
     (:global-keymap "C-c y" consult-yasnippet))
+#+end_src
 
+**** consult-eglot
+#+begin_quote
+A consulting-read interface for eglot. https://github.com/mohkale/consult-eglot
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package consult-eglot)
+    (:also-load consult-eglot)
+    (:when-loaded (consult-eglot-embark-mode)))
+
+  (setup (:package consult-eglot-embark))
+
+#+end_src
+
+**** consult-flyspell
+#+begin_src emacs-lisp
   (setup (:package consult-flyspell))
 
+#+end_src
+
+**** consult-flycheck
+#+begin_src emacs-lisp
   (setup (:package consult-flycheck))
 
-  (setup (:package consult-ghq))
+#+end_src
 
-  (setup (:package consult-thing-at-point)
-    (:global-keymap "C-c i" consult-line-thing-at-point))
+**** consult-ghq
+#+begin_src emacs-lisp
+  (setup (:package consult-ghq))
 
 #+end_src
 
 *** affe
 #+begin_src emacs-lisp
   (setup (:package affe)
-    (:also-load orderless)
+    (:also-load orderless consult)
     (:when-loaded
       (defun affe-orderless-regexp-compiler (input _type _ignorecase)
         (setq input (cdr (orderless-compile input)))
@@ -1597,7 +1643,6 @@ Search and navigate via completing-read. https://github.com/minad/consult
                                                  (executable-find "fdfind"))))
                                      (when fd
                                        (concat fd " --color=never --full-path"))))
-      ;; expand (consult-customize affe-grep :preview-key "M-.")
       (consult--customize-put '(affe-grep) :preview-key '"M-.")))
 #+end_src
 
@@ -2065,6 +2110,14 @@ HTML hypertext markup language.
     (:opt css-indent-offset 2))
 #+end_src
 
+*** dockerfile-ts-mode
+#+begin_src emacs-lisp
+  (setup dockerfile-ts-mode
+    (:match-file "Dockerfile\\|.dockerfile\\|Containerfile"))
+
+#+end_src
+
+
 *** YAML
 #+begin_src emacs-lisp
   (setup yaml-ts-mode
@@ -2287,8 +2340,9 @@ Major mode for editing comma/char separated values
     (:opt reftex-plug-into-AUCTeX t
           reftex-insert-label-flags '("s" "sfte")
           TeX-default-mode 'japanese-latex-mode
-          japanese-LaTeX-default-style "jsarticle"
+          japanese-LaTeX-default-style "jlreq"
           japanese-TeX-engine-default 'uptex
+          TeX-engine 'luatex
           TeX-command-output-list '(("LaTeXMk" ("pdf"))
                                     ("LuaLaTeX" ("pdf")))
           TeX-electric-sub-and-superscript t
@@ -2301,22 +2355,34 @@ Major mode for editing comma/char separated values
           TeX-electric-math '("$" . "$")
           TeX-master nil
           TeX-auto-untabify nil
+          TeX-command-extra-options "-synctex=1 -interaction=nonstopmode -file-line-error"
           TeX-view-program-selection '((output-pdf "PDF Tools")
                                        (output-dvi "xdvi")))
     (:when-loaded
       (:foreach '(("make" "make"
-                   TeX-run-command nil t :help "Run Make")
-                  ("Latexmk" "latexmk -pdfdvi %t"
-                   TeX-run-TeX nil (latex-mode) :help "Run LaTeXmk")
-                  ("LuaLaTeX" "lualatex %t"
-                   TeX-run-TeX nil (latex-mode) :help "Run LuaLaTeX")
+                   TeX-run-command nil
+                   t :help "Run Make")
+                  ("Latexmk" "latexmk -pdfdvi %(extraopts) %t"
+                   TeX-run-TeX nil
+                   (latex-mode) :help "Run LaTeXmk with -pdfdvi")
+                  ("LuaLatexmk" "latexmk -lualatex %(extraopts) %t"
+                   TeX-run-TeX nil
+                   (latex-mode) :help "Run LaTeXmk with -lualatex")
+                  ("LuaLaTeX" "lualatex %(extraopts) %t"
+                   TeX-run-TeX nil
+                   (latex-mode) :help "Run LuaLaTeX")
                   ("pBibTeX" "pbibtex -kanji=utf8 %s"
-                   TeX-run-BibTeX nil t :help "Run pBibTeX")
+                   TeX-run-BibTeX nil
+                   t :help "Run pBibTeX")
                   ("upBibTeX" "upbibtex %s"
-                   TeX-run-BibTeX nil t :help "Run upBibTeX")
+                   TeX-run-BibTeX nil
+                   t :help "Run upBibTeX")
                   ("Mendex" "mendex -U %s"
                    TeX-run-command nil t
                    :help "Create index file with mendex")
+                  ("SumatraPDF"
+                   "SumatraPDF.exe -reuse-instance %o -forward-search %b %n"
+                   TeX-run-discard-or-function t t :help "Forward search with SumatraPDF")
                   ("Okular"
                    "okular --unique \"file:\"%s.pdf\"#src:%n %a\""
                    TeX-run-discard-or-function t t :help "Forward search with Okular"))
@@ -2850,9 +2916,12 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
     - =stop=
     - =seed=
     - and so on
-- [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]
-  - ~magit-status~ → push ~s~ to staging → ~migit-commit-create~ → ~ellama-generate-commit-message~
-  - I adopt [[https://www.conventionalcommits.org/ja/v1.0.0/][Conventional Commits]] now.
+- Generete commit massage by LLM (ref: [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]).
+  1. push =C-x g= to execute ~magit-status~
+  2. push =s= to staging
+  3. push =c c= to execute ~migit-commit-create~
+  4. ~ellama-generate-commit-message~
+- I adopt [[https://www.conventionalcommits.org/ja/v1.0.0/][Conventional Commits]] as ~ellama-generate-commit-message-template~
 
 #+begin_src emacs-lisp
   (setup (:package ellama)
@@ -2975,8 +3044,7 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 
   <DIFF>
   %s
-  </DIFF>"
-          ))
+  </DIFF>"))
 
   (setup embark
     (:with-map embark-region-map

@@ -116,6 +116,18 @@
       repo = "consult";
       type = "github";
     };
+    consult-eglot = {
+      flake = false;
+      owner = "mohkale";
+      repo = "consult-eglot";
+      type = "github";
+    };
+    consult-eglot-embark = {
+      flake = false;
+      owner = "mohkale";
+      repo = "consult-eglot";
+      type = "github";
+    };
     consult-flycheck = {
       flake = false;
       owner = "minad";
@@ -132,12 +144,6 @@
       flake = false;
       owner = "tomoya";
       repo = "consult-ghq";
-      type = "github";
-    };
-    consult-thing-at-point = {
-      flake = false;
-      owner = "fenril058";
-      repo = "consult-line-thing-at-point";
       type = "github";
     };
     consult-yasnippet = {

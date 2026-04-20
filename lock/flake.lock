@@ -307,6 +307,38 @@
         "type": "github"
       }
     },
+    "consult-eglot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756632318,
+        "narHash": "sha256-T6ZYTnc9tqwU+UE7f7Yk74mgPg8O5S9rnNZOQs5seBA=",
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "rev": "d8b444aac39edfc6473ffbd228df3e9119451b51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "type": "github"
+      }
+    },
+    "consult-eglot-embark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756632318,
+        "narHash": "sha256-T6ZYTnc9tqwU+UE7f7Yk74mgPg8O5S9rnNZOQs5seBA=",
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "rev": "d8b444aac39edfc6473ffbd228df3e9119451b51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mohkale",
+        "repo": "consult-eglot",
+        "type": "github"
+      }
+    },
     "consult-flycheck": {
       "flake": false,
       "locked": {
@@ -352,22 +384,6 @@
       "original": {
         "owner": "tomoya",
         "repo": "consult-ghq",
-        "type": "github"
-      }
-    },
-    "consult-thing-at-point": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1776314448,
-        "narHash": "sha256-1Tv0KZ0Ph2I4wKEpZbsz7KDxaya9NxdSvHHY4jm2nfU=",
-        "owner": "fenril058",
-        "repo": "consult-line-thing-at-point",
-        "rev": "76a08806b89dd24c2f68a115657dc1816e0ac77a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fenril058",
-        "repo": "consult-line-thing-at-point",
         "type": "github"
       }
     },
@@ -1838,10 +1854,11 @@
         "compat": "compat",
         "cond-let": "cond-let",
         "consult": "consult",
+        "consult-eglot": "consult-eglot",
+        "consult-eglot-embark": "consult-eglot-embark",
         "consult-flycheck": "consult-flycheck",
         "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",
-        "consult-thing-at-point": "consult-thing-at-point",
         "consult-yasnippet": "consult-yasnippet",
         "corfu": "corfu",
         "cowsay": "cowsay",
