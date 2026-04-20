@@ -301,6 +301,12 @@
       repo = "flycheck-inline";
       type = "github";
     };
+    flycheck-posframe = {
+      flake = false;
+      owner = "alexmurray";
+      repo = "flycheck-posframe";
+      type = "github";
+    };
     flymake-ruff = {
       flake = false;
       owner = "erickgnavar";

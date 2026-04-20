@@ -1770,12 +1770,6 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil)
 
-  (setup (:package envrc)
-    (:with-mode envrc-global-mode
-      (:hook-into after-init-hook))
-    (:when-loaded
-      (advice-add 'shell-command-to-string :around #'envrc-propagate-environment)))
-
   (setup prog-mode
     (:when-loaded
       (defsubst indicate-buffer-boundaries-left ()
@@ -1800,6 +1794,11 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
   (setup eldoc
     (:defer 2 #'global-eldoc-mode))
 
+#+end_src
+
+*** tree-sitter
+
+#+begin_src emacs-lisp
   (setup treesit
     (:nixpkgs tree-sitter)
     (:also-load treesit-auto)
@@ -1807,9 +1806,15 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
     (setup (:package treesit-auto)
       (:opt treesit-auto-install t)
       (:when-loaded
-        (add-to-list 'treesit-language-source-alist '(erlang "https://github.com/WhatsApp/tree-sitter-erlang"))
-        (add-to-list 'treesit-language-source-alist '(lua "https://github.com/MunifTanjim/tree-sitter-lua")))))
+        (:foreach '((erlang "https://github.com/WhatsApp/tree-sitter-erlang")
+                    (lua "https://github.com/MunifTanjim/tree-sitter-lua"))
+                          (add-to-list 'treesit-language-source-alist ,it)))))
 
+#+end_src
+
+*** eglot
+
+#+begin_src emacs-lisp
   (setup eglot
     (:also-load cape)
     (:when-loaded
@@ -1817,34 +1822,76 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
     (defun my/eglot-capf ()
       (add-to-list 'completion-at-point-functions #'eglot-completion-at-point))
     (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
-    (:bind "C-c h" eglot-code-actions))
+    (:bind "C-c j" eglot-code-actions))
 
+#+end_src
+
+*** envrc
+#+begin_src emacs-lisp
+  (setup (:package envrc)
+    (:with-mode envrc-global-mode
+      (:hook-into after-init-hook))
+    (:when-loaded
+      (advice-add 'shell-command-to-string :around #'envrc-propagate-environment)))
+
+#+end_src
+
+*** flymake
+#+begin_src emacs-lisp
   (setup flymake
     (:bind "M-n" flymake-goto-next-error
            "M-p" flymake-goto-prev-error))
+#+end_src
 
-  (setup (:package flycheck-inline))
+*** flycheck
+#+begin_quote
+On the fly syntax checking for GNU Emacs. https://github.com/flycheck/flycheck
+#+end_quote
 
+#+begin_src emacs-lisp
   (setup (:package flycheck)
-    (:also-load flycheck-inline)
-    (:hook flycheck-inline-mode)
     (:bind "M-n" flycheck-next-error
            "M-p" flycheck-previous-error)
+    (:opt flycheck-textlint-config '("linter/textlintrc.json"
+                                     "textlintrc.json"
+                                     "linter/.textlintrc.json"
+                                     ".textlintrc.json"))
     (:when-loaded
-      (flycheck-define-checker textlint
-        "A linter for text."
-        ;; -c .textlintrc はいらない？
-        :command ("npx" "textlint" "--format" "unix" source)
-        :error-patterns
-        ((warning line-start (file-name) ":" line ":" column ": "
-                  (id (one-or-more (not (any " "))))
-                  (message (one-or-more not-newline)
-                           (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-                  line-end))
-        :modes (text-mode org-mode markdown-mode review-starter-mode LaTeX-mode))
-      (add-to-list 'flycheck-checkers 'textlint )))
+      (:foreach '("linter/.markdownlint-cli2.json"
+                  "linter/.markdownlint-cli2.jsonc"
+                  "linter/.markdownlint-cli2.yaml")
+                (add-to-list 'flycheck-markdown-markdownlint-cli2-config ,it))))
+#+end_src
+
+**** flycheck-posframe
+#+begin_quote
+Display flycheck error messages via posframe.
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package flycheck-posframe)
+    (when window-system (:hook-into flycheck-mode))
+    (custom-set-faces
+     '(flycheck-posframe-background-face
+       ((((background light))
+         :background "pale goldenrod")
+        (((background dark))
+         :background "navy"))
+       nil)))
 
 #+end_src
+
+**** flycheck-inline
+#+begin_quote
+Displaying errors from Flycheck right below their reporting location, using overlays. https://github.com/flycheck/flycheck-inline
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package flycheck-inline)
+    (unless window-system (:hook-into flycheck-mode)))
+
+#+end_src
+
 
 *** Make
 #+begin_src emacs-lisp

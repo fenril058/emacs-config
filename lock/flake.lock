@@ -803,6 +803,22 @@
         "type": "github"
       }
     },
+    "flycheck-posframe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775693648,
+        "narHash": "sha256-Zxdq+ZhC3/cx9MrkfpcObx4pH34xxRgVIhPMO7zmHes=",
+        "owner": "alexmurray",
+        "repo": "flycheck-posframe",
+        "rev": "aeccb14e90ba25f45e1919b776777fc6ec95e251",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexmurray",
+        "repo": "flycheck-posframe",
+        "type": "github"
+      }
+    },
     "flymake-ruff": {
       "flake": false,
       "locked": {
@@ -1885,6 +1901,7 @@
         "figlet": "figlet",
         "flycheck": "flycheck",
         "flycheck-inline": "flycheck-inline",
+        "flycheck-posframe": "flycheck-posframe",
         "flymake-ruff": "flymake-ruff",
         "flyspell-correct": "flyspell-correct",
         "fullframe": "fullframe",
