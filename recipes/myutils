@@ -1,3 +1,4 @@
 (myutils :fetcher github
          :repo "fenril058/emacs-config"
-         :files ("site-lisp/*.el"))
+         :files ("site-lisp/*.el"
+                 (:exclude "site-lisp/*-test.el")))

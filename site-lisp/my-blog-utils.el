@@ -36,21 +36,24 @@
 
 ;;;###autoload
 (defun replace-markdown-links-to-org ()
-  "Replace Markdown links with Org-mode links.
-If region active, do in the active region, else do in the entire buffer.
-Only if the current mode is org-mode and the link is not in src block,
-this function repalce the link."
+  "Replace Markdown links [text](url) with Org-mode links [[url][text]].
+If region is active, operate on the region; otherwise, on the whole buffer.
+If the current mode is org-mode, do not touch links inside src blocks."
   (interactive)
   (save-excursion
     (save-restriction
       (when (region-active-p)
         (narrow-to-region (region-beginning) (region-end)))
       (goto-char (point-min))
-      (while (re-search-forward "\\[\\([^]]+\\)\\](\\([^)]*\\))" nil t)
+      ;; Markdown: [text](url)
+      ;; text may contain one-level nested brackets like: [[TITAN-956] ...]
+      (while (re-search-forward
+              "\\[\\(\\(?:[^][]\\|\\[[^]]*\\]\\)*\\)\\](\\([^)\n]*\\))"
+              nil t)
         (let ((text (match-string 1))
-              (url (match-string 2)))
-          (unless (when (eq major-mode 'org-mode) (org-in-src-block-p))
-            (replace-match (format "[[%s][%s]]" url text))))))))
+              (url  (match-string 2)))
+          (unless (and (eq major-mode 'org-mode) (org-in-src-block-p))
+            (replace-match (format "[[%s][%s]]" url text) t t)))))))
 
 ;;;###autoload
 (defun format-elfeed-header-for-blog ()

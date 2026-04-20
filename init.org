@@ -2474,7 +2474,25 @@ Major mode for Markdown-formatted text.  https://jblevins.org/projects/markdown-
       (:bind "C-c" compile
              "a" markdown-table-align))
     (:when-loaded
-      (setopt markdown-fontify-code-blocks-natively t)))
+      (setopt markdown-fontify-code-blocks-natively t)
+      (defun replace-org-links-to-markdown ()
+        "Replace Org-mode links with Markdown links.
+  If region active, do in the active region, else do in the entire buffer.
+  Only if the current mode is org-mode and the link is not in src block,
+  this function replaces the link."
+        (interactive)
+        (save-excursion
+          (save-restriction
+            (when (region-active-p)
+              (narrow-to-region (region-beginning) (region-end)))
+            (goto-char (point-min))
+            ;; Org: [[url][text]]  ->  Markdown: [text](url)
+            (while (re-search-forward "\\[\\[\\([^]\n]+\\)\\]\\[\\(\\(?:.\\|\n\\)*?\\)\\]\\]" nil t)
+              (let ((url  (match-string 1))
+                    (text (match-string 2)))
+                (unless (and (eq major-mode 'org-mode) (org-in-src-block-p))
+                  ;; replace-match の第2引数を t にして、\1 等の解釈を避ける
+                  (replace-match (format "[%s](%s)" text url) t t)))))))))
 
   (setup (:package edit-indirect))        ; markdown-edit-code-block requires
 
