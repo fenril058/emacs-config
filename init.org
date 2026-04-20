@@ -2356,7 +2356,8 @@ Major mode for Markdown-formatted text.  https://jblevins.org/projects/markdown-
     (:bind "C-c RET" compile
            "C-c '" markdown-edit-code-block)
     (:with-map markdown-mode-command-map
-      (:bind "a" markdown-table-align))
+      (:bind "C-c" compile
+             "a" markdown-table-align))
     (:when-loaded
       (setopt markdown-fontify-code-blocks-natively t)))
 
