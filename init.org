@@ -1848,6 +1848,8 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 On the fly syntax checking for GNU Emacs. https://github.com/flycheck/flycheck
 #+end_quote
 
+- [[https://www.macs.hw.ac.uk/~rs46/posts/2018-12-29-textlint-flycheck.html][A textlint flycheck checker in Emacs]]
+
 #+begin_src emacs-lisp
   (setup (:package flycheck)
     (:bind "M-n" flycheck-next-error
