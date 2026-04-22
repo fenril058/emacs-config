@@ -3198,7 +3198,7 @@ An Emacs plugin for GitHub Copilot.  https://github.com/copilot-emacs/copilot.el
 
 #+begin_src emacs-lisp
   (setup (:package copilot)
-    (:nixpkgs copilot-language-server)
+    ;; (:nixpkgs copilot-language-server)
     (:with-map copilot-completion-map
               (:bind
                ("<tab>" . copilot-accept-completion)
@@ -3207,6 +3207,7 @@ An Emacs plugin for GitHub Copilot.  https://github.com/copilot-emacs/copilot.el
                ("C-TAB" . copilot-accept-completion-by-word)
                ("C-n" . copilot-next-completion)
                ("C-p" . copilot-previous-completion))))
+
 #+end_src
 
 
