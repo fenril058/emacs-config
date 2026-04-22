@@ -547,22 +547,6 @@
         "type": "github"
       }
     },
-    "duplicate-thing": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1540998021,
-        "narHash": "sha256-ZbVfR3ALMg+0Jn7YL0h9i4UAJyF28YDWLokRlAGjjhY=",
-        "owner": "ongaeshi",
-        "repo": "duplicate-thing",
-        "rev": "9d8fd05e3e5caa35d3f2a0c0032c92f0c0908e21",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ongaeshi",
-        "repo": "duplicate-thing",
-        "type": "github"
-      }
-    },
     "eat": {
       "flake": false,
       "locked": {
@@ -1885,7 +1869,6 @@
         "dired-sidebar": "dired-sidebar",
         "dired-subtree": "dired-subtree",
         "dtw-mode": "dtw-mode",
-        "duplicate-thing": "duplicate-thing",
         "eat": "eat",
         "ebnf-mode": "ebnf-mode",
         "ediprolog": "ediprolog",

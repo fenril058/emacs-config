@@ -206,12 +206,6 @@
       repo = "dtw-mode";
       type = "github";
     };
-    duplicate-thing = {
-      flake = false;
-      owner = "ongaeshi";
-      repo = "duplicate-thing";
-      type = "github";
-    };
     eat = {
       flake = false;
       type = "git";
