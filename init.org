@@ -128,14 +128,17 @@ Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup
 - [[https://zenn.dev/takeokunn/articles/56010618502ccc][Emacsを世界最速級で起動する方法]]
 #+end_quote
 
-When emacs launched by =emacs --deubg-init=, then profiler starts.
+- Show emacs-init-time after starup.
+- When emacs launched by =emacs --deubg-init=, then profiler starts.
 #+begin_src emacs-lisp
+  ;;; Initialization time
+  (add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs initialized in %.3f sec with %d garbage collection(s)"
+                     (float-time (time-subtract after-init-time before-init-time))
+                     gcs-done)))
+
   ;;; Profiler
-
-  ;; enable debug
-  ;; (setq debug-on-error  t
-  ;;       init-file-debug t)
-
   (when init-file-debug
     (require 'profiler)
     (profiler-start 'cpu)
@@ -505,6 +508,33 @@ This setting is in [[./early-init.org]].
   ;; show character name when `C-x ='
   (setopt what-cursor-show-names t)
 
+
+#+end_src
+
+**** <f12> map
+#+begin_src emacs-lisp
+  (setup menu-bar
+    (:global-keymap "<f12> <f12>" #'toggle-debug-on-error))
+
+  (setup edebug
+    (:global-keymap "<f12> e r" #'edebug-remove-instrumentation))
+
+  (setup calc
+    (:opt calc-kill-line-numbering nil)
+    (:global-keymap "<f12> c c" #'calc))
+
+  (setup profiler
+    (:global-keymap "<f12> e p" #'toggle-profiler)
+    (autoload 'toggle-profiler "profiler" "" t)
+    (defun toggle-profiler ()
+      (interactive)
+      (if (profiler-running-p)
+          (progn
+            (profiler-report)
+            (profiler-stop)
+            (profiler-reset))
+        (call-interactively #'profiler-start))))
+
 #+end_src
 
 *** ffap
@@ -531,11 +561,14 @@ This setting is in [[./early-init.org]].
 
 #+end_src
 
-
 *** duplicate-thing
+
+I used [[https://github.com/ongaeshi/duplicate-thing][ongaeshi/duplicate-thing]] long time,
+but now I have noticed that the buint-in `duplicate-dwim' command.
+
 #+begin_src emacs-lisp
-  (setup (:package duplicate-thing)
-    (:global-keymap "C-c d" 'duplicate-thing))
+  (setup misc
+    (:global-keymap "C-c d" 'duplicate-dwim))
 
 #+end_src
 
@@ -1078,9 +1111,16 @@ Highlights uncommitted changes on the side of the window.  https://github.com/dg
 #+end_src
 
 *** theme
+
+#+begin_quote
+Highly accessible themes, conforming with the highest standard for colour contrast between background and foreground values (WCAG AAA).
+https://github.com/protesilaos/modus-themes
+#+end_quote
+
 #+begin_src emacs-lisp
   (when window-system
     (add-hook 'emacs-startup-hook (lambda () (load-theme 'modus-operandi))))
+
 #+end_src
 
 ** paren
@@ -1257,6 +1297,8 @@ Highlights uncommitted changes on the side of the window.  https://github.com/dg
            "S-TAB" dired-subtree-remove
            "b" dired-preview-mode)
     (:opt dired-listing-switches "-lGhFA --group-directories-first"
+          dired-vc-rename-file t          ; Dired renames them using ‘vc-rename-file’.
+
           wdired-allow-to-change-permissions t)
     (:when-loaded
       (defun toggle-dired-list-all ()
@@ -1894,7 +1936,6 @@ Displaying errors from Flycheck right below their reporting location, using over
 
 #+end_src
 
-
 *** Make
 #+begin_src emacs-lisp
   (setup makefile-gmake-mode
@@ -2166,7 +2207,6 @@ HTML hypertext markup language.
 
 #+end_src
 
-
 *** YAML
 #+begin_src emacs-lisp
   (setup yaml-ts-mode
@@ -2377,13 +2417,18 @@ Major mode for editing comma/char separated values
 
 #+end_src
 
-*** TeX/LaTeX
+*** AUCTeX
+#+begin_quote
+An extensible package for writing and formatting [[https://www.tug.org/][TeX ]] files.  https://www.gnu.org/software/auctex/
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package auctex))
 
   (setup tex-jp
     (:with-mode japanese-LaTeX-mode
-      (:match-file "*.tex"))
+      (:match-file "*.[Ll]a[Tt]e[Xx]")
+      (:match-file "*.[Tt]e[Xx]"))
     (:also-load texmathp                  ; empheq
                 reftex)
     (:opt reftex-plug-into-AUCTeX t
@@ -2449,6 +2494,14 @@ Major mode for editing comma/char separated values
   (setup kinsoku
     (setopt kinsoku-limit 10))
 
+#+end_src
+
+*** PDF Tools
+#+begin_quote
+Emacs support library for PDF files.  https://github.com/vedang/pdf-tools
+#+end_quote
+
+#+begin_src emacs-lisp
   (setup (:package pdf-tools)
     (:opt pdf-info-epdfinfo-program
           (expand-file-name "build/server/epdfinfo"
@@ -2464,17 +2517,23 @@ Major mode for editing comma/char separated values
 Major mode for Markdown-formatted text.  https://jblevins.org/projects/markdown-mode/
 #+end_quote
 
-
 #+begin_src emacs-lisp
   (setup (:package markdown-mode)
+    (:also-load sequential-command)
     (:match-file "*.md")
     (:bind "C-c RET" compile
+           "C-c a" markdown-seq-cmd-home
+           "C-c e" markdown-seq-cmd-end
            "C-c '" markdown-edit-code-block)
     (:with-map markdown-mode-command-map
       (:bind "C-c" compile
              "a" markdown-table-align))
     (:when-loaded
       (setopt markdown-fontify-code-blocks-natively t)
+      (define-seq-cmd markdown-seq-cmd-home
+                      markdown-beginning-of-line beginning-of-buffer seq-cmd-return)
+      (define-seq-cmd markdown-seq-cmd-end
+                      markdown-end-of-line end-of-buffer seq-cmd-return)
       (defun replace-org-links-to-markdown ()
         "Replace Org-mode links with Markdown links.
   If region active, do in the active region, else do in the entire buffer.

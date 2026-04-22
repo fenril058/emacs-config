@@ -136,4 +136,5 @@ The outer [...] are Markdown syntax and are removed; inner [...] remain as text.
         (replace-markdown-links-to-org))
       s))))
 
+;; (ert t)
 ;;; test-markdown-org-links.el ends here
