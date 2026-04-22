@@ -1503,6 +1503,10 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 #+end_src
 
 *** cape
+#+begin_quote
+Completion At Point Extensions.  https://github.com/minad/cape
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package cape)
     (defun tempel-setup-capf ()
@@ -2337,6 +2341,15 @@ https://github.com/kyagi/shell-pop-el
 
 #+end_src
 
+** Docker
+#+begin_quote
+Manage docker from Emacs.  https://github.com/Silex/docker.el
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package docker))
+#+end_src
+
 ** Maxima
 #+begin_quote
 Maxima is a system for the manipulation of symbolic and numerical expressions, including differentiation, integration, Taylor series, Laplace transforms, ordinary differential equations, systems of linear equations, polynomials, sets, lists, vectors, matrices and tensors.  https://maxima.sourceforge.io/
@@ -3019,6 +3032,7 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 
 ** LLM
 
+*** ellama
 - chat models
   - https://ollama.com/library/gpt-oss
     - gpt-oss:20b
@@ -3176,6 +3190,25 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
     (:with-map embark-region-map
       (:bind  "T" #'ellama-translate)))
 #+end_src
+
+*** copilot
+#+begin_quote
+An Emacs plugin for GitHub Copilot.  https://github.com/copilot-emacs/copilot.el
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package copilot)
+    (:nixpkgs copilot-language-server)
+    (:with-map copilot-completion-map
+              (:bind
+               ("<tab>" . copilot-accept-completion)
+               ("TAB" . copilot-accept-completion)
+               ("C-<tab>" . copilot-accept-completion-by-word)
+               ("C-TAB" . copilot-accept-completion-by-word)
+               ("C-n" . copilot-next-completion)
+               ("C-p" . copilot-previous-completion))))
+#+end_src
+
 
 ** desktop-save
 I do not use =desktop-save= now.

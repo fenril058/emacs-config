@@ -13,6 +13,12 @@
       repo = "affe";
       type = "github";
     };
+    aio = {
+      flake = false;
+      owner = "skeeto";
+      repo = "emacs-aio";
+      type = "github";
+    };
     anzu = {
       flake = false;
       owner = "emacsorphanage";
@@ -152,6 +158,12 @@
       repo = "consult-yasnippet";
       type = "github";
     };
+    copilot = {
+      flake = false;
+      owner = "copilot-emacs";
+      repo = "copilot.el";
+      type = "github";
+    };
     corfu = {
       flake = false;
       owner = "minad";
@@ -198,6 +210,12 @@
       flake = false;
       owner = "Fuco1";
       repo = "dired-hacks";
+      type = "github";
+    };
+    docker = {
+      flake = false;
+      owner = "Silex";
+      repo = "docker.el";
       type = "github";
     };
     dtw-mode = {

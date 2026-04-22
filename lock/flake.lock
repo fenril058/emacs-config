@@ -32,6 +32,22 @@
         "type": "github"
       }
     },
+    "aio": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771082956,
+        "narHash": "sha256-RMPj0t81JC9j7GCgCfcgD1Cly+3x/qKsj3J9wKQCm7s=",
+        "owner": "skeeto",
+        "repo": "emacs-aio",
+        "rev": "0e94a06bb035953cbbb4242568b38ca15443ad4c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "skeeto",
+        "repo": "emacs-aio",
+        "type": "github"
+      }
+    },
     "anzu": {
       "flake": false,
       "locked": {
@@ -403,6 +419,22 @@
         "type": "github"
       }
     },
+    "copilot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774941222,
+        "narHash": "sha256-hXZsu/pDE0/Li+GcFbC9ObbY4N1sVWDZ48CJfDrJmL4=",
+        "owner": "copilot-emacs",
+        "repo": "copilot.el",
+        "rev": "ab5c58bc969f52f6d75e972658f2c3381c70b4fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "copilot-emacs",
+        "repo": "copilot.el",
+        "type": "github"
+      }
+    },
     "corfu": {
       "flake": false,
       "locked": {
@@ -528,6 +560,22 @@
       "original": {
         "owner": "Fuco1",
         "repo": "dired-hacks",
+        "type": "github"
+      }
+    },
+    "docker": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769429555,
+        "narHash": "sha256-Rm7aMHMBSA3f2pLeh6YZbNhmbjRYlUcIxHoHvsoEFHs=",
+        "owner": "Silex",
+        "repo": "docker.el",
+        "rev": "916686b86e83a3bd2281fbc5e6f98962aa747429",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Silex",
+        "repo": "docker.el",
         "type": "github"
       }
     },
@@ -1837,6 +1885,7 @@
       "inputs": {
         "ace-window": "ace-window",
         "affe": "affe",
+        "aio": "aio",
         "anzu": "anzu",
         "auctex": "auctex",
         "avy": "avy",
@@ -1860,6 +1909,7 @@
         "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",
         "consult-yasnippet": "consult-yasnippet",
+        "copilot": "copilot",
         "corfu": "corfu",
         "cowsay": "cowsay",
         "dash": "dash",
@@ -1868,6 +1918,7 @@
         "dired-preview": "dired-preview",
         "dired-sidebar": "dired-sidebar",
         "dired-subtree": "dired-subtree",
+        "docker": "docker",
         "dtw-mode": "dtw-mode",
         "eat": "eat",
         "ebnf-mode": "ebnf-mode",
