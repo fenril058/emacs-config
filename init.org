@@ -1548,6 +1548,14 @@ Completion At Point Extensions.  https://github.com/minad/cape
 
 #+begin_src emacs-lisp
   (setup (:package cape)
+    (defun tempel-setup-capf ()
+      (setq-local completion-at-point-functions
+                  (cons #'tempel-complete ; see all matches
+                        completion-at-point-functions)))
+    (:foreach '(prog-mode-hook
+                text-mode-hook
+                conf-mode-hook)
+              (add-hook ,it #'tempel-setup-capf))
     (:foreach #'(cape-dict
                  ;; cape-tex
                  cape-abbrev
