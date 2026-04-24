@@ -15,6 +15,43 @@
     },
     "version": "1.27.0.20250307.75451"
   },
+  "eglot": {
+    "archive": {
+      "narHash": "sha256-7j9uzlEWnmjcBQZFpUtboseUQWugyaa6pEnwI5bzmyw=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/eglot-1.23.0.20260422.80836.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "eldoc": "1.16.0",
+      "emacs": "26.3",
+      "external-completion": "0.1",
+      "flymake": "1.4.5",
+      "jsonrpc": "1.0.28",
+      "project": "0.11.2",
+      "seq": "2.23",
+      "xref": "1.7.0"
+    },
+    "version": "1.23.0.20260422.80836"
+  },
+  "jsonrpc": {
+    "archive": {
+      "narHash": "sha256-u0ufGYM242gi2eQt8pvDVmvh4EF943JEpRUpQgOqvFk=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/jsonrpc-1.0.28.0.20260416.174639.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "emacs": "25.2"
+    },
+    "version": "1.0.28.0.20260416.174639"
+  },
   "rainbow-mode": {
     "archive": {
       "narHash": "sha256-XMJ1pjGBISLllFwOcH9nA8xu9qYo1xsiqQ5XH/4XHCU=",

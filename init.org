@@ -1548,33 +1548,38 @@ Completion At Point Extensions.  https://github.com/minad/cape
 
 #+begin_src emacs-lisp
   (setup (:package cape)
-    (defun tempel-setup-capf ()
-      (setq-local completion-at-point-functions
-                  (cons #'tempel-complete ; see all matches
-                        completion-at-point-functions)))
+
+    (defun setup-capf-local ()
+      (add-hook 'completion-at-point-functions
+                (cape-capf-super
+                 #'tempel-complete        ; see all matches
+                 #'yasnippet-capf
+                 #'cape-file
+                 #'cape-keyword
+                 #'cape-abbrev
+                 #'cape-dabbrev
+                 #'cape-dict)
+                nil t))
+
     (:foreach '(prog-mode-hook
                 text-mode-hook
+                org-mode-hook
                 conf-mode-hook)
-              (add-hook ,it #'tempel-setup-capf))
-    (:foreach #'(cape-dict
-                 ;; cape-tex
-                 cape-abbrev
-                 cape-dabbrev
-                 cape-keyword
-                 cape-file)
-              (add-hook 'completion-at-point-functions ,it)))
-  (add-hook 'completion-at-point-functions #'cape-file)
+              (add-hook ,it #'setup-capf-local)))
 
 #+end_src
 
 *** tempel
 #+begin_quote
-Tempo templates/snippets with in-buffer field editing. https://github.com/minad/tempel
+Tempo templates/snippets with in-buffer field editing.  https://github.com/minad/tempel
 #+end_quote
 
 #+begin_src emacs-lisp
   (setup (:package tempel)
     (:also-load cape tempel-collection)
+    ;; suggested officially, but I think not easy to type.
+    (:global-keymap "M-+" tempel-complete
+                    "M-*" tempel-insert)
     ;; When exapanding template, overriding <tab> and <backtab>.
     (:with-map tempel-map
       (:bind "<tab>" tempel-next
@@ -1597,6 +1602,8 @@ Collection tempel templates.  https://github.com/Crandel/tempel-collection
 Yet another snippet extension for Emacs.  https://github.com/joaotavora/yasnippet
 #+end_quote
 
+It overlaps in function with Tempel, but I've kept it for now.
+
 #+begin_src emacs-lisp
   (setup (:package yasnippet)
     (:defer 1
@@ -1612,7 +1619,7 @@ Yet another snippet extension for Emacs.  https://github.com/joaotavora/yasnippe
 
 #+end_src
 
-*** yasnippet-capf
+**** yasnippet-capf
 #+begin_quote
 Completion-At-Point Extension for YASnippet.  https://github.com/elken/yasnippet-capf
 #+end_quote
@@ -1704,10 +1711,17 @@ Search and navigate via completing-read. https://github.com/minad/consult
 #+end_src
 
 **** consult-yasnippet
+#+begin_quote
+A consulting-read interface for yasnippet.  https://github.com/mohkale/consult-yasnippet
+#+end_quote
+
+It overlaps in function with ~tempel-insert~, but I've kept it for now.
+
 #+begin_src emacs-lisp
   (setup (:package consult-yasnippet)
     (:also-load yasnippet)
     (:global-keymap "C-c y" consult-yasnippet))
+
 #+end_src
 
 **** consult-eglot
@@ -1822,8 +1836,7 @@ from =helm-descbinds= to =embark-bindings=
 
 *** embark-consult
 #+begin_quote
-Consult integration for Embark
-[[https://github.com/oantolin/embark]]
+Consult integration for Embark.  [[https://github.com/oantolin/embark]]
 #+end_quote
 
 #+begin_src emacs-lisp
@@ -1834,6 +1847,7 @@ Consult integration for Embark
       (require 'embark-consult))
     (:with-mode embark-collect-mode
       (:hook consult-preview-at-point-mode)))
+
 #+end_src
 
 ** avy
@@ -1855,6 +1869,7 @@ Jump to things in Emacs tree-style.  https://github.com/abo-abo/avy
            (cdr (ring-ref avy-ring 0))))
         t)
       (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark)))
+
 #+end_src
 
 ** ace-window
@@ -1876,6 +1891,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
       (setopt aw-keys '(?j ?k ?l ?i ?o ?h ?y ?u ?p))
       (custom-set-faces '(aw-leading-char-face ((t (:foreground "red" :height 4.0)))
                                                nil))))
+
 #+end_src
 
 ** Coding
@@ -1927,14 +1943,13 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 *** eglot
 
 #+begin_src emacs-lisp
-  (setup eglot
+  (setup (:package eglot)
     (:also-load cape)
     (:when-loaded
       (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
-    (defun my/eglot-capf ()
-      (add-to-list 'completion-at-point-functions #'eglot-completion-at-point))
-    (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
     (:bind "C-c j" eglot-code-actions))
+
+  (setup (:package jsonrpc))
 
 #+end_src
 
@@ -1953,6 +1968,7 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
   (setup flymake
     (:bind "M-n" flymake-goto-next-error
            "M-p" flymake-goto-prev-error))
+
 #+end_src
 
 *** flycheck
