@@ -197,10 +197,14 @@ Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup
 *** Conditional-case macros
 
 #+begin_src emacs-lisp
+  ;; (defconst is-mac (eq system-type 'darwin))
+  ;; (defconst is-linux (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
+  ;; (defconst is-windows (memq system-type '(cygwin windows-nt ms-dos)))
+  (defconst is-wsl (and (string= system-type "gnu/linux")
+                        (string-match "microsoft" (shell-command-to-string "uname -r"))))
+
   (defmacro when-wsl (&rest body)
-    (when (and (string= system-type "gnu/linux")
-               (string-match "microsoft" (shell-command-to-string "uname -r")))
-      `(progn ,@body)))
+    (when is-wsl `(progn ,@body)))
 
   (defmacro when-system-name (name &rest body)
     "If NAME equals `system-name', then execute BODY."
@@ -583,6 +587,19 @@ https://github.com/ataka/fcopy/tree/e355f6ec889d8ecbdb096019c2dc660b1cec4941
     (:global-keymap "C-c k" 'fcopy))
 
 #+end_src
+
+*** expreg
+#+begin_quote
+Your friendly neighborhood expand-region clone.  https://github.com/casouri/expreg
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package expreg)
+    (:global-keymap "C-c p" expreg-expand
+                    "C-c P" expreg-contract))
+
+#+end_src
+
 
 *** iedit
 #+begin_quote
@@ -1029,6 +1046,16 @@ Nix3.el integration for Magit
       (set-face-attribute 'diff-refine-added   nil :extend t)))
 
 #+end_src
+
+*** difftastic
+#+begin_quote
+Wrapper for difftastic.  https://github.com/pkryger/difftastic.el
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package difftastic))
+#+end_src
+
 
 **** smerge-mode
 
@@ -1533,10 +1560,20 @@ Simple templates for Emacs. https://github.com/minad/tempel
 
 #+begin_src emacs-lisp
   (setup (:package tempel)
-    (:also-load cape)
+    (:also-load cape tempel-collection)
     (:global-keymap
      "M-+" tempel-complete ;; Alternative tempel-expand
      "M-*" tempel-insert))
+
+#+end_src
+
+**** tempel-collection
+#+begin_quote
+Collection tempel templates.  https://github.com/Crandel/tempel-collection
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package tempel-collection))
 
 #+end_src
 
@@ -3209,7 +3246,6 @@ An Emacs plugin for GitHub Copilot.  https://github.com/copilot-emacs/copilot.el
                ("C-p" . copilot-previous-completion))))
 
 #+end_src
-
 
 ** desktop-save
 I do not use =desktop-save= now.
