@@ -87,11 +87,11 @@
     "melpa": {
       "flake": false,
       "locked": {
-        "lastModified": 1775208978,
-        "narHash": "sha256-iHyKOqou/td9Up53YoVNpRyeuZzgyKU0oOG+AUvPxeo=",
+        "lastModified": 1776807483,
+        "narHash": "sha256-0LUhYq5N6TjF6uJB3Iq3Rx+KCpcoon9NSbTKqI0TMlI=",
         "owner": "melpa",
         "repo": "melpa",
-        "rev": "e74998c6f8ebf57e821455e8e0cd6db5db6e72a7",
+        "rev": "ded37adf942ceac2bc6e234646b1b178d48ba87b",
         "type": "github"
       },
       "original": {
