@@ -170,6 +170,11 @@
       repo = "corfu";
       type = "github";
     };
+    corfu-terminal = {
+      flake = false;
+      type = "git";
+      url = "https://codeberg.org/akib/emacs-corfu-terminal";
+    };
     cowsay = {
       flake = false;
       owner = "lassik";
@@ -670,6 +675,11 @@
       repo = "plz-media-type";
       type = "github";
     };
+    popon = {
+      flake = false;
+      type = "git";
+      url = "https://codeberg.org/akib/emacs-popon";
+    };
     posframe = {
       flake = false;
       owner = "tumashu";
@@ -891,6 +901,12 @@
       flake = false;
       owner = "joaotavora";
       repo = "yasnippet";
+      type = "github";
+    };
+    yasnippet-capf = {
+      flake = false;
+      owner = "elken";
+      repo = "yasnippet-capf";
       type = "github";
     };
     yasnippet-snippets = {

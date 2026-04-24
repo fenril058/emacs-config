@@ -451,6 +451,22 @@
         "type": "github"
       }
     },
+    "corfu-terminal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691633196,
+        "narHash": "sha256-0qdSsuPE2s+DVu6yuqebMEt/29ypRlvb7TbvWEMHsjU=",
+        "ref": "refs/heads/master",
+        "rev": "501548c3d51f926c687e8cd838c5865ec45d03cc",
+        "revCount": 48,
+        "type": "git",
+        "url": "https://codeberg.org/akib/emacs-corfu-terminal"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/akib/emacs-corfu-terminal"
+      }
+    },
     "cowsay": {
       "flake": false,
       "locked": {
@@ -1785,6 +1801,22 @@
         "type": "github"
       }
     },
+    "popon": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1688372833,
+        "narHash": "sha256-stiwCre9Ih6GwKjVQ7iFmMPGbkiQHx8hNgy8PHRE1BA=",
+        "ref": "refs/heads/master",
+        "rev": "bf8174cb7e6e8fe0fe91afe6b01b6562c4dc39da",
+        "revCount": 52,
+        "type": "git",
+        "url": "https://codeberg.org/akib/emacs-popon"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/akib/emacs-popon"
+      }
+    },
     "posframe": {
       "flake": false,
       "locked": {
@@ -1943,6 +1975,7 @@
         "consult-yasnippet": "consult-yasnippet",
         "copilot": "copilot",
         "corfu": "corfu",
+        "corfu-terminal": "corfu-terminal",
         "cowsay": "cowsay",
         "dash": "dash",
         "diff-hl": "diff-hl",
@@ -2026,6 +2059,7 @@
         "plz": "plz",
         "plz-event-source": "plz-event-source",
         "plz-media-type": "plz-media-type",
+        "popon": "popon",
         "posframe": "posframe",
         "powershell": "powershell",
         "promise": "promise",
@@ -2063,6 +2097,7 @@
         "yadmacro": "yadmacro",
         "yaml": "yaml",
         "yasnippet": "yasnippet",
+        "yasnippet-capf": "yasnippet-capf",
         "yasnippet-snippets": "yasnippet-snippets",
         "yawc-mode": "yawc-mode",
         "zoutline": "zoutline"
@@ -2532,6 +2567,22 @@
       "original": {
         "owner": "joaotavora",
         "repo": "yasnippet",
+        "type": "github"
+      }
+    },
+    "yasnippet-capf": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747739106,
+        "narHash": "sha256-KWh8trHgrU+v+52cF0e1aJQ3oc9y8D25dg2UwIvKmsM=",
+        "owner": "elken",
+        "repo": "yasnippet-capf",
+        "rev": "f53c42a996b86fc95b96bdc2deeb58581f48c666",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elken",
+        "repo": "yasnippet-capf",
         "type": "github"
       }
     },

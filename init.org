@@ -1529,6 +1529,18 @@ COmpletion in Region FUnction https://github.com/minad/corfu
 
 #+end_src
 
+**** corfu-terminal
+#+begin_quote
+Corfu popup on terminal.  https://codeberg.org/akib/emacs-corfu-terminal
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package corfu-terminal)
+    (unless (display-graphic-p)
+      (corfu-terminal-mode +1)))
+
+#+end_src
+
 *** cape
 #+begin_quote
 Completion At Point Extensions.  https://github.com/minad/cape
@@ -1536,34 +1548,29 @@ Completion At Point Extensions.  https://github.com/minad/cape
 
 #+begin_src emacs-lisp
   (setup (:package cape)
-    (defun tempel-setup-capf ()
-      (dolist
-          (funcs #'(cape-dict
-                    ;; cape-tex
-                    cape-abbrev
-                    cape-dabbrev
-                    cape-keyword
-                    cape-file))
-        (add-to-list 'completion-at-point-functions funcs))
-      (setq-local completion-at-point-functions
-                  (cons #'tempel-expand ; exact match
-                        completion-at-point-functions)))
-    (:foreach '(prog-mode-hook text-mode-hook conf-mode-hook)
-              (add-hook ,it #'tempel-setup-capf)))
+    (:foreach #'(cape-dict
+                 ;; cape-tex
+                 cape-abbrev
+                 cape-dabbrev
+                 cape-keyword
+                 cape-file)
+              (add-hook 'completion-at-point-functions ,it)))
+  (add-hook 'completion-at-point-functions #'cape-file)
 
 #+end_src
 
 *** tempel
 #+begin_quote
-Simple templates for Emacs. https://github.com/minad/tempel
+Tempo templates/snippets with in-buffer field editing. https://github.com/minad/tempel
 #+end_quote
 
 #+begin_src emacs-lisp
   (setup (:package tempel)
     (:also-load cape tempel-collection)
-    (:global-keymap
-     "M-+" tempel-complete ;; Alternative tempel-expand
-     "M-*" tempel-insert))
+    ;; When exapanding template, overriding <tab> and <backtab>.
+    (:with-map tempel-map
+      (:bind "<tab>" tempel-next
+             "<backtab>" tempel-previous)))
 
 #+end_src
 
@@ -1578,9 +1585,12 @@ Collection tempel templates.  https://github.com/Crandel/tempel-collection
 #+end_src
 
 *** yasnippet
+#+begin_quote
+Yet another snippet extension for Emacs.  https://github.com/joaotavora/yasnippet
+#+end_quote
+
 #+begin_src emacs-lisp
   (setup (:package yasnippet)
-    (:opt )
     (:defer 1
             (lambda ()
               (let ((yas-verbosity 2))
@@ -1591,6 +1601,17 @@ Collection tempel templates.  https://github.com/Crandel/tempel-collection
     (:also-load yasnippet-snippets))
 
   (setup (:package yasnippet-snippets))
+
+#+end_src
+
+*** yasnippet-capf
+#+begin_quote
+Completion-At-Point Extension for YASnippet.  https://github.com/elken/yasnippet-capf
+#+end_quote
+
+#+begin_src emacs-lisp
+  (setup (:package yasnippet-capf))
+
 #+end_src
 
 *** vertico
