@@ -499,6 +499,22 @@
         "type": "github"
       }
     },
+    "difftastic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775641803,
+        "narHash": "sha256-jYtUifgPehZCYMJs2s9Ejqt7hxdnYH/PN1/4kAjTPXU=",
+        "owner": "pkryger",
+        "repo": "difftastic.el",
+        "rev": "7db20929cac31687a529943c3d8d5b44fd8d69e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pkryger",
+        "repo": "difftastic.el",
+        "type": "github"
+      }
+    },
     "dired-hacks-utils": {
       "flake": false,
       "locked": {
@@ -768,6 +784,22 @@
       "original": {
         "owner": "erlang",
         "repo": "emacs-erlang-ts",
+        "type": "github"
+      }
+    },
+    "expreg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758258553,
+        "narHash": "sha256-ee/G180fgxPzA73/K/faReF2Mgr1fD3/UN9qa8cUo60=",
+        "owner": "casouri",
+        "repo": "expreg",
+        "rev": "53fd5a4812b77e49d3ab45fc16bb2998abaf1d86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "casouri",
+        "repo": "expreg",
         "type": "github"
       }
     },
@@ -1914,6 +1946,7 @@
         "cowsay": "cowsay",
         "dash": "dash",
         "diff-hl": "diff-hl",
+        "difftastic": "difftastic",
         "dired-hacks-utils": "dired-hacks-utils",
         "dired-preview": "dired-preview",
         "dired-sidebar": "dired-sidebar",
@@ -1931,6 +1964,7 @@
         "envrc": "envrc",
         "erlang": "erlang",
         "erlang-ts": "erlang-ts",
+        "expreg": "expreg",
         "fcopy": "fcopy",
         "figlet": "figlet",
         "flycheck": "flycheck",
@@ -2010,6 +2044,7 @@
         "svg-lib": "svg-lib",
         "tablist": "tablist",
         "tempel": "tempel",
+        "tempel-collection": "tempel-collection",
         "test-simple": "test-simple",
         "transient": "transient",
         "treesit-auto": "treesit-auto",
@@ -2192,6 +2227,22 @@
       "original": {
         "owner": "minad",
         "repo": "tempel",
+        "type": "github"
+      }
+    },
+    "tempel-collection": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772192010,
+        "narHash": "sha256-kv9Gd1i9A2hsoqnu1Ggmg7iz3HyMMKgmEukAW2J0btk=",
+        "owner": "Crandel",
+        "repo": "tempel-collection",
+        "rev": "6292604c1d5ed0044ce0beb2d46c73697dc66ed3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Crandel",
+        "repo": "tempel-collection",
         "type": "github"
       }
     },

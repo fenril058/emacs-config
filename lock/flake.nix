@@ -188,6 +188,12 @@
       repo = "diff-hl";
       type = "github";
     };
+    difftastic = {
+      flake = false;
+      owner = "pkryger";
+      repo = "difftastic.el";
+      type = "github";
+    };
     dired-hacks-utils = {
       flake = false;
       owner = "Fuco1";
@@ -287,6 +293,12 @@
       flake = false;
       owner = "erlang";
       repo = "emacs-erlang-ts";
+      type = "github";
+    };
+    expreg = {
+      flake = false;
+      owner = "casouri";
+      repo = "expreg";
       type = "github";
     };
     fcopy = {
@@ -765,6 +777,12 @@
       flake = false;
       owner = "minad";
       repo = "tempel";
+      type = "github";
+    };
+    tempel-collection = {
+      flake = false;
+      owner = "Crandel";
+      repo = "tempel-collection";
       type = "github";
     };
     test-simple = {
