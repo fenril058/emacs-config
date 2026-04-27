@@ -1,4 +1,0 @@
-(calfw-howm :fetcher github
-            :repo "fenril058/emacs-calfw"
-            :branch "fix/howm-cl-loop-variable-binding"
-            :files ("calfw-howm.el" "calfw-compat.el"))

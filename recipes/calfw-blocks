@@ -1,0 +1,3 @@
+(calfw-blocks :fetcher github
+              :repo "fenril058/calfw-blocks"
+              :branch "develop")

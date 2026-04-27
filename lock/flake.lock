@@ -164,16 +164,15 @@
     "calfw-howm": {
       "flake": false,
       "locked": {
-        "lastModified": 1775133289,
-        "narHash": "sha256-w4MLjY8I3CoFjkV9i1VKdyDiyTug4jX2G9D38+V7CtU=",
-        "owner": "fenril058",
+        "lastModified": 1777195547,
+        "narHash": "sha256-RpN0/hpM7q669RPXkQdEQAKYjoFauwAtciF3I7LgnMQ=",
+        "owner": "kiwanami",
         "repo": "emacs-calfw",
-        "rev": "6bdc916f5649f9768eea62e6fa0dfbd13c3e9755",
+        "rev": "24fa167af96a6e677aea7c6b9385f669b550ee2f",
         "type": "github"
       },
       "original": {
-        "owner": "fenril058",
-        "ref": "fix/howm-cl-loop-variable-binding",
+        "owner": "kiwanami",
         "repo": "emacs-calfw",
         "type": "github"
       }
@@ -181,16 +180,15 @@
     "calfw-ical": {
       "flake": false,
       "locked": {
-        "lastModified": 1775063660,
-        "narHash": "sha256-264LjoluHvN6ufmpjiKP/OSaAF34XjyAKMKCtew+2yI=",
-        "owner": "fenril058",
+        "lastModified": 1777195547,
+        "narHash": "sha256-RpN0/hpM7q669RPXkQdEQAKYjoFauwAtciF3I7LgnMQ=",
+        "owner": "kiwanami",
         "repo": "emacs-calfw",
-        "rev": "928ac98be18499a374fd25d1dc5e8ec4502a88b8",
+        "rev": "24fa167af96a6e677aea7c6b9385f669b550ee2f",
         "type": "github"
       },
       "original": {
-        "owner": "fenril058",
-        "ref": "fix/ical-crlf-normalization",
+        "owner": "kiwanami",
         "repo": "emacs-calfw",
         "type": "github"
       }

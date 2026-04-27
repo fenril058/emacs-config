@@ -600,7 +600,6 @@ Your friendly neighborhood expand-region clone.  https://github.com/casouri/expr
 
 #+end_src
 
-
 *** iedit
 #+begin_quote
 Edit multiple occurrences in the same way simultaneously. https://github.com/victorhge/iedit/tree/main
@@ -1055,7 +1054,6 @@ Wrapper for difftastic.  https://github.com/pkryger/difftastic.el
 #+begin_src emacs-lisp
   (setup (:package difftastic))
 #+end_src
-
 
 **** smerge-mode
 
@@ -2068,6 +2066,14 @@ Displaying errors from Flycheck right below their reporting location, using over
 
 #+end_src
 
+*** Shell script
+
+#+begin_src emacs-lisp
+  (setup sh-script
+    (:opt sh-basic-offset 2))
+
+#+end_src
+
 *** C/C++
 #+begin_src emacs-lisp
   (setup cc-mode
@@ -2187,7 +2193,7 @@ Displaying errors from Flycheck right below their reporting location, using over
 
 #+end_src
 
-***  Haskel
+*** Haskel
 #+begin_src emacs-lisp
   (setup (:package haskell-mode)
     (:hook eglot-ensure))
@@ -3080,38 +3086,37 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 #+end_quote
 
 #+begin_src emacs-lisp
-    (setup (:package calfw)
-      (:also-load calfw-org calfw-howm calfw-cal calfw-ical)
-      (setopt calfw-org-agenda-schedule-args '(:scheduled :timestamp :deadline))
-      (:with-map calfw-calendar-mode-map
-        (:bind "o" 'calfw-org-open-agenda-day))
+  (setup (:package calfw)
+    (:also-load calfw-org calfw-howm calfw-cal calfw-ical)
+    (setopt calfw-org-agenda-schedule-args '(:scheduled :timestamp :deadline))
+    (:with-map calfw-calendar-mode-map
+      (:bind "o" 'calfw-org-open-agenda-day))
 
-      (setup org-agenda
-        (:when-loaded
-          (add-to-list 'org-agenda-custom-commands
-                       '("c" "Display calendar" (lambda (_) (calfw-open-my-calendar))))))
+    (setup org-agenda
+      (:when-loaded
+        (add-to-list 'org-agenda-custom-commands
+                     '("c" "Display calendar" (lambda (_) (calfw-open-my-calendar))))))
 
-      (defun calfw-open-my-calendar ()
-        "org-agenda, 天文現象, 祝日, howm を source として表示する。"
-        (interactive)
-        (let* ((source1 (calfw-org-create-source org-agenda-files "org" "DodgerBlue1"))
-               (source2 (calfw-ical-create-source
-                         "https://www.cantonbecker.com/astronomy-calendar/astrocal.ics"
-                         "天文現象"
-                         "ForestGreen"))
-               (source3 (calfw-howm-create-source "howm" "LightSlateBlue")))
-          (calfw-open-calendar-buffer
-           :view 'month
-           :contents-sources (list source1 source2 source3))))
-      (autoload 'calfw-org-create-source "calfw-org"))
+    (defun calfw-open-my-calendar ()
+      "org-agenda, 天文現象, 祝日, howm を source として表示する。"
+      (interactive)
+      (let* ((source1 (calfw-org-create-source org-agenda-files "org" "DodgerBlue1"))
+             (source2 (calfw-ical-create-source
+                       "https://www.cantonbecker.com/astronomy-calendar/astrocal.ics"
+                       "天文現象"
+                       "ForestGreen"))
+             (source3 (calfw-howm-create-source "howm" "LightSlateBlue")))
+        (calfw-open-calendar-buffer
+         :view 'month
+         :contents-sources (list source1 source2 source3))))
+    (autoload 'calfw-org-create-source "calfw-org"))
 
-    (setup (:package calfw-org))
-    (setup (:package calfw-howm))
-    (setup (:package calfw-cal))
-    (setup (:package calfw-ical))
+  (setup (:package calfw-org))
+  (setup (:package calfw-howm))
+  (setup (:package calfw-cal))
+  (setup (:package calfw-ical))
 
 #+end_src
-
 ** LLM
 
 *** ellama

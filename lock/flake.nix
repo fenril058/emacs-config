@@ -63,15 +63,13 @@
     };
     calfw-howm = {
       flake = false;
-      owner = "fenril058";
-      ref = "fix/howm-cl-loop-variable-binding";
+      owner = "kiwanami";
       repo = "emacs-calfw";
       type = "github";
     };
     calfw-ical = {
       flake = false;
-      owner = "fenril058";
-      ref = "fix/ical-crlf-normalization";
+      owner = "kiwanami";
       repo = "emacs-calfw";
       type = "github";
     };
