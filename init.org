@@ -17,9 +17,9 @@ I sometime use =git rebase -i= to clean up the history. Therefore, you need to e
 
 You may need to run these commands when you start Emacs for the first time.
 
-- =treesit-auto-install-all=
-- =nerd-icons-install-fonts=
-- =eat-compile-terminfo=
+- ~treesit-auto-install-all~
+- ~nerd-icons-install-fonts~
+- ~eat-compile-terminfo~
 
 *** Commands
 
@@ -1948,13 +1948,13 @@ Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
     (:nixpkgs tree-sitter)
     (:also-load treesit-auto)
     (:opt treesit-font-lock-level 4)
-    (setup (:package treesit-auto)
-      (:opt treesit-auto-install t)
-      (:when-loaded
-        (:foreach '((erlang "https://github.com/WhatsApp/tree-sitter-erlang")
-                    (lua "https://github.com/MunifTanjim/tree-sitter-lua"))
-                          (add-to-list 'treesit-language-source-alist ,it)))))
+    (:when-loaded
+      (:foreach '((erlang "https://github.com/WhatsApp/tree-sitter-erlang")
+                  (lua "https://github.com/MunifTanjim/tree-sitter-lua"))
+                (add-to-list 'treesit-language-source-alist ,it))))
 
+  (setup (:package treesit-auto)
+    (:opt treesit-auto-install t))
 #+end_src
 
 *** eglot
