@@ -1672,14 +1672,12 @@ Search and navigate via completing-read. https://github.com/minad/consult
 
 #+begin_src emacs-lisp
   (setup (:package consult)
-    (:also-load affe consult-xref)
+    (:also-load affe consult-xref embark-consult)
     (:override-map "C-'" consult-buffer
                    "C-c i" consult-line-thing-at-point
                    "C-c h" consult-buffer)
     (:global-keymap "C-x b" consult-buffer
                     "<remap> <goto-line>" consult-goto-line)
-    (:with-mode completion-list-mode-hook
-      (:hook consult-preview-at-point-mode))
     (:opt consult-preview-key '(:debounce 0.5 any)
           consult-ripgrep-args (concat "rg "
                                        ;; -u がないと .gitignore のせいで何もヒットしないことがある.
@@ -1721,6 +1719,7 @@ Search and navigate via completing-read. https://github.com/minad/consult
                    '("j" . consult-org-heading))
       (add-to-list 'org-speed-commands
                    '("J" .  org-goto))))
+
 #+end_src
 
 **** consult-yasnippet
@@ -1836,6 +1835,7 @@ from =helm-descbinds= to =embark-bindings=
 
 #+begin_src emacs-lisp
   (setup (:package embark)
+    (:also-load embark-consult)
     (:global-keymap
      "C-." embark-act
      "C-;" embark-dwim
@@ -1853,13 +1853,7 @@ Consult integration for Embark.  [[https://github.com/oantolin/embark]]
 #+end_quote
 
 #+begin_src emacs-lisp
-  (setup (:package embark-consult)
-    (with-eval-after-load 'consult
-      (require 'embark-consult))
-    (with-eval-after-load 'embark
-      (require 'embark-consult))
-    (:with-mode embark-collect-mode
-      (:hook consult-preview-at-point-mode)))
+  (setup (:package embark-consult))
 
 #+end_src
 
