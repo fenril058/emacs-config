@@ -109,4 +109,5 @@
   ;; suppress warning
   (setopt native-comp-async-report-warnings-errors 'silent)
 
+  ;;; early-init.el ends here
 #+end_src

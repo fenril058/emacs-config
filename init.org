@@ -114,9 +114,9 @@ and then move to [[https://github.com/conao3/leaf.el][conao3/leaf.el]].
 However its function is too complicated for me.
 Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup.el]], though I was curious about [[https://github.com/zonuexe/emacs-wiz/tree/master][zonuexe/emacs-wiz.]]
 
-** initial settings
+** Initial settings
 
-*** header
+*** Header
 #+begin_src emacs-lisp
   ;;; init.el --- user init file -*- lexical-binding: t; no-byte-compile: t; -*-
 
@@ -188,7 +188,7 @@ Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup
 
 #+end_src
 
-*** custom-file
+*** Custom-file
 #+begin_src emacs-lisp
   (setopt custom-file (locate-user-emacs-file "custom.el"))
 
@@ -454,7 +454,7 @@ This setting is in [[./early-init.org]].
 
 #+end_src
 
-** emacsclient
+** Emacsclient
 #+begin_src emacs-lisp
   ;;; for emacs client
   (setup server
@@ -465,7 +465,7 @@ This setting is in [[./early-init.org]].
 
 #+end_src
 
-** editing remotefile
+** Editing remote file
 #+begin_src emacs-lisp
   (setup tramp
     (:when-loaded
@@ -483,7 +483,7 @@ This setting is in [[./early-init.org]].
 
 #+end_src
 
-** keymap
+** Keymap
 #+begin_src emacs-lisp
   (setup overriding-minor-mode
     (defvar overriding-minor-mode-map
@@ -731,7 +731,7 @@ Yet another dmacro.  [[https://github.com/fenril058/yadmacro]]
 
 #+end_src
 
-** magit
+** Magit
 
 #+begin_src emacs-lisp
   (setup (:package transient))
@@ -820,7 +820,7 @@ Nix3.el integration for Magit
 
 #+end_src
 
-** appearance
+** Appearance
 
 *** Basic (builtin)
 #+begin_src emacs-lisp
@@ -1148,7 +1148,7 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
-** paren
+** Paren
 #+begin_src emacs-lisp
   (setup paren
     (setopt show-paren-delay 0.1)
@@ -1196,7 +1196,7 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
-** history
+** History
 #+begin_src emacs-lisp
   (setopt auto-save-visited-interval 180) ; 180秒idleで保存
   (auto-save-visited-mode 1)
@@ -1259,7 +1259,7 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
-** search
+** Search
 #+begin_src emacs-lisp
   (setup isearch
     (:opt isearch-allow-scroll t))
@@ -1285,7 +1285,7 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
-** replace
+** Replace
 *** anzu
 #+begin_src emacs-lisp
   (setup (:package anzu)
@@ -1298,7 +1298,7 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
-** time-stamp
+** Time-stamp
 #+begin_src emacs-lisp
   (setup time-stamp
     (:with-hook before-save-hook
@@ -1353,7 +1353,7 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
-** my utility tools
+** My utility tools
 
 My utility tools consists of these files:
 - =my-blog-utils.el=
@@ -1423,7 +1423,7 @@ If ([Windows.Forms.Clipboard]::ContainsImage() -eq $True) {
 [[https://github.com/protesilaos/fontaine][protesilaos/fontaine: Set Emacs font configurations using presets]] is probably a better choice.
 I found the package via [[https://qiita.com/terzacommune/items/7e3e025754376fb22d17][emacsのライティング環境整備 2026 春 #Emacs - Qiita]].
 
-** unicode
+** Unicode
 
 *** uniletter
 #+begin_quote
@@ -1455,7 +1455,7 @@ Provide detailed information about Unicode characters.
 
 #+end_src
 
-** decolation
+** Decolation
 
 *** boxes
 #+begin_src emacs-lisp
@@ -1655,6 +1655,9 @@ VERTical Interactive COmpletion. https://github.com/minad/vertico
 Search and navigate via completing-read. https://github.com/minad/consult
 #+end_quote
 
+- ~consult-apropos~ was dropped at version 0.32 (2023-02-06): See [[https://github.com/minad/consult/blob/main/CHANGELOG.org][CHANGELOG]].
+  - Just use ~describe-symbol~ instead.
+
 #+begin_src emacs-lisp
   (setup (:package consult)
     (:also-load affe consult-xref)
@@ -1848,7 +1851,7 @@ Consult integration for Embark.  [[https://github.com/oantolin/embark]]
 
 #+end_src
 
-** avy
+** Avy
 #+begin_quote
 Jump to things in Emacs tree-style.  https://github.com/abo-abo/avy
 #+end_quote
@@ -1870,7 +1873,7 @@ Jump to things in Emacs tree-style.  https://github.com/abo-abo/avy
 
 #+end_src
 
-** ace-window
+** Ace-window
 #+begin_quote
 Quickly switch windows in Emacs.  https://github.com/abo-abo/ace-window
 #+end_quote
@@ -3297,5 +3300,18 @@ An Emacs plugin for GitHub Copilot.  https://github.com/copilot-emacs/copilot.el
 
 #+end_src
 
-** desktop-save
-I do not use =desktop-save= now.
+** Footer
+#+begin_src emacs-lisp
+  ;;; init.el ends here
+#+end_src
+
+** NOT adopted tools
+
+This section intoduces tools that were considered but not adopted now.
+
+- ~desktop-save~.
+- [[https://github.com/jwiegley/use-package][jwiegley/use-package]] and [[https://github.com/conao3/leaf.el][conao3/leaf.el]].
+- [[https://github.com/emacs-helm/helm][emacs-helm/helm]] and [[https://github.com/emacs-jp/anything][emacs-jp/anything]]
+- [[https://github.com/company-mode/company-mode][company-mode/company-mode]] and [[https://github.com/auto-complete/auto-complete][auto-complete/auto-complete]]
+- [[https://www.gentei.org/~yuuji/software/windows.el][gentei.org/~yuuji/software/windows.el]]
+- [[https://www.yatex.org/hgrepos/yatex][YaTeX]]
