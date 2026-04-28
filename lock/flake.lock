@@ -1154,6 +1154,23 @@
         "url": "https://git.code.sf.net/p/maxima/code"
       }
     },
+    "imenu-list": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777353986,
+        "narHash": "sha256-eiysvICCsEb9dcHSb9v45DqgVfkq4FaX408CKEAgC5E=",
+        "owner": "fenril058",
+        "repo": "imenu-list",
+        "rev": "dbcecc7b4c49a67f3d6be4257b3b4c7e091b1adf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenril058",
+        "ref": "patched",
+        "repo": "imenu-list",
+        "type": "github"
+      }
+    },
     "inheritenv": {
       "flake": false,
       "locked": {
@@ -2017,6 +2034,7 @@
         "hydra": "hydra",
         "iedit": "iedit",
         "imaxima": "imaxima",
+        "imenu-list": "imenu-list",
         "inheritenv": "inheritenv",
         "init-fontset": "init-fontset",
         "io-mode": "io-mode",

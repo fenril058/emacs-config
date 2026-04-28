@@ -1,0 +1,3 @@
+(imenu-list :fetcher github
+            :repo "fenril058/imenu-list"
+            :branch "patched")

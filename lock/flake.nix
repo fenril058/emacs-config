@@ -428,6 +428,13 @@
       type = "git";
       url = "https://git.code.sf.net/p/maxima/code";
     };
+    imenu-list = {
+      flake = false;
+      owner = "fenril058";
+      ref = "patched";
+      repo = "imenu-list";
+      type = "github";
+    };
     inheritenv = {
       flake = false;
       owner = "purcell";

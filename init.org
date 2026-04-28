@@ -1298,6 +1298,18 @@ https://github.com/protesilaos/modus-themes
 
 #+end_src
 
+** Imenu
+#+begin_quote
+Emacs plugin to show the current buffer's imenu entries in a separate buffer.  https://github.com/bmag/imenu-list
+#+end_quote
+
+I forked it: https://github.com/fenril058/imenu-list/tree/patched.
+
+#+begin_src emacs-lisp
+  (setup (:package imenu-list)
+    (:key-chord "mn" imenu-list))
+#+end_src
+
 ** Time-stamp
 #+begin_src emacs-lisp
   (setup time-stamp
