@@ -1304,6 +1304,7 @@ Emacs plugin to show the current buffer's imenu entries in a separate buffer.  h
 #+end_quote
 
 I forked it: https://github.com/fenril058/imenu-list/tree/patched.
+I wonder ~embark-collect~ is enough for the kind of function.
 
 #+begin_src emacs-lisp
   (setup (:package imenu-list)
