@@ -1,7 +1,76 @@
 ;;; my-blog-utils.el -*- lexical-binding: t; -*-
 
+(require 'transient)
+
 (defcustom my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"
   "Source directory of my blog")
+
+(defcustom my-blog-url "https://chisono.web.fc2.com/blog/"
+  "URL of my blog")
+
+;;;###autoload
+(transient-define-suffix my-blog-new (title)
+  :key "n"
+  :description "作成"
+  (interactive "sWrite article title: ")
+  (create-blog-article title))
+
+;;;###autoload
+(transient-define-suffix my-blog-search-this-year ()
+  :key "s"
+  :description "タイトル検索（今年のみ）"
+  (interactive)
+  (let ((max-mini-window-height 0.5)
+        (vertico-count 50))
+    (consult-ripgrep (concat my-blog-directory (format-time-string "%Y")) "^#\\+TITLE:")))
+
+;;;###autoload
+(transient-define-suffix my-blog-search ()
+  :key "S"
+  :description "タイトル検索"
+  (interactive)
+  (let ((max-mini-window-height 0.5)
+        (vertico-count 50)
+        (vertico-grid-mode t))
+    (consult-ripgrep my-blog-directory "^#\\+TITLE:")))
+
+;;;###autoload
+(transient-define-suffix my-blog-dired ()
+  :key "d"
+  :description "Dired"
+  (interactive)
+  (dired (concat my-blog-directory (format-time-string "%Y"))))
+
+;;;###autoload
+(transient-define-suffix my-blog-git-save ()
+  :key "u"
+  :description "Save & Push"
+  (interactive)
+  (async-shell-command (format "cd %s && git add -A; git now; git push" my-blog-directory)))
+
+;;;###autoload
+(transient-define-suffix my-blog-current-open ()
+  :key "o"
+  :description "サイトを開く"
+  (interactive)
+  (let ((open-cmd (if is-wsl "wslstart" "open")))
+    (shell-command (format "%s %s" open-cmd my-blog-url))))
+
+;;;###autoload
+(transient-define-prefix my-blog-menu ()
+  "Blog"
+  [["Basic"
+    (my-blog-new)
+    (my-blog-dired)
+    ]
+   ["操作"
+    (my-blog-git-save)
+    (my-blog-current-open)
+    ]
+   ["Search"
+    (my-blog-search-this-year)
+    (my-blog-search)
+    ]])
 
 ;;;###autoload
 (defun create-blog-article (title)
@@ -74,3 +143,4 @@ If the current mode is org-mode, do not touch links inside src blocks."
       )))
 
 (provide 'my-blog-utils)
+;;; my-blog-utils.el ends here

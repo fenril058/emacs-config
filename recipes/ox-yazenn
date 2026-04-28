@@ -1,0 +1,2 @@
+(ox-yazenn :fetcher github
+           :repo "msnoigrs/ox-yazenn")

@@ -1389,10 +1389,12 @@ My utility tools consists of these files:
   (:nixpkgs espeak) ; espeak-ng (original espeak is referred to as espeak-classic)
   (:global-keymap "C-c f" check-font-here
                   "C-c F" describe-text-properties
-                  "C-c b" create-blog-article
+                  "C-c b" my-blog-menu
                   "C-c m" insert-clipboard-image-as-markdown-or-org-style)
   (setup org
-    (:bind "C-c 1"  replace-markdown-links-to-org)))
+    (:bind "C-c 1"  replace-markdown-links-to-org))
+  (setup markdown
+    (:bind "C-c 1"  replace-org-links-to-markdown)))
 
 #+end_src
 
@@ -1571,13 +1573,12 @@ Completion At Point Extensions.  https://github.com/minad/cape
               (cape-capf-super
                #'tempel-complete        ; see all matches
                #'yasnippet-capf
-               #'cape-file
                #'cape-keyword
                #'cape-abbrev
                #'cape-dabbrev
                #'cape-dict)
-              nil t))
-
+              nil t)
+    (add-hook 'completion-at-point-functions #'cape-file nil t))
   (:foreach '(prog-mode-hook
               text-mode-hook
               org-mode-hook
@@ -2930,13 +2931,17 @@ RSS 2.0 Back-End for Org Export Engine. https://github.com/emacsmirror/ox-rss
 
 #+end_src
 
-**** org-export-zenn
+**** org-export-yazenn
+
 #+begin_quote
-Zenn-flavored Markdown export backend for Org mode.  https://github.com/conao3/ox-zenn.el
+Org Modeエクスポートエンジン向けZenn.dev用Markdownバックエンド.  https://github.com/msnoigrs/ox-yazenn
 #+end_quote
 
+- [[https://zenn.dev/msnoigrs/books/zenn-no-toukou-kontentsu-wo-org-mode-de-kaku][Zennの投稿コンテンツをOrg Modeで書く]]
+
 #+begin_src emacs-lisp
-(setup (:package ox-zenn))
+(setup (:package ox-yazenn)
+  (:opt org-yazenn-zenndev-username "ril"))
 
 #+end_src
 
@@ -3135,6 +3140,7 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 (setup (:package calfw-ical))
 
 #+end_src
+
 ** LLM
 
 *** ellama
@@ -3330,3 +3336,4 @@ This section intoduces tools that were considered but not adopted now.
 - [[https://github.com/company-mode/company-mode][company-mode/company-mode]] and [[https://github.com/auto-complete/auto-complete][auto-complete/auto-complete]]
 - [[https://www.gentei.org/~yuuji/software/windows.el][gentei.org/~yuuji/software/windows.el]]
 - [[https://www.yatex.org/hgrepos/yatex][YaTeX]]
+- [[https://github.com/conao3/ox-zenn.el][conao3/ox-zenn.el]]
