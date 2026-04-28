@@ -868,7 +868,7 @@ Nix3.el integration for Magit
       (custom-set-faces '(hiwin-face ((((class color) (background light))
                                        (:background "gray90")))
                                      nil)))
-    (:defer 2))
+    (when window-system (:defer 2)))
 
 #+end_src
 
@@ -899,29 +899,39 @@ Nix3.el integration for Magit
 #+begin_src emacs-lisp
   (when-system-name "5CD51398X8"
     (when window-system
-      (setopt initial-frame-alist '((height . 53) (width . 117) (left . 961) (top . 31)))
+      ;; (setopt initial-frame-alist '((height . 53) (width . 117) (left . 961) (top . 31)))
+      (setup frame
+        (:with-hook emacs-startup-hook
+          (:hook
+           (lambda () (modify-all-frames-parameters '((height . 58) (width . 116) (left . 961) (top . 0)))))))
       (setup font
         (:with-hook after-init-hook
-          (:hook (lambda ()
-                   (set-frame-font "-TWR-Moralerspace Krypton HWJPDOC-regular-normal-normal-*-15-*-*-*-*-0-iso10646-1")
-                   (set-fontset-font nil 'unicode (font-spec :family "Moralerspace Krypton HWJPDOC") nil 'prepend)
-                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
-                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+          (:hook
+           (lambda ()
+             (set-frame-font "-TWR-Moralerspace Krypton HWJPDOC-regular-normal-normal-*-15-*-*-*-*-0-iso10646-1")
+             (set-fontset-font nil 'unicode (font-spec :family "Moralerspace Krypton HWJPDOC") nil 'prepend)
+             (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
+             (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
         (setup face-remap
           (:when-loaded
             (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
 
   (when-system-name "4CE536CRGP"
     (when window-system
-      (modify-all-frames-parameters '((height . 72) (width . 157) (left . 5088) (top . 0)))
+      (setup frame
+        (:with-hook emacs-startup-hook
+          (:hook
+           (lambda ()
+             (modify-all-frames-parameters '((height . 72) (width . 157) (left . 5088) (top . 0)))))))
       (setup font
         (:with-hook after-init-hook
-          (:hook (lambda ()
-                   (set-frame-font "-TWR-PlemolJP Console NF-regular-normal-normal-*-15-*-*-*-d-0-iso10646-1")
-                   (set-fontset-font nil 'unicode (font-spec :family "PlemolJP Console NF") nil 'prepend)
-                   (set-fontset-font nil ?\u203B (font-spec :family "PlemolJP")) ; ※
-                   (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
-                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+          (:hook
+           (lambda ()
+             (set-frame-font "-TWR-PlemolJP Console NF-regular-normal-normal-*-15-*-*-*-d-0-iso10646-1")
+             (set-fontset-font nil 'unicode (font-spec :family "PlemolJP Console NF") nil 'prepend)
+             (set-fontset-font nil ?\u203B (font-spec :family "PlemolJP")) ; ※
+             (add-to-list 'face-font-rescale-alist '("Noto Sans CJK KR" . 1.1))
+             (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
         (setup face-remap
           (:when-loaded
             (set-face-attribute 'variable-pitch nil :family "Rounded Mgen+ 1p"))))))
@@ -930,10 +940,11 @@ Nix3.el integration for Magit
     (when window-system
       (setup font
         (:with-hook after-init-hook
-          (:hook (lambda ()
-                   (set-frame-font "-GOOG-Noto Sans Mono CJK JP-regular-normal-normal-*-14-*-*-*-*-0-iso10646-1")
-                   (set-fontset-font nil 'unicode (font-spec :family "Noto Sans Mono CJK JP") nil 'prepend)
-                   (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
+          (:hook
+           (lambda ()
+             (set-frame-font "-GOOG-Noto Sans Mono CJK JP-regular-normal-normal-*-14-*-*-*-*-0-iso10646-1")
+             (set-fontset-font nil 'unicode (font-spec :family "Noto Sans Mono CJK JP") nil 'prepend)
+             (add-to-list 'face-font-rescale-alist '("Noto Color Emoji" . 0.9)))))
         (setup face-remap
           (:when-loaded
             (set-face-attribute 'variable-pitch nil :family "Noto Serif CJK JP"))))))
@@ -965,8 +976,6 @@ Nix3.el integration for Magit
     (:defer 2 (lambda ()
                 (setup-inequality-sign-narrow)
                 (setup-Greek-letters-narrow))))
-
-
 
 #+end_src
 
