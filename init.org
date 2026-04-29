@@ -1931,7 +1931,7 @@ holizontally."
     (:bind "C-c t" hs-toggle-hiding))
   (add-hook 'prog-mode-hook #'hs-minor-mode))
 
-(setup eldoc
+(setup (:package eldoc)
   (:defer 2 #'global-eldoc-mode))
 
 #+end_src
@@ -2952,8 +2952,8 @@ Org Modeエクスポートエンジン向けZenn.dev用Markdownバックエン�
 - [[https://zenn.dev/msnoigrs/books/zenn-no-toukou-kontentsu-wo-org-mode-de-kaku][Zennの投稿コンテンツをOrg Modeで書く]]
 
 #+begin_src emacs-lisp
-;; (setup (:package ox-yazenn)
-;;   (:opt org-yazenn-zenndev-username "ril"))
+(setup (:package ox-yazenn)
+  (:opt org-yazenn-zenndev-username "ril"))
 
 #+end_src
 

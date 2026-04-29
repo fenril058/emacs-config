@@ -37,6 +37,21 @@
     },
     "version": "1.23.0.20260422.80836"
   },
+  "eldoc": {
+    "archive": {
+      "narHash": "sha256-JI/csURgG7yoqdbjJ40GUJqr1FDGOHzg08UFdLwMYU8=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/eldoc-1.16.0.0.20260101.125434.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "emacs": "26.3"
+    },
+    "version": "1.16.0.0.20260101.125434"
+  },
   "jsonrpc": {
     "archive": {
       "narHash": "sha256-u0ufGYM242gi2eQt8pvDVmvh4EF943JEpRUpQgOqvFk=",

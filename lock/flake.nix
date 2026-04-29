@@ -643,6 +643,12 @@
       repo = "ox-rss";
       type = "github";
     };
+    ox-yazenn = {
+      flake = false;
+      owner = "msnoigrs";
+      repo = "ox-yazenn";
+      type = "github";
+    };
     ox-zenn = {
       flake = false;
       owner = "conao3";

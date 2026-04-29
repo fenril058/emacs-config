@@ -1719,6 +1719,22 @@
         "type": "github"
       }
     },
+    "ox-yazenn": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777012490,
+        "narHash": "sha256-IOvHFu47ml3o0paY2Kq6sseu1DwVXacIt4hFCcjmsow=",
+        "owner": "msnoigrs",
+        "repo": "ox-yazenn",
+        "rev": "8de603b2dcb14a505de28c2b021d3c55e37ae606",
+        "type": "github"
+      },
+      "original": {
+        "owner": "msnoigrs",
+        "repo": "ox-yazenn",
+        "type": "github"
+      }
+    },
     "ox-zenn": {
       "flake": false,
       "locked": {
@@ -2069,6 +2085,7 @@
         "orderless": "orderless",
         "org": "org",
         "ox-rss": "ox-rss",
+        "ox-yazenn": "ox-yazenn",
         "ox-zenn": "ox-zenn",
         "pdf-tools": "pdf-tools",
         "perspective": "perspective",
