@@ -1,2 +1,4 @@
 (ox-yazenn :fetcher github
-           :repo "msnoigrs/ox-yazenn")
+           :repo "msnoigrs/ox-yazenn"
+           :files ("*.el"
+                   (:exclude "zenn-publish.el")))
