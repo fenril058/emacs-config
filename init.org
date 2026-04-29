@@ -1390,6 +1390,7 @@ My utility tools consists of these files:
   (:global-keymap "C-c f" check-font-here
                   "C-c F" describe-text-properties
                   "C-c b" my-blog-menu
+                  "C-c z" my-zenn-menu
                   "C-c m" insert-clipboard-image-as-markdown-or-org-style)
   (setup org
     (:bind "C-c 1"  replace-markdown-links-to-org))
@@ -1624,13 +1625,9 @@ It overlaps in function with Tempel, but I've kept it for now.
 
 #+begin_src emacs-lisp
 (setup (:package yasnippet)
-  (:defer 1
-          (lambda ()
-            (let ((yas-verbosity 2))
-              (yas-global-mode 1))))
-  (:when-loaded
-    (setup warning
-      (add-to-list 'warning-suppress-types '(yasnippet backquote-change))))
+  (:defer 1 (lambda ()
+              (setopt yas-verbosity 2)
+              (yas-global-mode 1)))
   (:also-load yasnippet-snippets))
 
 (setup (:package yasnippet-snippets))
@@ -2492,7 +2489,7 @@ but it has been archived and likely moved to [[https://github.com/emacsmirror/ma
 *** open-junk-file
 #+begin_src emacs-lisp
 (setup (:package open-junk-file)
-  (:global-keymap "C-c z" open-junk-file)
+  (:global-keymap "C-c x" open-junk-file)
   (:opt open-junk-file-format "~/junk/%Y/%m/%Y-%m-%d-%H%M%S."))
 
 #+end_src
@@ -2931,7 +2928,22 @@ RSS 2.0 Back-End for Org Export Engine. https://github.com/emacsmirror/ox-rss
 
 #+end_src
 
-**** org-export-yazenn
+
+**** org-export-zenn
+#+begin_quote
+Zenn-flavored Markdown export backend for Org mode.  https://github.com/conao3/ox-zenn.el
+#+end_quote
+
+- [[https://zenn.dev/conao3/articles/ox-zenn-usage][org-modeドキュメントからZenn Flavored Markdownを生成するox-zennの使い方]]
+- [[https://zenn.dev/toyboot4e/articles/write-org-for-great-good][Zenn Book = One Org File]]
+- [[https://zenn.dev/toyboot4e/books/kyopro-bonsai-hs/viewer/ox-zenn][付録 A. ox-zenn.el｜競プロ盆栽.hs]]
+
+#+begin_src emacs-lisp
+(setup (:package ox-zenn))
+
+#+end_src
+
+**** org-export-yazenn                                                :error:
 
 #+begin_quote
 Org Modeエクスポートエンジン向けZenn.dev用Markdownバックエンド.  https://github.com/msnoigrs/ox-yazenn
@@ -2940,8 +2952,8 @@ Org Modeエクスポートエンジン向けZenn.dev用Markdownバックエン�
 - [[https://zenn.dev/msnoigrs/books/zenn-no-toukou-kontentsu-wo-org-mode-de-kaku][Zennの投稿コンテンツをOrg Modeで書く]]
 
 #+begin_src emacs-lisp
-(setup (:package ox-yazenn)
-  (:opt org-yazenn-zenndev-username "ril"))
+;; (setup (:package ox-yazenn)
+;;   (:opt org-yazenn-zenndev-username "ril"))
 
 #+end_src
 
@@ -3336,4 +3348,3 @@ This section intoduces tools that were considered but not adopted now.
 - [[https://github.com/company-mode/company-mode][company-mode/company-mode]] and [[https://github.com/auto-complete/auto-complete][auto-complete/auto-complete]]
 - [[https://www.gentei.org/~yuuji/software/windows.el][gentei.org/~yuuji/software/windows.el]]
 - [[https://www.yatex.org/hgrepos/yatex][YaTeX]]
-- [[https://github.com/conao3/ox-zenn.el][conao3/ox-zenn.el]]
