@@ -467,7 +467,7 @@
     };
     key-chord = {
       flake = false;
-      owner = "emacsorphanage";
+      owner = "zonuexe";
       repo = "key-chord";
       type = "github";
     };

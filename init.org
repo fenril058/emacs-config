@@ -359,7 +359,11 @@ This setting is in [[./early-init.org]].
 
 #+begin_src emacs-lisp
 (setup (:package key-chord)
-  (:defer 0.3))
+  (:opt key-chord-two-keys-delay           0.1
+        key-chord-safety-interval-backward 0.1
+        key-chord-safety-interval-forward  0.2)
+  (:defer 0.3 (lambda () (let ((inhibit-message t))
+                           (key-chord-mode 1)))))
 
 (eval-when-compile
   (setup-define :key-chord
@@ -1620,6 +1624,8 @@ Collection tempel templates.  https://github.com/Crandel/tempel-collection
 #+begin_quote
 Yet another snippet extension for Emacs.  https://github.com/joaotavora/yasnippet
 #+end_quote
+
+This package reuiqres ~cl-lib.el~.
 
 It overlaps in function with Tempel, but I've kept it for now.
 
@@ -2955,6 +2961,9 @@ Org Modeエクスポートエンジン向けZenn.dev用Markdownバックエン�
 (setup (:package ox-yazenn)
   (:opt org-yazenn-zenndev-username "ril"))
 
+(setup ox
+  (:also-load ox-yazenn-article ox-yazenn-book))
+
 #+end_src
 
 *** HOWM
@@ -3095,9 +3104,9 @@ RFC document browser and viewer https://github.com/galdor/rfc-mode
     (setopt japanese-holiday-weekend '(0 6) ; 土日を祝日として表示
             japanese-holiday-weekend-marker ; 土曜日を水色で表示
             '(holiday nil nil nil nil nil japanese-holiday-saturday))
-    (add-hook 'calendar-today-visible-hook 'japanese-holiday-mark-weekend)
-    (add-hook 'calendar-today-invisible-hook 'japanese-holiday-mark-weekend)
-    (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+    (cl-pushnew 'japanese-holiday-mark-weekend calendar-today-visible-hook)
+    (cl-pushnew 'japanese-holiday-mark-weekend calendar-today-invisible-hook)
+    (cl-pushnew 'calendar-mark-today calendar-today-visible-hook)
     (setopt calendar-month-header '(propertize
                                     (format "%d年 %s月" year month)
                                     'font-lock-face 'calendar-month-header))

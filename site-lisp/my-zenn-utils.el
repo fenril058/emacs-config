@@ -1,12 +1,12 @@
-;;; my-zenn-utils.el
+;;; my-zenn-utils.el -*- lexical-binding: t; -*-
 
-;; https://zenn.dev/megeton/articles/66b3769294b04b
-
-;; https://github.com/fenril058/zenn-content
+;; The concept is from <https://zenn.dev/megeton/articles/66b3769294b04b>
 
 (require 'transient)
+(require 'consult)
 
-(defcustom my-zenn-dir "~/ghq/github.com/fenril058/zenn-content/"
+;; https://github.com/fenril058/zenn-content
+(defvar my-zenn-dir "~/ghq/github.com/fenril058/zenn-content/"
   "zenn-content directory")
 
 ;;;###autoload
@@ -24,7 +24,7 @@
                  0 14))))
     (shell-command (format "cd %s && zenn new:article --slug %s" my-zenn-dir slug))
     (find-file (format "%sarticles/%s.md" my-zenn-dir slug))
-    (end-of-buffer)))
+    (goto-char (point-max))))
 
 ;;;###autoload
 (transient-define-suffix my-zenn-search ()
@@ -51,7 +51,7 @@
                   (file-name-nondirectory buffer-file-name)))
            (url (format "https://zenn.dev/ril/articles/%s" stem))
            (open-cmd (if is-wsl "wslstart" "open")))
-      (if (stinrg= dir my-zenn-dir)
+      (if (string= dir my-zenn-dir)
           (shell-command (format "%s %s" open-cmd url))
         (message "Not in zenn-content directory.")))))
 

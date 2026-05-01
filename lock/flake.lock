@@ -1254,15 +1254,15 @@
     "key-chord": {
       "flake": false,
       "locked": {
-        "lastModified": 1743365495,
-        "narHash": "sha256-NYtJKBTUlJ1xAUe7MudwfleL+aaEdg8pwHsEy+bbJdM=",
-        "owner": "emacsorphanage",
+        "lastModified": 1729652021,
+        "narHash": "sha256-bMrFQjo3Dki2MhSln0IP2jIE97M1Qovhnb3BtGmFR4A=",
+        "owner": "zonuexe",
         "repo": "key-chord",
-        "rev": "cb646e815c61f253ad9fdfbe058049dda4e2b32b",
+        "rev": "15564dc4f1a4af8f646f5e73b09e3bd439cfe99b",
         "type": "github"
       },
       "original": {
-        "owner": "emacsorphanage",
+        "owner": "zonuexe",
         "repo": "key-chord",
         "type": "github"
       }

@@ -1,8 +1,9 @@
 ;;; my-blog-utils.el -*- lexical-binding: t; -*-
 
 (require 'transient)
+(require 'consult)
 
-(defcustom my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"
+(defvar my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"
   "Source directory of my blog")
 
 (defcustom my-blog-url "https://chisono.web.fc2.com/blog/"
