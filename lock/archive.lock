@@ -17,9 +17,9 @@
   },
   "eglot": {
     "archive": {
-      "narHash": "sha256-7j9uzlEWnmjcBQZFpUtboseUQWugyaa6pEnwI5bzmyw=",
+      "narHash": "sha256-8/lYu04I2MfDc/mlT+GCi0xzctbsEYG3CmAk4hQR7sg=",
       "type": "tarball",
-      "url": "https://elpa.gnu.org/devel/eglot-1.23.0.20260422.80836.tar"
+      "url": "https://elpa.gnu.org/devel/eglot-1.23.0.20260502.85641.tar"
     },
     "inventory": {
       "type": "archive",
@@ -35,7 +35,7 @@
       "seq": "2.23",
       "xref": "1.7.0"
     },
-    "version": "1.23.0.20260422.80836"
+    "version": "1.23.0.20260502.85641"
   },
   "eldoc": {
     "archive": {

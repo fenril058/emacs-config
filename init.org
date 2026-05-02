@@ -983,29 +983,31 @@ Nix3.el integration for Magit.  [[https://github.com/emacs-twist/nix3.el]]
 *** mode-line
 
 #+begin_src emacs-lisp
-(setopt mode-line-format '("%e"
-                           mode-line-front-space
-                           (current-input-method "" "      ")
-                           (:propertize
-                            (""
-                             mode-line-mule-info
-                             mode-line-client
-                             mode-line-modified
-                             mode-line-remote
-                             mode-line-auto-compile
-                             mode-line-window-dedicated)
-                            display (min-width (2.0)))
-                           ;; mode-line-frame-identification
-                           " "
-                           mode-line-buffer-identification
-                           " "
-                           mode-line-position
-                           (project-mode-line project-mode-line-format)
-                           (vc-mode vc-mode)
-                           " "
-                           mode-line-modes
-                           mode-line-misc-info
-                           mode-line-end-spaces))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq-default mode-line-format '("%e"
+                                             mode-line-front-space
+                                             (current-input-method "" "      ")
+                                             (:propertize
+                                              (""
+                                               mode-line-mule-info
+                                               mode-line-client
+                                               mode-line-modified
+                                               mode-line-remote
+                                               mode-line-auto-compile
+                                               mode-line-window-dedicated)
+                                              display (min-width (3.0)))
+                                             ;; mode-line-frame-identification
+                                             " "
+                                             mode-line-buffer-identification
+                                             " "
+                                             mode-line-position
+                                             (project-mode-line project-mode-line-format)
+                                             (vc-mode vc-mode)
+                                             " "
+                                             mode-line-modes
+                                             mode-line-misc-info
+                                             mode-line-end-spaces))))
 
 (setup simple
   (size-indication-mode 1)            ;ファイルサイズを表示
@@ -1028,6 +1030,57 @@ Nix3.el integration for Magit.  [[https://github.com/emacs-twist/nix3.el]]
 
 (setup outline
   (:blackout outline-minor-mode))
+
+#+end_src
+
+**** sky-color-clock
+
+#+begin_quote
+A clock widget for modelines with real-time sky color and moonphase/weather icon.
+https://github.com/zk-phi/sky-color-clock
+#+end_quote
+
+- [[https://tsuu32.hatenablog.com/entry/2019/11/07/020005][sky-color-clockと仲良くする - つーさにブログ]]
+- [[info:auth#Top][Emacs auth-source]]
+
+#+begin_src emacs-lisp
+(eval-when-compile
+  (require 'auth-source)
+  (defconst my-openweathermap-api-key
+    (let ((match (auth-source-search :host "openweather")))
+      (setq my-openweathermap-api-key (if match (funcall (plist-get (car match) :secret)) nil)))
+    "Access token for openweathermap API."))
+
+(setup (:package sky-color-clock)
+  (:defer 0.2 (lambda () (require 'sky-color-clock)))
+  (:when-loaded
+    (setq sky-color-clock-format "%H:%M")
+    (sky-color-clock-initialize 35)
+    (when my-openweathermap-api-key
+      (sky-color-clock-initialize-openweathermap-client my-openweathermap-api-key 1850144))
+    (require 'cal-china)
+    (defun lunar-month-day-string ()
+      (let* ((chinese-date (calendar-chinese-from-absolute
+                            (calendar-absolute-from-gregorian (calendar-current-date))))
+             (m (nth 2 chinese-date))
+             (d (nth 3 chinese-date)))
+        (format "旧暦%d月%d日" m d)))
+    (defun sky-color-clock--form ()
+      (let* ((sky-color-clock-str
+              (propertize (sky-color-clock)
+                          'help-echo (format "Sky color clock\n%s\n%s\n"
+                                             (format-time-string "%Y年%-m月%-d日 (%a)")
+                                             (lunar-month-day-string))))
+             (mode-line-right-margin
+              (propertize " " 'display `(space :align-to (- right-fringe ,(length sky-color-clock-str))))))
+        (concat mode-line-right-margin sky-color-clock-str)))
+    (setq mode-line-end-spaces '(:eval (sky-color-clock--form)))
+    (defvar sky-color-clock--timer (run-at-time t 60 #'sky-color-clock-handler))
+    (defun sky-color-clock-handler ()
+      (force-mode-line-update 'all)
+      (let* ((current (current-time))
+             (timer sky-color-clock--timer))
+        (timer-set-time timer (timer-next-integral-multiple-of-time current 60) 60)))))
 
 #+end_src
 
@@ -1154,7 +1207,7 @@ https://github.com/protesilaos/modus-themes
 
 #+begin_src emacs-lisp
 (when window-system
-  (add-hook 'emacs-startup-hook (lambda () (load-theme 'modus-operandi))))
+  (add-hook 'after-init-hook (lambda () (load-theme 'modus-operandi))))
 
 #+end_src
 

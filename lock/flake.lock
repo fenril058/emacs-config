@@ -2108,6 +2108,7 @@
         "sequential-command": "sequential-command",
         "setup": "setup",
         "shell-pop": "shell-pop",
+        "sky-color-clock": "sky-color-clock",
         "svg-lib": "svg-lib",
         "tablist": "tablist",
         "tempel": "tempel",
@@ -2247,6 +2248,22 @@
       "original": {
         "owner": "kyagi",
         "repo": "shell-pop-el",
+        "type": "github"
+      }
+    },
+    "sky-color-clock": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1615004911,
+        "narHash": "sha256-mLtJZHGgedPqBkaKDeK6Br2m2eKrTMlmcIuczDFLsJQ=",
+        "owner": "zk-phi",
+        "repo": "sky-color-clock",
+        "rev": "525122ffb94ae4ac160de72c2ee0ade331d2e80a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zk-phi",
+        "repo": "sky-color-clock",
         "type": "github"
       }
     },

@@ -782,6 +782,12 @@
       repo = "shell-pop-el";
       type = "github";
     };
+    sky-color-clock = {
+      flake = false;
+      owner = "zk-phi";
+      repo = "sky-color-clock";
+      type = "github";
+    };
     svg-lib = {
       flake = false;
       owner = "rougier";
