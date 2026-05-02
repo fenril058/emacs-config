@@ -57,6 +57,7 @@ in
 
     home.file = {
       ".config/emacs/snippets".source = ./snippets;
+      ".config/emacs/insert".source = ./insert;
     };
   };
 }

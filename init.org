@@ -1982,7 +1982,7 @@ holizontally."
       (setopt vc-file-prop-obarray (obarray-make 17)))))
 
 (setup auto-insert
-  (:opt auto-insert-directory (concat user-emacs-directory "insert/"))
+  (:opt auto-insert-directory (file-name-concat user-emacs-directory "insert/"))
   (:hook-into after-init-hook))
 
 (setup hideshow

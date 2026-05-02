@@ -1,0 +1,105 @@
+\RequirePackage{plautopatch}
+\documentclass[uplatex,dvipdfmx, book]{jlreq}
+
+%
+% Math and Science
+%
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{empheq}
+\usepackage{siunitx}
+
+%
+% Font
+%
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% \usepackage{mathpazo} % add possibly `sc` and `osf` options
+% \usepackage{eulervm}
+% \usepackage[defaultsups]{newpxtext}
+% \usepackage{newpxmath}
+% \usepackage{newtxmath,newtxtext}
+
+%
+% Figure
+%
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows}
+\graphicspath{{./fig/}}
+\newcommand{\fg}[4]{\begin{figure}[htbp]
+     \centering
+     \includegraphics[width = #1]{#2}
+     \caption{#3}\label{#4}
+ \end{figure}}
+
+%
+% Color
+%
+\usepackage{xcolor}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+%
+% Math Utilities
+%
+\newcommand{\vect}[1]{\mathbf{#1}}
+% \newcommand{\vect}[1]{\mathbold{#1}} % eulervmを使う場合
+\newcommand{\diff}{\mathrm{d}}
+\newcommand*{\Laplace}{\!\mathop{}\mathbin{\bigtriangleup}}    % ただの三角形
+\newcommand*{\DAlambert}{\!\mathop{}\mathbin{\Box}}    % ただの四角形
+
+%
+% 定理環境
+%
+% http://www.math.tohoku.ac.jp/~kuroki/LaTeX/howtolatex.html
+\theoremstyle{definition}
+\newtheorem{thm}{定理}
+\newtheorem*{thm*}{定理}
+\newtheorem{dfn}{定義}
+% \newtheorem{dfn}[thm]{定義} % 定理と共通の番号にする
+\newtheorem*{dfn*}{定義}
+% not insert \qed at the end of proof environment
+\makeatletter%
+\renewenvironment{proof}[1][\proofname]{\par%
+  \normalfont%
+  \topsep6\p@\@plus6\p@ \trivlist%
+  \item[\hskip\labelsep{\bfseries #1}\@addpunct{\bfseries.}]\ignorespaces%
+}{%
+  \endtrivlist%
+}
+\renewcommand{\proofname}{証明}
+\makeatother
+
+%
+% Enumerate
+%
+\renewcommand\labelenumi{(\arabic{enumi})} % (1)(2)・・・
+\renewcommand\labelenumii{(\alph{enumii})} % (a)(b)・・・
+\renewcommand\labelenumiii{(\roman{enumiii})} % (i)(ii)・・・
+
+%
+% Link and PDF meta data
+%
+% https://blog.miz-ar.info/2015/09/latex-hyperref-tips/
+% https://blog.miz-ar.info/2015/09/latex-hyperref-tips-2/
+\usepackage{hyperref}
+\usepackage{pxjahyper}
+\hypersetup{
+  pdftitle={title},
+  pdfauthor={author}
+}
+\title{title}
+\author{author}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\end{document}
+%%% Local Variables:
+%%% mode: japanese-latex
+%%% TeX-master: t
+%%% End:
