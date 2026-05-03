@@ -14,15 +14,17 @@
   :key "n"
   :description "新規記事"
   (interactive "sWrite Slug: ")
-  (let ((slug (unless slug
-                ;; 何も入力がなければ14桁の16進文字列をslugとして生成
+  (let ((slug (unless (string-match "\\w+" slug)
+                ;; 空白以外何も入力がなければ14桁の16進文字列をslugとして生成
                 (substring
                  (md5 (format "%s%s%s"
                               (random)
                               (current-time)
                               (user-uid)))
                  0 14))))
-    (shell-command (format "cd %s && zenn new:article --slug %s" my-zenn-dir slug))
+    (shell-command (format "cd %s && direnv exec . zenn new:article --slug %s"
+                           my-zenn-dir
+                           slug))
     (find-file (format "%sarticles/%s.md" my-zenn-dir slug))
     (goto-char (point-max))))
 
@@ -31,7 +33,9 @@
   :key "s"
   :description "題名検索"
   (interactive)
-  (consult-ripgrep my-zenn-dir "^title: "))
+  (let ((max-mini-window-height 0.5)
+        (vertico-count 50))
+    (consult-ripgrep my-zenn-dir "^title: ")))
 
 ;;;###autoload
 (transient-define-suffix my-zenn-dired ()
