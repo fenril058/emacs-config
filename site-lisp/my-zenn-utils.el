@@ -71,7 +71,7 @@
            (url (format "http://localhost:8001/articles/%s" stem))
            (open-cmd (if is-wsl "wslstart" "open")))
       (my-zenn-preview-start)
-      (if (string= dir my-zenn-dir)
+      (if (string-prefix-p (expand-file-name my-zenn-dir) dir)
           (shell-command (format "%s %s" open-cmd url))
         (message "Not in zenn-content directory.")))))
 
