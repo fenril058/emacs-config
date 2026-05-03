@@ -82,7 +82,7 @@
   (interactive)
   (when (not (process-status "zenn"))
     (start-process-shell-command "zenn" "*Zenn*"
-                                 (format "direnv exec %s zenn preview -p 8001" my-zenn-dir))))
+                                 (format "cd %s && direnv exec . zenn preview -p 8001" my-zenn-dir))))
 
 (transient-define-suffix my-zenn-preview-stop ()
   :key "0"
