@@ -2037,7 +2037,7 @@ holizontally."
 
 *** flymake
 #+begin_src emacs-lisp
-(setup flymake
+(setup (:package flymake)
   (:bind "M-n" flymake-goto-next-error
          "M-p" flymake-goto-prev-error))
 

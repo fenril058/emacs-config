@@ -52,6 +52,23 @@
     },
     "version": "1.16.0.0.20260101.125434"
   },
+  "flymake": {
+    "archive": {
+      "narHash": "sha256-Jd6E5NJtbZRtdocJPw3mPchZjYVp1Fiw+UFKXuCcZw0=",
+      "type": "tarball",
+      "url": "https://elpa.gnu.org/devel/flymake-1.4.5.0.20260326.141956.tar"
+    },
+    "inventory": {
+      "type": "archive",
+      "url": "https://elpa.gnu.org/devel/"
+    },
+    "packageRequires": {
+      "eldoc": "1.14.0",
+      "emacs": "26.1",
+      "project": "0.11.1"
+    },
+    "version": "1.4.5.0.20260326.141956"
+  },
   "jsonrpc": {
     "archive": {
       "narHash": "sha256-u0ufGYM242gi2eQt8pvDVmvh4EF943JEpRUpQgOqvFk=",
