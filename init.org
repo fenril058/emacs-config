@@ -599,8 +599,8 @@ Your friendly neighborhood expand-region clone.  https://github.com/casouri/expr
 
 #+begin_src emacs-lisp
 (setup (:package expreg)
-  (:global-keymap "C-c p" expreg-expand
-                  "C-c P" expreg-contract))
+  (:global-keymap "C-c q" expreg-expand
+                  "C-c Q" expreg-contract))
 
 #+end_src
 

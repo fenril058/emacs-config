@@ -55,7 +55,7 @@
                   (file-name-nondirectory buffer-file-name)))
            (url (format "https://zenn.dev/ril/articles/%s" stem))
            (open-cmd (if is-wsl "wslstart" "open")))
-      (if (string= dir my-zenn-dir)
+      (if (string-prefix-p (expand-file-name my-zenn-dir) dir)
           (shell-command (format "%s %s" open-cmd url))
         (message "Not in zenn-content directory.")))))
 
