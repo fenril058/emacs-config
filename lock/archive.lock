@@ -71,9 +71,9 @@
   },
   "jsonrpc": {
     "archive": {
-      "narHash": "sha256-u0ufGYM242gi2eQt8pvDVmvh4EF943JEpRUpQgOqvFk=",
+      "narHash": "sha256-z00xcMruj7bXCD15JOYaEWMH5l6FlmXwqayeweY6q9I=",
       "type": "tarball",
-      "url": "https://elpa.gnu.org/devel/jsonrpc-1.0.28.0.20260416.174639.tar"
+      "url": "https://elpa.gnu.org/devel/jsonrpc-1.0.28.0.20260504.104721.tar"
     },
     "inventory": {
       "type": "archive",
@@ -82,7 +82,7 @@
     "packageRequires": {
       "emacs": "25.2"
     },
-    "version": "1.0.28.0.20260416.174639"
+    "version": "1.0.28.0.20260504.104721"
   },
   "rainbow-mode": {
     "archive": {
