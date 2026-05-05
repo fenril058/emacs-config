@@ -1680,10 +1680,18 @@ Yet another snippet extension for Emacs.  https://github.com/joaotavora/yasnippe
 
 This package reuiqres ~cl-lib.el~.
 
+The message below is really annoying. Therefore I set warning-suppress-types, but is it good manner?
+#+begin_quote
+⛔ Warning (yasnippet): ‘Snippet’ modified buffer in a backquote expression.
+  To hide this warning, add (yasnippet backquote-change) to ‘warning-suppress-types’.
+#+end_quote
+
 It overlaps in function with Tempel, but I've kept it for now.
 
 #+begin_src emacs-lisp
 (setup (:package yasnippet)
+  (:when-loaded (cl-pushnew 'yasnippet warning-suppress-types)
+                (cl-pushnew 'backquote-change warning-suppress-types))
   (:defer 1 (lambda ()
               (setopt yas-verbosity 2)
               (yas-global-mode 1)))
@@ -2054,12 +2062,17 @@ On the fly syntax checking for GNU Emacs. https://github.com/flycheck/flycheck
 (setup (:package flycheck)
   (:bind "M-n" flycheck-next-error
          "M-p" flycheck-previous-error)
-  (:opt flycheck-textlint-config '("linter/textlintrc.json"
+  (:opt flycheck-textlint-config '(".config/textlintrc.json"
+                                   "linter/textlintrc.json"
                                    "textlintrc.json"
+                                   ".config/.textlintrc.json"
                                    "linter/.textlintrc.json"
                                    ".textlintrc.json"))
   (:when-loaded
-    (:foreach '("linter/.markdownlint-cli2.json"
+    (:foreach '(".config/.markdownlint-cli2.json"
+                ".config/.markdownlint-cli2.jsonc"
+                ".config/.markdownlint-cli2.yaml"
+                "linter/.markdownlint-cli2.json"
                 "linter/.markdownlint-cli2.jsonc"
                 "linter/.markdownlint-cli2.yaml")
               (add-to-list 'flycheck-markdown-markdownlint-cli2-config ,it))))
@@ -3071,8 +3084,7 @@ This setting is inspired by [[https://qiita.com/atsisy/items/1b7249bf3cd6046b568
   (:when-loaded
     (:global-keymap "C-x C-b" persp-list-buffers)
     (set-face-foreground 'persp-selected-face "red"))
-  (:opt persp-mode-prefix-key (kbd "C-c p")
-        persp-frame-global-perspective-include-scratch-buffer nil)
+  (:opt persp-frame-global-perspective-include-scratch-buffer nil)
   (setup consult
     (:when-loaded
       (add-to-list 'consult-buffer-sources 'persp-consult-source)))
@@ -3097,6 +3109,7 @@ This setting is inspired by [[https://qiita.com/atsisy/items/1b7249bf3cd6046b568
   (:with-hook after-init-hook
     (:hook (lambda ()
              (persp-mode 1)
+             (setopt persp-mode-prefix-key (kbd "C-c p"))
              (num-persp-generate-perspective)
              (num-persp-assign-keys)
              (persp-switch "1")))))
