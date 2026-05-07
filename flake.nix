@@ -1,3 +1,4 @@
+
 {
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
@@ -9,17 +10,17 @@
     org-babel.url = "github:emacs-twist/org-babel";
 
     # Package registries for Twist
-    elpa = {
-      url = "github:elpa-mirrors/elpa";
-      flake = false;
-    };
-
     melpa = {
       url = "github:melpa/melpa";
       flake = false;
     };
 
-    nongnu = {
+    gnu-elpa = {
+      url = "github:elpa-mirrors/elpa";
+      flake = false;
+    };
+
+    nongnu-elpa = {
       url = "github:elpa-mirrors/nongnu";
       flake = false;
     };

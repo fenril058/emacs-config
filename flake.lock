@@ -18,22 +18,6 @@
         "type": "github"
       }
     },
-    "elpa": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1777203551,
-        "narHash": "sha256-NQvKApUjlJjlD6RAFrdtb9oa8GISVKp3E4PnoGdLRvY=",
-        "owner": "elpa-mirrors",
-        "repo": "elpa",
-        "rev": "677c0ba227ad9d5486f49cf1a9f7026cdc6f5d16",
-        "type": "github"
-      },
-      "original": {
-        "owner": "elpa-mirrors",
-        "repo": "elpa",
-        "type": "github"
-      }
-    },
     "epkgs": {
       "flake": false,
       "locked": {
@@ -84,6 +68,22 @@
         "type": "github"
       }
     },
+    "gnu-elpa": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777203551,
+        "narHash": "sha256-NQvKApUjlJjlD6RAFrdtb9oa8GISVKp3E4PnoGdLRvY=",
+        "owner": "elpa-mirrors",
+        "repo": "elpa",
+        "rev": "677c0ba227ad9d5486f49cf1a9f7026cdc6f5d16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elpa-mirrors",
+        "repo": "elpa",
+        "type": "github"
+      }
+    },
     "melpa": {
       "flake": false,
       "locked": {
@@ -129,7 +129,7 @@
         "type": "indirect"
       }
     },
-    "nongnu": {
+    "nongnu-elpa": {
       "flake": false,
       "locked": {
         "lastModified": 1775140556,
@@ -162,13 +162,13 @@
     },
     "root": {
       "inputs": {
-        "elpa": "elpa",
         "epkgs": "epkgs",
         "flake-utils": "flake-utils",
+        "gnu-elpa": "gnu-elpa",
         "melpa": "melpa",
         "nix-filter": "nix-filter",
         "nixpkgs": "nixpkgs",
-        "nongnu": "nongnu",
+        "nongnu-elpa": "nongnu-elpa",
         "org-babel": "org-babel",
         "twist": "twist",
         "twist-overrides": "twist-overrides"
