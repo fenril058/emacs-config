@@ -3083,6 +3083,7 @@ Perspective for Emacs. https://github.com/nex3/perspective-el
 This setting is inspired by [[https://qiita.com/atsisy/items/1b7249bf3cd6046b5681][Emacsのperspective.elワークスペースをもっと使いやすく #Linux - Qiita]].
 #+begin_src emacs-lisp
 (setup (:package perspective)
+  (custom-set-variables '(persp-mode-prefix-key (kbd "C-c p")))
   (:when-loaded
     (:global-keymap "C-x C-b" persp-list-buffers)
     (set-face-foreground 'persp-selected-face "red"))
@@ -3111,13 +3112,11 @@ This setting is inspired by [[https://qiita.com/atsisy/items/1b7249bf3cd6046b568
   (:with-hook after-init-hook
     (:hook (lambda ()
              (persp-mode 1)
-             (setopt persp-mode-prefix-key (kbd "C-c p"))
              (num-persp-generate-perspective)
              (num-persp-assign-keys)
              (persp-switch "1")))))
 
 #+end_src
-
 ** Browsing
 
 *** View mode
