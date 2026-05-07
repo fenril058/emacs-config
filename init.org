@@ -261,6 +261,7 @@ as OPTS to `setup-define'."
    `(with-eval-after-load 'autoinsert
       (dolist (entry (reverse ',entries))
         (add-to-list 'auto-insert-alist entry)))))
+
 #+end_src
 
 *** :defer
@@ -2075,7 +2076,8 @@ On the fly syntax checking for GNU Emacs. https://github.com/flycheck/flycheck
                 "linter/.markdownlint-cli2.json"
                 "linter/.markdownlint-cli2.jsonc"
                 "linter/.markdownlint-cli2.yaml")
-              (add-to-list 'flycheck-markdown-markdownlint-cli2-config ,it))))
+              (add-to-list 'flycheck-markdown-markdownlint-cli2-config ,it))
+    (add-to-list 'flycheck-textlint-plugin-alist '(org-mode . "@textlint/org"))))
 #+end_src
 
 **** flycheck-posframe
