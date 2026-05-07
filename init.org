@@ -1428,6 +1428,8 @@ I wonder ~embark-collect~ is enough for the kind of function.
 (setup (:package dired-sidebar)
   (:global-keymap "<f5>" dired-sidebar-toggle-sidebar))
 
+(setup (:package dirvish))
+
 #+end_src
 
 ** My utility tools

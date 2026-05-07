@@ -221,6 +221,12 @@
       repo = "dired-hacks";
       type = "github";
     };
+    dirvish = {
+      flake = false;
+      owner = "alexluigit";
+      repo = "dirvish";
+      type = "github";
+    };
     docker = {
       flake = false;
       owner = "Silex";

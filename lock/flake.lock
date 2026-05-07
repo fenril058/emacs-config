@@ -593,6 +593,22 @@
         "type": "github"
       }
     },
+    "dirvish": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1746346061,
+        "narHash": "sha256-QBOamfJXLdkw1ShH29w8nYkWfvY/ibjJPNRt0kc8LDU=",
+        "owner": "alexluigit",
+        "repo": "dirvish",
+        "rev": "d877433f957a363ad78b228e13a8e5215f2d6593",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexluigit",
+        "repo": "dirvish",
+        "type": "github"
+      }
+    },
     "docker": {
       "flake": false,
       "locked": {
@@ -2015,6 +2031,7 @@
         "dired-preview": "dired-preview",
         "dired-sidebar": "dired-sidebar",
         "dired-subtree": "dired-subtree",
+        "dirvish": "dirvish",
         "docker": "docker",
         "dtw-mode": "dtw-mode",
         "eat": "eat",
