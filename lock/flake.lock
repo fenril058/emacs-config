@@ -401,6 +401,22 @@
         "type": "github"
       }
     },
+    "consult-wt": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777908804,
+        "narHash": "sha256-vITjvG2D2G4M278dqf/swx9sZYmPC53oswhQ9S+NgME=",
+        "owner": "tomoya",
+        "repo": "consult-wt",
+        "rev": "63c8fb6631a06bc538535795152b274a050f33ad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tomoya",
+        "repo": "consult-wt",
+        "type": "github"
+      }
+    },
     "consult-yasnippet": {
       "flake": false,
       "locked": {
@@ -2019,6 +2035,7 @@
         "consult-flycheck": "consult-flycheck",
         "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",
+        "consult-wt": "consult-wt",
         "consult-yasnippet": "consult-yasnippet",
         "copilot": "copilot",
         "corfu": "corfu",

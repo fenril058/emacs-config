@@ -1,0 +1,2 @@
+(consult-wt :fetcher github
+            :repo "tomoya/consult-wt")

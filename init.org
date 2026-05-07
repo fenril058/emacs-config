@@ -1838,10 +1838,26 @@ A consulting-read interface for eglot. https://github.com/mohkale/consult-eglot
 #+end_src
 
 **** consult-ghq
+#+begin_quote
+Ghq interface using consult.  https://github.com/tomoya/consult-ghq
+#+end_quote
+
 #+begin_src emacs-lisp
 (setup (:package consult-ghq))
 
 #+end_src
+
+**** consult-wt
+#+begin_quote
+[[https://github.com/max-sixty/worktrunk][Worktrunk]] interface using consult.  https://github.com/tomoya/consult-wt
+#+end_quote
+
+Dependson ~jq~.
+
+#+begin_src emacs-lisp
+(setup (:package consult-wt))
+#+end_src
+
 
 *** affe
 #+begin_src emacs-lisp

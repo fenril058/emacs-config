@@ -150,6 +150,12 @@
       repo = "consult-ghq";
       type = "github";
     };
+    consult-wt = {
+      flake = false;
+      owner = "tomoya";
+      repo = "consult-wt";
+      type = "github";
+    };
     consult-yasnippet = {
       flake = false;
       owner = "mohkale";
