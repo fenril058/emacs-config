@@ -14,7 +14,8 @@
   :key "n"
   :description "新規記事"
   (interactive "sWrite Slug: ")
-  (let ((slug (unless (string-match "\\w+" slug)
+  (let ((slug (if (string-match "\\w+" slug)
+                  slug
                 ;; 空白以外何も入力がなければ14桁の16進文字列をslugとして生成
                 (substring
                  (md5 (format "%s%s%s"
