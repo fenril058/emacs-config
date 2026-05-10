@@ -1693,8 +1693,7 @@ It overlaps in function with Tempel, but I've kept it for now.
 
 #+begin_src emacs-lisp
 (setup (:package yasnippet)
-  (:when-loaded (cl-pushnew 'yasnippet warning-suppress-types)
-                (cl-pushnew 'backquote-change warning-suppress-types))
+  (:when-loaded (cl-pushnew '(yasnippet backquote-change) warning-suppress-types ))
   (:defer 1 (lambda ()
               (setopt yas-verbosity 2)
               (yas-global-mode 1)))
@@ -3313,13 +3312,14 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
         (make-llm-ollama
          :chat-model "qwen3.5"
          :embedding-model "qwen3-embedding"
-         :default-chat-non-standard-params '(("num_ctx" . 32768)))
+         :default-chat-non-standard-params '(("num_ctx" . 8192)))
         ;; coding
         ellama-coding-provider
         (make-llm-ollama
          :chat-model "qwen3.5"
          :embedding-model "qwen3-embedding"
-         :default-chat-non-standard-params '(("num_ctx" . 32768)))
+         :default-chat-non-standard-params '(("num_ctx" . 4096)
+                                             ("think" . "false")))
         ;; 翻訳
         ellama-translation-provider
         (make-llm-ollama
@@ -3406,6 +3406,7 @@ Migrate to the new configuration schema; old keys are no longer recognized.
 (setup embark
   (:with-map embark-region-map
     (:bind  "T" #'ellama-translate)))
+
 #+end_src
 
 *** copilot
