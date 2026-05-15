@@ -1026,8 +1026,11 @@ Nix3.el integration for Magit.  [[https://github.com/emacs-twist/nix3.el]]
 (add-hook 'after-save-hook 'mode-line-flush--dark-green)
 
 (setup (:package yawc-mode)
-  (:hook-into org-mode markdown-mode)
-  (:opt yawc-mode-jp t))
+  (defun yawc-setup ()
+    (yawc-mode 1)
+    (setq yawc-mode-jp t))
+  (:foreach '(org-mode-hook markdown-mode-hook)
+            (add-hook ,it #'yawc-setup)))
 
 (setup outline
   (:blackout outline-minor-mode))
