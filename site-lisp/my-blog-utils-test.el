@@ -1,4 +1,4 @@
-;;; test-markdown-org-links.el --- ERT tests for markdown->org link conversion -*- lexical-binding: t; -*-
+;;; my-blog-utils-test --- ERT tests for my-blog-utils-test -*- lexical-binding: t; -*-
 
 (require 'ert)
 (require 'org)     ;; org-mode, org-in-src-block-p
@@ -137,4 +137,4 @@ The outer [...] are Markdown syntax and are removed; inner [...] remain as text.
       s))))
 
 ;; (ert t)
-;;; test-markdown-org-links.el ends here
+;;; my-blog-utils-test.el ends here

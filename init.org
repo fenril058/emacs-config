@@ -53,8 +53,10 @@ The example of =flake.nix= is below:
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    emacs-config.url = "github:/fneril058/emacs-config"; # or "path:local_path_to_repo"
-    inputs.nixpkgs.follows = "nixpkgs";
+    emacs-config = {
+      url = "github:fenril058/emacs-config"; # or "path:local_path_to_repo"
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, emacs-config,... }:
@@ -2504,7 +2506,7 @@ is only valid in `dired-mode'."
 ** For WSL
 #+begin_src emacs-lisp
 (when-wsl
- (setup browser-url
+ (setup browse-url
    (setopt browse-url-browser-function 'browse-url-generic
            browse-url-generic-program "wslstart"))
  (setup dired
@@ -3302,7 +3304,7 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
                         :chat-model "gpt-oss"
                         :embedding-model "nomic-embed-text-v2-moe"))
           ("gemma4" . (make-llm-ollama
-                       :chat-model "gpt-oss"
+                       :chat-model "gemma4"
                        :embedding-model "nomic-embed-text-v2-moe")))
         ;; 名前生成
         ellama-naming-provider

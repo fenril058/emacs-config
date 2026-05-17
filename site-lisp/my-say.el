@@ -2,15 +2,15 @@
 
 ;; Copyright (C) 2025  ril
 
-;; Author: Your Name <yamatakau08@gmail.com>
-;; Maintainer: ril <fenri.nh@gmail.com>
+;; Author: yamatakau08 <yamatakau08@gmail.com>
+;; Maintainer: ril <fenril.nh@gmail.com>
 ;; Created: 2025-10-31
 ;; Version: 0.2
 ;; Keywords: multimedia, speech, convenience
 ;; URL: https://github.com/yamatakau08/.emacs.d/tree/master/my-say
 ;; Package-Requires: ((emacs "26.1"))
 
-;; This file is part of GNU Emacs.
+;; This file is not part of GNU Emacs.
 
 ;;; License:
 ;; This program is free software; you can redistribute it and/or modify
@@ -56,9 +56,11 @@
 
 (defcustom my-say-command "espeak-ng"
   "The command to execute by `my-say--execute'"
-  :type '(choice (string :tag "say")
-                 (string :tag "espeak-ng")
-                 (string :tag "espeak"))
+  :type '(choice
+          (const :tag "say" "say")
+          (const :tag "espeak-ng" "espeak-ng")
+          (const :tag "espeak" "espeak")
+          (string :tag "Other command"))
   :group 'my-say)
 
 (defcustom my-say-voice nil

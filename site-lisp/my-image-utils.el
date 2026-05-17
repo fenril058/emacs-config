@@ -5,7 +5,7 @@
 (defcustom paste-image-script-path "$HOME/wsl_bin/paste_image.ps1"
   "Path of the powershell script for pasting image."
   :type 'string
-  :group 'convince)
+  :group 'convenience)
 
 (defun save-clipboard-image-as-png--windows (filename)
   "Save clipboard image as a png file named FILENAME."

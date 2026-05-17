@@ -62,11 +62,9 @@
           inhibit-x-resources t
           inhibit-startup-buffer-menu t
           scroll-preserve-screen-position t
-          scroll-conservatively 100
           scroll-conservatively 35 ; スクロール行数 (一行ごとのスクロール)
           scroll-margin 0
           scroll-step 1
-          scroll-preserve-screen-position t
           display-line-numbers t
           display-line-numbers-widen t
           display-line-numbers-width nil

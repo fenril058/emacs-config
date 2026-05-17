@@ -6,7 +6,7 @@
 (defvar my-blog-directory "~/Dropbox/SharedWithKT/my_site/source/blog/"
   "Source directory of my blog")
 
-(defcustom my-blog-url "https://chisono.web.fc2.com/blog/"
+(defvar my-blog-url "https://chisono.web.fc2.com/blog/"
   "URL of my blog")
 
 ;;;###autoload

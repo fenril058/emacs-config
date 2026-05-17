@@ -1,4 +1,4 @@
-;;; myuils.el --- A collection of commands and utilities -*- lexical-binding: t -*-
+;;; myutils.el --- A collection of commands and utilities -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2026 ril
 
@@ -32,5 +32,5 @@
 
 ;;; Code:
 
-(provide 'myutils.el)
+(provide 'myutils)
 ;;; myutils.el ends here
