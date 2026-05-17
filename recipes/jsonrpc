@@ -1,0 +1,2 @@
+(jsonrpc :fetcher github
+         :repo "emacs-straight/jsonrpc")

@@ -1,0 +1,2 @@
+(flymake :fetcher github
+         :repo "emacs-straight/flymake")

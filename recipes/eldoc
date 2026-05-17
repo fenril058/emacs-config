@@ -1,0 +1,2 @@
+(eldoc :fetcher github
+       :repo "emacs-straight/eldoc")

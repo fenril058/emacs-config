@@ -1,0 +1,2 @@
+(eglot :fetcher github
+       :repo "emacs-straight/eglot")
