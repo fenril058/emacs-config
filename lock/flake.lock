@@ -497,6 +497,22 @@
         "type": "github"
       }
     },
+    "csv-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741334091,
+        "narHash": "sha256-fxWHhGsERAwFz2kC2GdkR0G3b28SDmVnn5QSjl7rf34=",
+        "owner": "emacsmirror",
+        "repo": "csv-mode",
+        "rev": "ba5dc934b9dbdc2b57ab1917a669cdfd7d1838d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacsmirror",
+        "repo": "csv-mode",
+        "type": "github"
+      }
+    },
     "dash": {
       "flake": false,
       "locked": {
@@ -721,6 +737,38 @@
         "type": "github"
       }
     },
+    "eglot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778976576,
+        "narHash": "sha256-wdCxsC3z7TS05llgAeVmcWNyfHbay0Xvnsh+Z820/zY=",
+        "owner": "emacs-straight",
+        "repo": "eglot",
+        "rev": "3371f2b84cc86a581f651885ec3854895868f5f2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-straight",
+        "repo": "eglot",
+        "type": "github"
+      }
+    },
+    "eldoc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778976576,
+        "narHash": "sha256-pZvncUFGNNxT/hJLHLgiwvBhQtiwT51euyQ89AnPiLs=",
+        "owner": "emacs-straight",
+        "repo": "eldoc",
+        "rev": "69030e0802f47b5fd32b559f2c92b7a8bf0ad2e3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-straight",
+        "repo": "eldoc",
+        "type": "github"
+      }
+    },
     "elispxmp": {
       "flake": false,
       "locked": {
@@ -926,6 +974,22 @@
       "original": {
         "owner": "alexmurray",
         "repo": "flycheck-posframe",
+        "type": "github"
+      }
+    },
+    "flymake": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778976577,
+        "narHash": "sha256-GEdpcqcIDgy0t2Aq1iK6zn+JEVNFDMLdRvr4ScXYq3U=",
+        "owner": "emacs-straight",
+        "repo": "flymake",
+        "rev": "672e657179adb5da1fd2302cdbe14b07e05518eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-straight",
+        "repo": "flymake",
         "type": "github"
       }
     },
@@ -1264,6 +1328,22 @@
       "original": {
         "owner": "emacs-jp",
         "repo": "japanese-holidays",
+        "type": "github"
+      }
+    },
+    "jsonrpc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777939745,
+        "narHash": "sha256-RvuORrIqq+9uqMKFRrdoXPpfsy2mG9Q301b4pfH+Fv8=",
+        "owner": "emacs-straight",
+        "repo": "jsonrpc",
+        "rev": "0135c781e636b97ff6c6173be236f43df67e6c06",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-straight",
+        "repo": "jsonrpc",
         "type": "github"
       }
     },
@@ -1738,15 +1818,15 @@
     "ox-rss": {
       "flake": false,
       "locked": {
-        "lastModified": 1680923250,
-        "narHash": "sha256-kFRO/YebtrB21Cuq4SrE2y0rs24UPfJ+UuJTsUZlPl4=",
-        "owner": "BenedictHW",
+        "lastModified": 1778625075,
+        "narHash": "sha256-2KaYxCNLEaS8CPDzRBL6QmQA4gaitrRQZDymkEtx1rc=",
+        "owner": "bhw-foss",
         "repo": "ox-rss",
-        "rev": "d2964eca3614f84db85b498d065862a1e341868d",
+        "rev": "c83db3dc521d0dd423b0f24e57b7eaa798ab5e40",
         "type": "github"
       },
       "original": {
-        "owner": "BenedictHW",
+        "owner": "bhw-foss",
         "repo": "ox-rss",
         "type": "github"
       }
@@ -1960,6 +2040,22 @@
         "type": "github"
       }
     },
+    "rainbow-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1702660301,
+        "narHash": "sha256-cYq4bYYuRfHeXEpirNwyFwAWLK+yxve32E1DJUm7S7k=",
+        "owner": "emacsmirror",
+        "repo": "rainbow-mode",
+        "rev": "f7db3b5919f70420a91eb199f8663468de3033f3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacsmirror",
+        "repo": "rainbow-mode",
+        "type": "github"
+      }
+    },
     "reformatter": {
       "flake": false,
       "locked": {
@@ -2041,6 +2137,7 @@
         "corfu": "corfu",
         "corfu-terminal": "corfu-terminal",
         "cowsay": "cowsay",
+        "csv-mode": "csv-mode",
         "dash": "dash",
         "diff-hl": "diff-hl",
         "difftastic": "difftastic",
@@ -2055,6 +2152,8 @@
         "ebnf-mode": "ebnf-mode",
         "ediprolog": "ediprolog",
         "edit-indirect": "edit-indirect",
+        "eglot": "eglot",
+        "eldoc": "eldoc",
         "elispxmp": "elispxmp",
         "ellama": "ellama",
         "embark": "embark",
@@ -2068,6 +2167,7 @@
         "flycheck": "flycheck",
         "flycheck-inline": "flycheck-inline",
         "flycheck-posframe": "flycheck-posframe",
+        "flymake": "flymake",
         "flymake-ruff": "flymake-ruff",
         "flyspell-correct": "flyspell-correct",
         "fullframe": "fullframe",
@@ -2089,6 +2189,7 @@
         "init-fontset": "init-fontset",
         "io-mode": "io-mode",
         "japanese-holidays": "japanese-holidays",
+        "jsonrpc": "jsonrpc",
         "just-mode": "just-mode",
         "key-chord": "key-chord",
         "key-combo": "key-combo",
@@ -2132,6 +2233,7 @@
         "promise": "promise",
         "puni": "puni",
         "rainbow-delimiters": "rainbow-delimiters",
+        "rainbow-mode": "rainbow-mode",
         "reformatter": "reformatter",
         "repl-toggle": "repl-toggle",
         "rfc-mode": "rfc-mode",

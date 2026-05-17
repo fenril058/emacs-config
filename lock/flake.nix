@@ -185,6 +185,12 @@
       repo = "emacs-cowsay";
       type = "github";
     };
+    csv-mode = {
+      flake = false;
+      owner = "emacsmirror";
+      repo = "csv-mode";
+      type = "github";
+    };
     dash = {
       flake = false;
       owner = "magnars";
@@ -268,6 +274,18 @@
       repo = "edit-indirect";
       type = "github";
     };
+    eglot = {
+      flake = false;
+      owner = "emacs-straight";
+      repo = "eglot";
+      type = "github";
+    };
+    eldoc = {
+      flake = false;
+      owner = "emacs-straight";
+      repo = "eldoc";
+      type = "github";
+    };
     elispxmp = {
       flake = false;
       owner = "fenril058";
@@ -344,6 +362,12 @@
       flake = false;
       owner = "alexmurray";
       repo = "flycheck-posframe";
+      type = "github";
+    };
+    flymake = {
+      flake = false;
+      owner = "emacs-straight";
+      repo = "flymake";
       type = "github";
     };
     flymake-ruff = {
@@ -469,6 +493,12 @@
       flake = false;
       owner = "emacs-jp";
       repo = "japanese-holidays";
+      type = "github";
+    };
+    jsonrpc = {
+      flake = false;
+      owner = "emacs-straight";
+      repo = "jsonrpc";
       type = "github";
     };
     just-mode = {
@@ -651,7 +681,7 @@
     };
     ox-rss = {
       flake = false;
-      owner = "BenedictHW";
+      owner = "bhw-foss";
       repo = "ox-rss";
       type = "github";
     };
@@ -731,6 +761,12 @@
       flake = false;
       owner = "Fanael";
       repo = "rainbow-delimiters";
+      type = "github";
+    };
+    rainbow-mode = {
+      flake = false;
+      owner = "emacsmirror";
+      repo = "rainbow-mode";
       type = "github";
     };
     reformatter = {
