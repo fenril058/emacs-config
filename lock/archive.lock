@@ -17,9 +17,9 @@
   },
   "eglot": {
     "archive": {
-      "narHash": "sha256-8/lYu04I2MfDc/mlT+GCi0xzctbsEYG3CmAk4hQR7sg=",
+      "narHash": "sha256-UZHWLBPLQQFAQIw+uxoK+4xQu+gAwNf7rYl3oTuym0M=",
       "type": "tarball",
-      "url": "https://elpa.gnu.org/devel/eglot-1.23.0.20260502.85641.tar"
+      "url": "https://elpa.gnu.org/devel/eglot-1.23.0.20260516.111356.tar"
     },
     "inventory": {
       "type": "archive",
@@ -35,13 +35,13 @@
       "seq": "2.23",
       "xref": "1.7.0"
     },
-    "version": "1.23.0.20260502.85641"
+    "version": "1.23.0.20260516.111356"
   },
   "eldoc": {
     "archive": {
-      "narHash": "sha256-JI/csURgG7yoqdbjJ40GUJqr1FDGOHzg08UFdLwMYU8=",
+      "narHash": "sha256-72BLGQ/wkqnbdCCAafb6YoR2m1zi/lYFiXmg+opk8BY=",
       "type": "tarball",
-      "url": "https://elpa.gnu.org/devel/eldoc-1.16.0.0.20260101.125434.tar"
+      "url": "https://elpa.gnu.org/devel/eldoc-1.16.0.0.20260514.100530.tar"
     },
     "inventory": {
       "type": "archive",
@@ -50,13 +50,13 @@
     "packageRequires": {
       "emacs": "26.3"
     },
-    "version": "1.16.0.0.20260101.125434"
+    "version": "1.16.0.0.20260514.100530"
   },
   "flymake": {
     "archive": {
-      "narHash": "sha256-Jd6E5NJtbZRtdocJPw3mPchZjYVp1Fiw+UFKXuCcZw0=",
+      "narHash": "sha256-ZeJP2ugoRz1oDQAJHQBmResKqXXF2z3JbLVyidFpiDc=",
       "type": "tarball",
-      "url": "https://elpa.gnu.org/devel/flymake-1.4.5.0.20260326.141956.tar"
+      "url": "https://elpa.gnu.org/devel/flymake-1.4.5.0.20260512.154242.tar"
     },
     "inventory": {
       "type": "archive",
@@ -67,7 +67,7 @@
       "emacs": "26.1",
       "project": "0.11.1"
     },
-    "version": "1.4.5.0.20260326.141956"
+    "version": "1.4.5.0.20260512.154242"
   },
   "jsonrpc": {
     "archive": {
