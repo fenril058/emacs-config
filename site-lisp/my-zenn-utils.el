@@ -23,9 +23,40 @@
                               (current-time)
                               (user-uid)))
                  0 14))))
-    (shell-command (format "cd %s && direnv exec . zenn new:article --slug %s"
-                           my-zenn-dir
-                           slug))
+
+    (let ((default-directory my-zenn-dir)
+          (output-buffer "*Zenn Output*")
+          exit-status)
+      (with-temp-buffer
+        (setq exit-status
+              ;;  第3引数を `'(t t)` にすることで、標準出力と標準エラー出力を両方回収する
+              (call-process "direnv" nil '(t t) nil "exec" "." "zenn" "new:article" "--slug" slug))
+        (ansi-color-filter-region (point-min) (point-max))
+        (let ((output (buffer-string))
+              (line-count (count-lines (point-min) (point-max))))
+          (cond
+           ;; コマンドが失敗した場合
+           ((not (eq exit-status 0))
+            (let ((buf (get-buffer-create output-buffer)))
+              (with-current-buffer buf
+                (let ((inhibit-read-only t))
+                  (erase-buffer)
+                  (insert (format "Command failed with status %s\n" exit-status))
+                  (insert "---------------------------------------\n")
+                  (insert output)))
+              (display-buffer buf)
+              (error "Failed to create Zenn article. Check %s for details." output-buffer)))
+           ;;  正常終了したが、出力が2行以上の場合
+           ((> line-count 1)
+            (let ((buf (get-buffer-create output-buffer)))
+              (with-current-buffer buf
+                (let ((inhibit-read-only t))
+                  (erase-buffer)
+                  (insert output)))
+              (display-buffer buf)))
+           ;; 正常終了かつ出力が1行以内場合
+           (t
+            (message "%s" (string-trim output)))))))
     (find-file (format "%sarticles/%s.md" my-zenn-dir slug))
     (goto-char (point-max))))
 
@@ -48,62 +79,58 @@
 ;;;###autoload
 (transient-define-suffix my-zenn-current-open ()
   :key "o"
-  :description "zenn.devで開く"
+  :description (lambda ()
+                 (let ((dir (and buffer-file-name (file-name-directory buffer-file-name)))
+                       (zenn-dir (expand-file-name my-zenn-dir)))
+                   (if (and dir (string-prefix-p zenn-dir dir))
+                       "View on zenn.dev"
+                     ;; ディレクトリ外ならプロパティで色を変えて警告（警告用に transient-warning を使用）
+                     (propertize "View on zenn.dev (Not in Zenn dir)" 'face 'warning))))
   (interactive)
-  (when buffer-file-name
-    (let* ((dir (file-name-directory buffer-file-name))
-           (stem (file-name-sans-extension
-                  (file-name-nondirectory buffer-file-name)))
-           (url (format "https://zenn.dev/ril/articles/%s" stem))
-           (open-cmd (if is-wsl "wslstart" "open")))
-      (if (string-prefix-p (expand-file-name my-zenn-dir) dir)
-          (shell-command (format "%s %s" open-cmd url))
-        (message "Not in zenn-content directory.")))))
+  (if (and buffer-file-name
+           (string-prefix-p (expand-file-name my-zenn-dir) (file-name-directory buffer-file-name)))
+      (let* ((stem (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+             (url (format "https://zenn.dev/ril/articles/%s" stem)))
+        (browse-url url))
+    (user-error "Not in zenn-content directory.")))
 
 ;;;###autoload
 (transient-define-suffix my-zenn-current-preview ()
   :key "p"
-  :description "Preview"
+  :description (lambda ()
+                 (let ((dir (and buffer-file-name (file-name-directory buffer-file-name)))
+                       (zenn-dir (expand-file-name my-zenn-dir)))
+                   (if (and dir (string-prefix-p zenn-dir dir))
+                       "Preview"
+                     ;; ディレクトリ外ならプロパティで色を変えて警告（警告用に transient-warning を使用）
+                     (propertize "Preview (Not in Zenn dir)" 'face 'warning))))
   (interactive)
-  (when buffer-file-name
-    (let* ((dir (file-name-directory buffer-file-name))
-           (stem (file-name-sans-extension
-                  (file-name-nondirectory buffer-file-name)))
-           (url (format "http://localhost:8001/articles/%s" stem))
-           (open-cmd (if is-wsl "wslstart" "open")))
-      (my-zenn-preview-start)
-      (if (string-prefix-p (expand-file-name my-zenn-dir) dir)
-          (shell-command (format "%s %s" open-cmd url))
-        (message "Not in zenn-content directory.")))))
+  (if (and buffer-file-name
+           (string-prefix-p (expand-file-name my-zenn-dir) (file-name-directory buffer-file-name)))
+      (let* ((stem (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+             (url (format "http://localhost:8001/articles/%s" stem)))
+        (browse-url url))
+    (user-error "Not in zenn-content directory.")))
 
 ;;;###autoload
 (transient-define-suffix my-zenn-preview-start ()
   :key "1"
   :description "プレビュー起動"
   (interactive)
-  (when (not (process-status "zenn"))
-    (start-process-shell-command "zenn" "*Zenn*"
-                                 (format "cd %s && direnv exec . zenn preview -p 8001" my-zenn-dir))))
+  (if (process-status "zenn")
+      (message "Zenn Preview already started.")
+      (start-process-shell-command "zenn" "*Zenn*"
+                                   (format "cd %s && direnv exec . zenn preview -p 8001" my-zenn-dir))
+    (message "👀 Preview: http://localhost:8001")))
 
 (transient-define-suffix my-zenn-preview-stop ()
   :key "0"
   :description "プレビュー停止"
   (interactive)
-  (when (process-status "zenn")
-    (delete-process "zenn")))
-
-(transient-define-suffix my-zenn-upload ()
-  :key "u"
-  :description "git save and push"
-  (interactive)
-  (async-shell-command
-   (format "cd %s && git add -A; git save; git push" my-zenn-dir)))
-
-(transient-define-suffix my-zenn-install ()
-  :key "i"
-  :description "パッケージ更新"
-  (interactive)
-  (async-shell-command (format "cd %s && just update" my-zenn-dir)))
+  (if (not (process-status "zenn"))
+      (message "Zenn Preview not started.")
+    (delete-process "zenn")
+    (message "Zenn Preview terminated.")))
 
 ;;;###autoload
 (transient-define-prefix my-zenn-menu ()
@@ -115,13 +142,11 @@
     ]
    ["Preview"
     (my-zenn-current-preview)
-    (my-zenn-upload)
     (my-zenn-current-open)
     ]
    ["Other"
     (my-zenn-preview-start)
     (my-zenn-preview-stop)
-    (my-zenn-install)
     ]])
 
 (provide 'my-zenn-utils)

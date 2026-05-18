@@ -1,0 +1,2 @@
+(consult-nix-search-tv :fetcher github
+                       :repo "fenril058/consult-nix-search-tv")
