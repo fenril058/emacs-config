@@ -1862,6 +1862,11 @@ Dependson ~jq~.
 (setup (:package consult-wt))
 #+end_src
 
+**** consult-nix-search-tv
+
+#+begin_src emacs-lisp
+(setup (:package consult-nix-search-tv))
+#+end_src
 
 *** affe
 #+begin_src emacs-lisp

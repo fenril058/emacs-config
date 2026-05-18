@@ -401,6 +401,22 @@
         "type": "github"
       }
     },
+    "consult-nix-search-tv": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779116263,
+        "narHash": "sha256-A4ESn//TSJiRV2eDKw9SzM3iy4Qn4gBrwCX1wixNm9Y=",
+        "owner": "fenril058",
+        "repo": "consult-nix-search-tv",
+        "rev": "f48888f01b360149ea7bf60dbe10d808a4df1f61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenril058",
+        "repo": "consult-nix-search-tv",
+        "type": "github"
+      }
+    },
     "consult-wt": {
       "flake": false,
       "locked": {
@@ -2131,6 +2147,7 @@
         "consult-flycheck": "consult-flycheck",
         "consult-flyspell": "consult-flyspell",
         "consult-ghq": "consult-ghq",
+        "consult-nix-search-tv": "consult-nix-search-tv",
         "consult-wt": "consult-wt",
         "consult-yasnippet": "consult-yasnippet",
         "copilot": "copilot",

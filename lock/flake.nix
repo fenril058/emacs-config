@@ -150,6 +150,12 @@
       repo = "consult-ghq";
       type = "github";
     };
+    consult-nix-search-tv = {
+      flake = false;
+      owner = "fenril058";
+      repo = "consult-nix-search-tv";
+      type = "github";
+    };
     consult-wt = {
       flake = false;
       owner = "tomoya";
