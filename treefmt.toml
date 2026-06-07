@@ -21,7 +21,6 @@ priority = 3
 [formatter.elisp]
 command = "emacs"
 options = [
-  "--quick",
   "--batch",
   "--eval",
   "(progn (find-file (car command-line-args-left)) (emacs-lisp-mode) (setq make-backup-files nil version-control nil) (indent-tabs-mode -1) (indent-region (point-min) (point-max)) (save-buffer))",
@@ -32,16 +31,3 @@ includes = [
   "recipes/*",
 ]
 priority = 4
-
-[formatter.org]
-command = "emacs"
-options = [
-  "--quick",
-  "--batch",
-  "--eval",
-  "(progn (find-file (car command-line-args-left)) (indent-tabs-mode -1) (setq make-backup-files nil version-control nil org-src-content-indentation 0) (indent-region (point-min) (point-max)) (save-buffer))",
-]
-includes = [
-  "*.org"
-]
-priority = 5
