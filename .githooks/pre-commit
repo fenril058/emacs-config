@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+betterleaks git --pre-commit --staged -v
