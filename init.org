@@ -130,7 +130,7 @@ Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup
 - [[https://zenn.dev/takeokunn/articles/56010618502ccc][Emacsを世界最速級で起動する方法]]
 #+end_quote
 
-- Show emacs-init-time after starup.
+- Show emacs-init-time after startup.
 - When emacs launched by =emacs --deubg-init=, then profiler starts.
 #+begin_src emacs-lisp
 ;;; Initialization time
