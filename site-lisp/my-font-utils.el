@@ -7,10 +7,10 @@
   (princ (font-xlfd-name (font-at (point)))))
 
 ;;;###autoload
-(defun print-all-available-font-familes ()
+(defun print-all-available-font-families ()
   "使用可能なfont-familyをすべて表示する."
   (interactive)
-  (let ((buf (get-buffer-create "*Font Familes*"))
+  (let ((buf (get-buffer-create "*Font Families*"))
         (cbuf (current-buffer)))
     (with-current-buffer buf
       (delete-region (point-min) (point-max))

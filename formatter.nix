@@ -4,6 +4,8 @@ pkgs.writeShellApplication {
   runtimeInputs = [
     pkgs.treefmt
     pkgs.nixfmt
+    pkgs.lychee
+    pkgs.typos
   ];
   text = ''
     set -euo pipefail

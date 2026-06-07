@@ -8,7 +8,7 @@ from [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File
 #+begin_src emacs-lisp
 ;;; early-init.el --- user early-init file -*- lexical-binding: t; no-byte-compile: t; -*-
 
-;; Temporarily disabe `setopt' because it is slower than `setq'
+;; Temporarily disable `setopt' because it is slower than `setq'
 (fset 'real-setopt (symbol-function 'setopt))
 (defmacro setopt (&rest args)
   "setopt を setq に一時的に変えるためのマクロ."
@@ -22,11 +22,11 @@ from [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File
 
 (setopt load-prefer-newer t)
 
-;; Temporarily increase GC threshol
+;; Temporarily increase GC threshold
 (setopt gc-cons-threshold (* 1280 1024 1024)) ; it means 1280 MB
 (setopt gc-cons-percentage 0.2)               ; default 0.1
 
-;; Temporarily disabe Magic File Name
+;; Temporarily disable Magic File Name
 (defconst default-file-name-handler-alist file-name-handler-alist)
 (setopt file-name-handler-alist nil)
 
@@ -36,7 +36,7 @@ from [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File
 ;; Restore GC threshold and Magic File Name
 (add-hook 'emacs-startup-hook
           (lambda ()
-            "Restore defalut values after startup."
+            "Restore default values after startup."
             (setopt inhibit-message nil)
             (setopt file-name-handler-alist default-file-name-handler-alist)
             (setopt gc-cons-threshold (* 100 1024 1024)))) ; default 800000

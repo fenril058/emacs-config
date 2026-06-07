@@ -11,7 +11,7 @@ If ARG is zero, kill current line but exclude the trailing newline.
 Just replace `kill-region' as `copy-region-as-kill' in the
 function `kill-whole-line'.
 
-This function was originaly suggested by akisute3 and publish at
+This function was originally suggested by akisute3 and publish at
 their blog `http://d.hatena.ne.jp/akisute3/20120412/1334237294'."
   (interactive "p")
   (or arg (setq arg 1))

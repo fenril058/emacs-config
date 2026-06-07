@@ -3452,4 +3452,4 @@ This section intoduces tools that were considered but not adopted now.
 - [[https://github.com/emacs-helm/helm][emacs-helm/helm]] and [[https://github.com/emacs-jp/anything][emacs-jp/anything]]
 - [[https://github.com/company-mode/company-mode][company-mode/company-mode]] and [[https://github.com/auto-complete/auto-complete][auto-complete/auto-complete]]
 - [[https://www.gentei.org/~yuuji/software/windows.el][gentei.org/~yuuji/software/windows.el]]
-- [[https://www.yatex.org/hgrepos/yatex][YaTeX]]
+- [[https://www.yatex.org][YaTeX]]

@@ -1,9 +1,22 @@
+[formatter.lychee]
+command = "lychee"
+options = ["--no-progress", "--config", "./lychee.toml"]
+includes = ["init.org"]
+priority = 1
+
+[formatter.typos]
+command = "typos"
+options = ["--write-changes"]
+includes = ["*.org", "*.nix", "*.el", "*.md", "*.toml"]
+priority = 2
+
 [formatter.nixfmt]
 command = "nixfmt"
 includes = [
   "*.nix",
   "nix/*.nix",
 ]
+priority = 3
 
 [formatter.elisp]
 command = "emacs"
@@ -18,6 +31,7 @@ includes = [
   "site-lisp/*.el",
   "recipes/*",
 ]
+priority = 4
 
 [formatter.org]
 command = "emacs"
@@ -30,3 +44,4 @@ options = [
 includes = [
   "*.org"
 ]
+priority = 5

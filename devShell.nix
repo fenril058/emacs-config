@@ -3,7 +3,6 @@
 pkgs.mkShell {
   packages = with pkgs; [
     just
-    lychee
     betterleaks
     pinact
     zizmor

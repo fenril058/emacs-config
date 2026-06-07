@@ -114,11 +114,13 @@
             );
 
         formatter = pkgs.callPackage ./formatter.nix { };
+        devShell = pkgs.callPackage ./devShell.nix { };
       in
       {
         packages.default = package;
         apps = package.makeApps { lockDirName = "lock"; };
         formatter = formatter;
+        devShells.default = devShell;
         earlyInitEl = profile.earlyInitFile; # home-moduleから参照できるように
       }
     )

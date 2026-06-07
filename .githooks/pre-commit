@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
+zizmor --persona=pedantic .
+ghalint run
 betterleaks git --pre-commit --staged -v

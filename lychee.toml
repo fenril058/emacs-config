@@ -1,0 +1,5 @@
+exclude = [
+  "emacswiki\\.org",
+  "gnu\\.org",
+  "https://qiita\\.com/terzacommune/items/7e3e025754376fb22d17",
+]

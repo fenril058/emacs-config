@@ -36,7 +36,7 @@
 
 ;;;###autoload
 (defun other-window-or-split ()
-  "If the current frame has only one window, split horizontaly."
+  "If the current frame has only one window, split horizontally."
   (interactive)
   (when (one-window-p) (split-window-horizontally))
   (other-window 1))
