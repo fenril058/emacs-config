@@ -1,0 +1,31 @@
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "08:00"
+      timezone: "Asia/Tokyo"
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: "nix"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "08:00"
+      timezone: "Asia/Tokyo"
+    cooldown:
+      default-days: 7
+    ignore:
+      # Managed by update-inputs.yml (just update && just lock regenerates
+      # lock/flake.lock); Dependabot cannot run that chain.
+      - dependency-name: "melpa"
+      - dependency-name: "gnu-elpa"
+      - dependency-name: "nongnu-elpa"
+      - dependency-name: "epkgs"
