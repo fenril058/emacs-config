@@ -18,7 +18,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
 
       # Binary cache — speeds up subsequent runs significantly
-      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+      - uses: DeterminateSystems/magic-nix-cache-action@908b263ff629f4cc17666315b7fd3ec127c6244d # v14
 
       - name: Install tools
         run: nix profile install nixpkgs#just nixpkgs#emacs-nox
