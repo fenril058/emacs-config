@@ -1,9 +1,16 @@
+# show recipe list
+_:
+    @just --list
+
+# Regenerate lock/flake.lock and lock/flake.nix. Never edit lock/ by hand.
 lock:
     nix run .\#lock --impure -L
 
+# Refresh package registries (melpa, gnu-elpa, nongnu-elpa, epkgs).
 update-inputs:
     nix flake update melpa gnu-elpa nongnu-elpa epkgs
 
+# Refresh registries then update package metadata. Order: update -> lock -> review.
 update: update-inputs
     nix run .\#update --impure -L
 
