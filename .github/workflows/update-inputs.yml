@@ -1,0 +1,60 @@
+name: Update flake inputs
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Every Monday 02:00 UTC
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v14
+
+      # Binary cache — speeds up subsequent runs significantly
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+
+      - name: Install tools
+        run: nix profile install nixpkgs#just nixpkgs#emacs-nox
+
+      # `just update` refreshes the package registries (melpa, gnu-elpa, …)
+      # and regenerates lock/flake.nix; `just lock` pins individual package revs.
+      # Both commands internally pass --impure to read from the working tree.
+      - name: Update inputs and regenerate lock
+        run: just update && just lock
+
+      # Build the PR body: static header + `just review` output (compare URLs)
+      - name: Generate PR body
+        run: |
+          {
+            cat <<'HEADER'
+          Automated weekly update of Nix flake inputs.
+
+          For `.el` file diffs, check out this branch and run locally:
+          ```sh
+          just diff-el update/flake-inputs
+          ```
+
+          <details><summary>Changed packages (just review)</summary>
+
+          ```
+          HEADER
+            just review 2>/dev/null || echo '(review script failed)'
+            printf '```\n</details>\n'
+          } > /tmp/pr-body.md
+
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update/flake-inputs
+          commit-message: 'chore: update flake inputs'
+          title: 'chore: update flake inputs'
+          body-path: /tmp/pr-body.md
+          labels: dependencies
+          delete-branch: true
