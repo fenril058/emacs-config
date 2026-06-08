@@ -25,3 +25,13 @@ review base="HEAD":
 # Order: update -> lock -> review -> diff-el -> commit.
 diff-el base="HEAD":
     emacs -Q --batch --script scripts/diff-el.el {{base}}
+
+# Show derivation-level diff for native deps (poppler, vterm, etc.) after `just lock`.
+# Order: update -> lock -> diff-drv -> diff-el -> commit.
+diff-drv base="HEAD":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    sys=$(nix eval --raw --impure --expr builtins.currentSystem)
+    nix-diff \
+      "$(nix path-info --derivation "git+file://.?rev=$(git rev-parse {{base}})"#packages.${sys}.default)" \
+      "$(nix path-info --derivation --impure .#packages.${sys}.default)"
