@@ -46,10 +46,10 @@ After reviewing, commit the result.
 #+begin_src sh
 nix flake show --all-systems
 #+end_src
-Lists exported flake outputs (=packages=, =apps=, =formatter=, etc.).
+Lists the exported flake outputs (=packages=, =apps=, =formatter=, etc.).
 
 *** Tips for home-manager integration
-The example of =flake.nix= is below:
+An example =flake.nix= is shown below:
 #+BEGIN_SRC nix
 {
   inputs = {
@@ -110,16 +110,16 @@ Initially, I was using rubikitch's auto-install
 
 Soon after, I started using Emacs's package.el in conjunction with it.
 It was included by default in Emacs-24.
-While melp has many packages, I was dissatisfied with the fact that package.el doesn't allow you to revert to previous versions.
+While MELPA has many packages, package.el offers no way to revert to previous versions.
 
 I found [[https://github.com/emacscollective/borg?tab=readme-ov-file][emacscollective/borg]] and started using it, but cloning the entire repository felt like overkill.
 
 Then I found [[https://github.com/akirak/emacs-twist][emacs-twist]] and started using that.
 
 I once used [[https://github.com/jwiegley/use-package][jwiegley/use-package]] to write my .emacs/.emacs.el/init.el,
-and then move to [[https://github.com/conao3/leaf.el][conao3/leaf.el]].
-However its function is too complicated for me.
-Therefore I have started to use [[https://codeberg.org/pkal/setup.el][pkal/setup.el]], though I was curious about [[https://github.com/zonuexe/emacs-wiz/tree/master][zonuexe/emacs-wiz.]]
+and then moved to [[https://github.com/conao3/leaf.el][conao3/leaf.el]].
+However, it felt too complex for me,
+so I switched to [[https://codeberg.org/pkal/setup.el][pkal/setup.el]], though I was curious about [[https://github.com/zonuexe/emacs-wiz/tree/master][zonuexe/emacs-wiz.]]
 
 ** Initial settings
 
