@@ -118,10 +118,25 @@
       in
       {
         packages.default = package;
-        apps = package.makeApps { lockDirName = "lock"; };
+        apps =
+          let
+            descriptions = {
+              lock = "Regenerate lock/flake.lock and lock/flake.nix";
+              update = "Update package registry inputs and regenerate lock files";
+            };
+          in
+          pkgs.lib.mapAttrs (
+            name: app:
+            app
+            // {
+              meta = {
+                description = descriptions.${name} or "Emacs config maintenance app";
+              };
+            }
+          ) (package.makeApps { lockDirName = "lock"; });
         formatter = formatter;
         devShells.default = devShell;
-        earlyInitEl = profile.earlyInitFile; # home-moduleから参照できるように
+        packages.earlyInitEl = profile.earlyInitFile;
       }
     )
     // {

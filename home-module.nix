@@ -15,7 +15,7 @@ in
       createInitFile = true;
       createManifestFile = true;
       config = flake.packages.${system}.default;
-      earlyInitFile = flake.earlyInitEl.${system};
+      earlyInitFile = flake.packages.${system}.earlyInitEl;
     };
 
     xdg.desktopEntries.emacs-nix = {
