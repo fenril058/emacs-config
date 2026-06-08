@@ -5,6 +5,8 @@ on:
     - cron: '0 2 * * 1'  # Every Monday 02:00 UTC
   workflow_dispatch:       # Allow manual trigger from GitHub UI
 
+permissions: read-all
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -21,7 +23,11 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@908b263ff629f4cc17666315b7fd3ec127c6244d # v14
 
       - name: Install tools
-        run: nix profile install nixpkgs#just nixpkgs#emacs-nox
+        run: |
+          NIXPKGS_REV=$(jq -r '.nodes.nixpkgs.locked.rev' flake.lock)
+          nix profile install \
+            "github:NixOS/nixpkgs/${NIXPKGS_REV}#just" \
+            "github:NixOS/nixpkgs/${NIXPKGS_REV}#emacs-nox"
 
       # `just update` refreshes the package registries (melpa, gnu-elpa, …)
       # and regenerates lock/flake.nix; `just lock` pins individual package revs.
