@@ -2,29 +2,21 @@
 
 ** Introduction
 
-This repository contains my Emacs configuration which is built using [[https://github.com/akirak/emacs-twist][emacs-twist]].
-I use home-manager to install the configuration.
+This repository contains my Emacs configuration, built with [[https://github.com/akirak/emacs-twist][emacs-twist]] and installed via home-manager.
 
-Note: This configuration is currently built and tested only on Windows Subsystem for Linux (WSL).
-
-Caution: this repository is still alpha version.
-I sometime use =git rebase -i= to clean up the history. Therefore, you need to execute script below to reset your repository.
-
-#+BEGIN_SRC sh
-git fetch origin main
-git reset --hard origin/main
-#+END_SRC
-
-You may need to run these commands when you start Emacs for the first time.
+You may need to run these commands the first time you launch Emacs with this configuration.
 
 - ~treesit-auto-install-all~
 - ~nerd-icons-install-fonts~
 - ~eat-compile-terminfo~
 
+Note: This configuration is only tested on Windows Subsystem for Linux (WSL).
+
 *** Commands
 
 Common operations are wrapped in a =justfile=. Run =just= with no arguments to list available recipes.
 If you prefer raw Nix commands, refer to the =justfile= for the equivalent invocations.
+
 Note: in zsh, =\#= must be escaped with a backslash (e.g. =nix run .\#lock=). See =man zshmisc= "QUOTING" for details.
 
 **** Typical update workflow
