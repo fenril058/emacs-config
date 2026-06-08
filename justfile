@@ -32,6 +32,7 @@ diff-drv base="HEAD":
     #!/usr/bin/env bash
     set -euo pipefail
     sys=$(nix eval --raw --impure --expr builtins.currentSystem)
-    nix-diff \
-      "$(nix path-info --derivation "git+file://.?rev=$(git rev-parse {{base}})"#packages.${sys}.default)" \
-      "$(nix path-info --derivation --impure .#packages.${sys}.default)"
+    root=$(git rev-parse --show-toplevel)
+    base_drv=$(nix eval --raw "git+file://${root}?rev=$(git rev-parse {{base}})"#packages.${sys}.default.drvPath)
+    cur_drv=$(nix eval --raw --impure ".#packages.${sys}.default.drvPath")
+    nix-diff "${base_drv}" "${cur_drv}"
