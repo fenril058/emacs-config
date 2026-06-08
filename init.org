@@ -136,7 +136,7 @@ so I switched to [[https://codeberg.org/pkal/setup.el][pkal/setup.el]], though I
 #+end_quote
 
 - Show emacs-init-time after startup.
-- When emacs launched by =emacs --deubg-init=, then profiler starts.
+- When Emacs is launched with =emacs --debug-init=, then profiler starts.
 #+begin_src emacs-lisp
 ;;; Initialization time
 (add-hook 'emacs-startup-hook
@@ -579,8 +579,8 @@ be referred with `,it'. Originally define in another `setup.el' by zk-phi."))
 
 *** duplicate-thing
 
-I used [[https://github.com/ongaeshi/duplicate-thing][ongaeshi/duplicate-thing]] long time,
-but now I have noticed that the buint-in `duplicate-dwim' command.
+I used [[https://github.com/ongaeshi/duplicate-thing][ongaeshi/duplicate-thing]] for a long time,
+but now I have noticed that the built-in `duplicate-dwim' command does the same thing.
 
 #+begin_src emacs-lisp
 (setup misc
@@ -1378,7 +1378,7 @@ Emacs plugin to show the current buffer's imenu entries in a separate buffer.  h
 #+end_quote
 
 I forked it: https://github.com/fenril058/imenu-list/tree/patched.
-I wonder ~embark-collect~ is enough for the kind of function.
+I wonder if ~embark-collect~ is sufficient for this purpose.
 
 #+begin_src emacs-lisp
 (setup (:package imenu-list)
@@ -1451,7 +1451,7 @@ My utility tools consists of these files:
 - =my-image-utils.el=
   - depends on =xclip= on Linux, =pngpaste= on MacOS, and =paste_image.ps1= on WSL.
 - =my-say.el=
-  - depens on =espeak-ng= on Linux and =say= on MacOS.
+  - depends on =espeak-ng= on Linux and =say= on MacOS.
 - =my-window-utils.el=
 
 #+begin_src emacs-lisp
@@ -1691,9 +1691,9 @@ Collection tempel templates.  https://github.com/Crandel/tempel-collection
 Yet another snippet extension for Emacs.  https://github.com/joaotavora/yasnippet
 #+end_quote
 
-This package reuiqres ~cl-lib.el~.
+This package requires ~cl-lib.el~.
 
-The message below is really annoying. Therefore I set warning-suppress-types, but is it good manner?
+The message below is really annoying. Therefore I set warning-suppress-types, but is this good practice?
 #+begin_quote
 ⛔ Warning (yasnippet): ‘Snippet’ modified buffer in a backquote expression.
   To hide this warning, add (yasnippet backquote-change) to ‘warning-suppress-types’.
@@ -1861,7 +1861,7 @@ Ghq interface using consult.  https://github.com/tomoya/consult-ghq
 [[https://github.com/max-sixty/worktrunk][Worktrunk]] interface using consult.  https://github.com/tomoya/consult-wt
 #+end_quote
 
-Dependson ~jq~.
+Depends on ~jq~.
 
 #+begin_src emacs-lisp
 (setup (:package consult-wt))
@@ -2583,7 +2583,7 @@ This package is now officially maintained as part of Maxima. https://sourceforge
 #+end_src
 
 *** maxima.el
-This package was originally hosted at[[https://gitlab.com/sasanidas/maxima][FMF / maxima.el · GitLab]] ,
+This package was originally hosted at [[https://gitlab.com/sasanidas/maxima][FMF / maxima.el · GitLab]],
 but it has been archived and likely moved to [[https://github.com/emacsmirror/maxima][emacsmirror/maxima: Major mode for Maxima]].
 #+begin_src emacs-lisp
 (setup (:package maxima))
@@ -3287,10 +3287,10 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
     - =stop=
     - =seed=
     - and so on
-- Generate commit massage by LLM (ref: [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]).
+- Generate commit message by LLM (ref: [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]).
   1. push =C-x g= to execute ~magit-status~
   2. push =s= to staging
-  3. push =c c= to execute ~migit-commit-create~
+  3. push =c c= to execute ~magit-commit-create~
   4. ~ellama-generate-commit-message~
 - I adopt [[https://www.conventionalcommits.org/ja/v1.0.0/][Conventional Commits]] as ~ellama-generate-commit-message-template~
 
@@ -3450,7 +3450,7 @@ An Emacs plugin for GitHub Copilot.  https://github.com/copilot-emacs/copilot.el
 
 ** NOT adopted tools
 
-This section intoduces tools that were considered but not adopted now.
+This section introduces tools that were considered but not adopted.
 
 - ~desktop-save~.
 - [[https://github.com/jwiegley/use-package][jwiegley/use-package]] and [[https://github.com/conao3/leaf.el][conao3/leaf.el]].
