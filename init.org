@@ -23,19 +23,32 @@ You may need to run these commands when you start Emacs for the first time.
 
 *** Commands
 
-In zsh, you need to use a backslash before the #.
-More information on metacharacters can be found in =man zshmisc=, in the "QUOTING" section.
+Common operations are wrapped in a =justfile=. Run =just= with no arguments to list available recipes.
+If you prefer raw Nix commands, refer to the =justfile= for the equivalent invocations.
+Note: in zsh, =\#= must be escaped with a backslash (e.g. =nix run .\#lock=). See =man zshmisc= "QUOTING" for details.
 
-**** Update flake.lock
+**** Typical update workflow
+
+The recommended order when updating packages is:
+
 #+BEGIN_SRC sh
-nix run .#lock --impure
+just update      # refresh registries and package metadata
+just lock        # regenerate lock/flake.lock and lock/flake.nix
+just review      # review what changed in lock/ (package pin summary)
+just diff-drv    # show derivation-level diff for native deps (poppler, vterm, …)
+just diff-el     # show .el file diffs for packages whose revisions changed
 #+END_SRC
 
-**** Update Package Metadata
-#+BEGIN_SRC sh
-nix flake update melpa gnu-elpa nongnu-elpa gnu-elpa-archive nongnu-elpa-archive
-nix run --impure .#update
-#+END_SRC
+After reviewing, commit the result.
+
+**** Individual recipes
+
+- =just lock= — regenerate =lock/flake.lock= and =lock/flake.nix=. Never edit =lock/= by hand.
+- =just update-inputs= — refresh package registries (MELPA, GNU/NonGNU ELPA, epkgs).
+- =just update= — runs =update-inputs= then updates package metadata.
+- =just review [BASE]= — summarise per-package pin changes since =BASE= (default: =HEAD=).
+- =just diff-el [BASE]= — fetch =.el= diffs for changed packages via GitHub/GitLab API.
+- =just diff-drv [BASE]= — show derivation-level diff for native dependencies.
 
 **** Show Available Flake Outputs
 #+begin_src sh
