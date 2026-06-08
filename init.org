@@ -417,7 +417,7 @@ This setting is in [[./early-init.org]].
                     `((,'\, . (lambda (&rest body) `',(funcall `(lambda (it) ,@body) ',elem))))))
                  (eval list))))
     :documentation "Eval BODY for each elements in LIST. The current element can
-be referred with `,it'. Originally define in another `seup.el' by zk-phi."))
+be referred with `,it'. Originally define in another `setup.el' by zk-phi."))
 
 #+end_src
 
@@ -1202,7 +1202,7 @@ Highlights uncommitted changes on the side of the window.  https://github.com/dg
   (:opt goggles-pulse-iterations 1     ; 色を薄くする回数、1で即消える
         goggles-pulse-delay 0.1)       ; 色を薄くする1回ごとの秒数
   (defvar store-goggles-mode nil)
-  (defun resotre-goggles-mode-maybe ()
+  (defun restore-goggles-mode-maybe ()
     (interactive)
     (when store-goggles-mode
       (goggles-mode +1)))
@@ -1214,7 +1214,7 @@ Highlights uncommitted changes on the side of the window.  https://github.com/dg
     (:with-hook input-method-activate-hook
       (:hook disable-goggles-mode))
     (:with-hook input-method-deactivate-hook
-      (:hook resotre-goggles-mode-maybe))))
+      (:hook restore-goggles-mode-maybe))))
 #+end_src
 
 *** theme
@@ -1252,7 +1252,7 @@ https://github.com/protesilaos/modus-themes
        (puni-global-mode 1)
        ;; change default keybind
        (keymap-set puni-mode-map "M-(" 'puni-wrap-round) ; puni-syntactic-forward-punct
-       (keymap-set puni-mode-map "M-)" nil) ; puni-syntactic-backword-punct
+       (keymap-set puni-mode-map "M-)" nil) ; puni-syntactic-backward-punct
        (keymap-set puni-mode-map "M-s" 'puni-splice))))
   (:foreach '(emacs-lisp-mode-hook
               lisp-interaction-mode-hook
@@ -1677,7 +1677,7 @@ Tempo templates/snippets with in-buffer field editing.  https://github.com/minad
   ;; suggested officially, but I think not easy to type.
   (:global-keymap "M-+" tempel-complete
                   "M-*" tempel-insert)
-  ;; When exapanding template, overriding <tab> and <backtab>.
+  ;; When expanding template, overriding <tab> and <backtab>.
   (:with-map tempel-map
     (:bind "<tab>" tempel-next
            "<backtab>" tempel-previous)))
@@ -2223,13 +2223,13 @@ Displaying errors from Flycheck right below their reporting location, using over
     (:hook hide-ifdef-mode)))
 
 (setup (:package gdb-x)
-  (:with-mode gud-mode
+  (:with-mode good-mode
     (:bind
      "C-c C-'" gdb-x-many-windows-mode
-     "C-c C-q" gdb-x-gud-quit))
-  (:with-map gud-minor-mode-map
+     "C-c C-q" gdb-x-good-quit))
+  (:with-map good-minor-mode-map
     (:bind "C-c C-'" gdb-x-many-windows-mode
-           "C-c C-q" gdb-x-gud-quit))
+           "C-c C-q" gdb-x-good-quit))
   (:hook-into c-ts-mode-hook))
 
 (setup (:package clang-format))
@@ -2955,7 +2955,7 @@ this function replaces the link."
     tex: {
       packages: {'[+]': ['mathtools','empheq']},
       ams: {
-        multlineWidth: '%MULTLINEWIDTH'
+        multilineWidth: '%MULTLINEWIDTH'
       },
       tags: '%TAGS',
       tagSide: '%TAGSIDE',
@@ -3295,7 +3295,7 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
     - =stop=
     - =seed=
     - and so on
-- Generete commit massage by LLM (ref: [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]).
+- Generate commit massage by LLM (ref: [[https://zenn.dev/roswell/articles/emacs-ellama-generate-commit-message][Emacs Ellama を用いて Magit で Git コミットメッセージを生成する]]).
   1. push =C-x g= to execute ~magit-status~
   2. push =s= to staging
   3. push =c c= to execute ~migit-commit-create~
