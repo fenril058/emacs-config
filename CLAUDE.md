@@ -75,4 +75,4 @@ After installing for the first time, the user must run inside Emacs (noted in `i
 - Configuration text and prose in `init.org` is partly Japanese; preserve the existing language when editing nearby prose.
 - When editing `init.org`, keep section structure (`** Section / *** Subsection`) and the `#+begin_src emacs-lisp` / `#+end_src` fences intact — tangling depends on them.
 - Don't add `(setopt …)` to `early-init.org` expecting `setopt`-specific behavior during init; it's aliased to `setq` until startup completes (see `early-init.org`).
-- The repo history is occasionally rewritten with `git rebase -i`; the README tells consumers to `git reset --hard origin/main` after fetches. Avoid amending commits silently when collaborating.
+- The repo history is append-only: don't rewrite published history with `git rebase -i` or force-push `main`. (This repo previously rebased history and told consumers to `git reset --hard origin/main`; that practice has been dropped.)
