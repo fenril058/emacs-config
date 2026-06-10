@@ -4,7 +4,9 @@
     nix-filter.url = "github:numtide/nix-filter";
 
     # Emacs Twist
-    twist.url = "github:emacs-twist/twist.nix";
+    # Using the personal fork's develop branch (carries local fixes; master
+    # there mirrors upstream emacs-twist/twist.nix).
+    twist.url = "github:fenril058/twist.nix/develop";
     twist-overrides.url = "github:emacs-twist/overrides"; # to built vterm
     org-babel.url = "github:emacs-twist/org-babel";
 
