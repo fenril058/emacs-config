@@ -6,7 +6,7 @@
     # Emacs Twist
     # Using the personal fork's develop branch (carries local fixes; master
     # there mirrors upstream emacs-twist/twist.nix).
-    twist.url = "github:fenril058/twist.nix/develop";
+    twist.url = "github:fenril058/twist.nix/local";
     twist-overrides.url = "github:emacs-twist/overrides"; # to built vterm
     org-babel.url = "github:emacs-twist/org-babel";
 
