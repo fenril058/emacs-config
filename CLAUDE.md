@@ -25,6 +25,10 @@ The justfile wraps the common Nix invocations:
 - `just lock` — regenerate `lock/flake.lock` and `lock/flake.nix` (the auto-generated package lock; never edit `lock/` by hand). Equivalent to `nix run .#lock --impure -L`.
 - `just update-inputs` — `nix flake update melpa gnu-elpa nongnu-elpa epkgs` (refresh the package registries).
 - `just update` — runs `update-inputs` then `nix run .#update --impure -L` to refresh package metadata.
+- `just review [BASE]` — review what `just lock` changed in `lock/flake.lock` (per-package compare links; runs `scripts/review-lock.el`). `BASE` defaults to `HEAD`.
+- `just diff-el [BASE]` — show the actual `.el` file diffs for packages whose revisions changed (`scripts/diff-el.el`).
+- `just diff-drv [BASE]` — show the derivation-level diff for native deps (poppler, vterm, …) via `nix-diff`.
+- The intended order after refreshing is: `update` → `lock` → `review` → `diff-el` → commit.
 - `nix flake show --all-systems` — list flake outputs (`packages`, `apps`, `formatter`, etc.).
 - `nix fmt` — format Nix files. Uses `treefmt` with `nixfmt`, configured in `treefmt.toml` (excludes `lock/**`).
 - `home-manager switch` — apply the configuration after pulling new commits / updating inputs.
@@ -37,7 +41,7 @@ The justfile wraps the common Nix invocations:
 
 - `flake.nix` — defines `homeModules.twist` (system-independent) and per-system `packages.default`, `apps`, `formatter`, plus `earlyInitEl`. The build calls `inputs.twist.lib.makeEnv` to produce a package set composed of `init.org`'s declared packages.
 - `home-module.nix` — the home-manager module surface (`programs.emacs-twist.enable`). Wires `emacsclient`, the init/manifest files, an XDG desktop entry, and copies `snippets/` and `insert/` into `~/.config/emacs/`.
-- `nix/registries.nix` — package sources (MELPA, GNU/NonGNU ELPA, devel archives, emacsmirror). A `custom` registry pointing to `./recipes` is prepended in `flake.nix` so local recipes override upstream.
+- `nix/registries.nix` — package sources (MELPA, GNU ELPA, NonGNU ELPA, emacsmirror gitmodules). A `custom` registry pointing to `./recipes` is prepended in `flake.nix` so local recipes override upstream.
 - `nix/inputs.nix` — per-package source/file/dependency overrides (e.g., pin `org` to `elpa-mirrors/org-mode#bugfix`, fork of `lispy`, strip `swiper`/`ace-window` deps).
 - `nix/overrides.nix` — derivation-level overrides for packages needing a special build (currently `auctex` and `pdf-tools`).
 - `lock/` — auto-generated lock data. Do not edit; regenerate with `just lock`.
