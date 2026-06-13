@@ -3259,6 +3259,15 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 (setup (:package calfw-cal))
 (setup (:package calfw-ical))
 
+#+end_src
+
+*** calfw-blocks
+
+- https://github.com/ml729/calfw-blocks
+  - fork https://github.com/haji-ali/calfw-blocks
+    - fork https://github.com/fenril058/calfw-blocks
+
+#+begin_src emacs-lisp
 (setup (:package calfw-blocks))
 
 #+end_src
