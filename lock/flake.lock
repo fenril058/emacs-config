@@ -145,6 +145,23 @@
         "type": "github"
       }
     },
+    "calfw-blocks": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777226972,
+        "narHash": "sha256-HBRV6zMKOazV40wmkap8ZTL7T/E5l+PMXtIjDlSENec=",
+        "owner": "fenril058",
+        "repo": "calfw-blocks",
+        "rev": "0ef5a0980107b2940008b44865e3dc87bfbb5884",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fenril058",
+        "ref": "develop",
+        "repo": "calfw-blocks",
+        "type": "github"
+      }
+    },
     "calfw-cal": {
       "flake": false,
       "locked": {
@@ -2131,6 +2148,7 @@
         "blackout": "blackout",
         "boxes": "boxes",
         "calfw": "calfw",
+        "calfw-blocks": "calfw-blocks",
         "calfw-cal": "calfw-cal",
         "calfw-howm": "calfw-howm",
         "calfw-ical": "calfw-ical",
@@ -2278,6 +2296,7 @@
         "vterm": "vterm",
         "vui": "vui",
         "vundo": "vundo",
+        "wgrep": "wgrep",
         "which-key": "which-key",
         "with-editor": "with-editor",
         "wkr-mode": "wkr-mode",
@@ -2674,6 +2693,22 @@
       "original": {
         "owner": "casouri",
         "repo": "vundo",
+        "type": "github"
+      }
+    },
+    "wgrep": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733490377,
+        "narHash": "sha256-SQR3R/Vue/Rx3MvQiI6BotOKs39nES07hXsiOKMb/Kc=",
+        "owner": "mhayashi1120",
+        "repo": "Emacs-wgrep",
+        "rev": "49f09ab9b706d2312cab1199e1eeb1bcd3f27f6f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mhayashi1120",
+        "repo": "Emacs-wgrep",
         "type": "github"
       }
     },

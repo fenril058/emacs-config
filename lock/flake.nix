@@ -55,6 +55,13 @@
       repo = "emacs-calfw";
       type = "github";
     };
+    calfw-blocks = {
+      flake = false;
+      owner = "fenril058";
+      ref = "develop";
+      repo = "calfw-blocks";
+      type = "github";
+    };
     calfw-cal = {
       flake = false;
       owner = "kiwanami";
@@ -799,7 +806,7 @@
       repo = "rust-mode";
       type = "github";
     };
-    "s" = {
+    s = {
       flake = false;
       owner = "magnars";
       repo = "s.el";
@@ -936,6 +943,12 @@
       flake = false;
       owner = "casouri";
       repo = "vundo";
+      type = "github";
+    };
+    wgrep = {
+      flake = false;
+      owner = "mhayashi1120";
+      repo = "Emacs-wgrep";
       type = "github";
     };
     which-key = {
