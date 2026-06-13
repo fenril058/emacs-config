@@ -626,7 +626,7 @@ Edit multiple occurrences in the same way simultaneously. https://github.com/vic
 
 *** wgrep
 #+begin_src emacs-lisp
-(setup wgrep
+(setup (:package wgrep)
   (:opt wgrep-enable-key "r"
         wgrep-auto-save-buffer t))
 
@@ -3258,6 +3258,8 @@ Calfw - A calendar framework for Emacs. https://github.com/kiwanami/emacs-calfw
 (setup (:package calfw-howm))
 (setup (:package calfw-cal))
 (setup (:package calfw-ical))
+
+(setup (:package calfw-blocks))
 
 #+end_src
 
