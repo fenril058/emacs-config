@@ -16,6 +16,9 @@ in
       createManifestFile = true;
       config = flake.packages.${system}.default;
       earlyInitFile = flake.packages.${system}.earlyInitEl;
+      # We define our own xdg.desktopEntries.emacs-nix below, so suppress the
+      # module's desktop item to avoid a duplicate launcher entry.
+      desktopItem.enable = false;
     };
 
     xdg.desktopEntries.emacs-nix = {
