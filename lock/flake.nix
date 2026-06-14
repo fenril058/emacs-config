@@ -58,7 +58,7 @@
     calfw-blocks = {
       flake = false;
       owner = "fenril058";
-      ref = "develop";
+      ref = "local";
       repo = "calfw-blocks";
       type = "github";
     };

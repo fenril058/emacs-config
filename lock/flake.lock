@@ -148,16 +148,16 @@
     "calfw-blocks": {
       "flake": false,
       "locked": {
-        "lastModified": 1781404210,
-        "narHash": "sha256-p5mO2n2NGKePHiaQY+5XgIJe5jufM9T6xNOl7CdvEwQ=",
+        "lastModified": 1781406664,
+        "narHash": "sha256-YtBrNMpTksOZYhIUAKG5Nvc57y+wO0e5IRs6x+q5Bjw=",
         "owner": "fenril058",
         "repo": "calfw-blocks",
-        "rev": "ffd2c722c6498c6db1dd5eb5b95bc247903b8580",
+        "rev": "8f9456d5a12bda724ef5f13cbb59460c288f8068",
         "type": "github"
       },
       "original": {
         "owner": "fenril058",
-        "ref": "develop",
+        "ref": "local",
         "repo": "calfw-blocks",
         "type": "github"
       }
