@@ -2744,8 +2744,8 @@ Major mode for Markdown-formatted text.  https://jblevins.org/projects/markdown-
   (:also-load sequential-command)
   (:match-file "*.md")
   (:bind "C-c RET" compile
-         "C-c a" markdown-seq-cmd-home
-         "C-c e" markdown-seq-cmd-end
+         "C-a" markdown-seq-cmd-home
+         "C-e" markdown-seq-cmd-end
          "C-c '" markdown-edit-code-block)
   (:with-map markdown-mode-command-map
     (:bind "C-c" compile
