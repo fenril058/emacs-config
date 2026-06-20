@@ -147,11 +147,11 @@
     },
     "org-babel": {
       "locked": {
-        "lastModified": 1781137330,
+        "lastModified": 1781366822,
         "narHash": "sha256-Dd4eO2Vyp4x83yVKceuuIdM90WOKurNkVecldyTEMGw=",
         "owner": "fenril058",
         "repo": "org-babel",
-        "rev": "e1a7e92ffdb7149b24535d494db2a2e243a985f3",
+        "rev": "823c8054f07f0ba3ad6948d9e14b5dea8746845d",
         "type": "github"
       },
       "original": {
