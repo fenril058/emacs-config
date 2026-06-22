@@ -22,7 +22,6 @@ update-registries:
 
 # Fetch latest versions from ELPA archives and write to lock/archive.lock.
 # Run after `just lock`. Run `just update-registries` separately beforehand if needed.
-# (In this repo all packages are git-sourced, so archive.lock stays empty for now.)
 update-archive:
     nix run .\#update --impure -L
 
