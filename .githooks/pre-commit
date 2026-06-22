@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 nix fmt
+git add -u   # restage what the formatters changed so the commit includes it
 betterleaks git --pre-commit --staged -v
