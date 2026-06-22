@@ -9,6 +9,15 @@
     };
   };
 
+  auctex = _: _: {
+    origin = {
+      # git.savannah.gnu.org is unstable
+      type = "github";
+      owner = "emacs-straight";
+      repo = "auctex";
+    };
+  };
+
   repl-toggle = _: _: {
     origin = {
       type = "github";

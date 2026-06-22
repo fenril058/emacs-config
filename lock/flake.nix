@@ -27,9 +27,9 @@
     };
     auctex = {
       flake = false;
-      ref = "main";
-      type = "git";
-      url = "https://git.savannah.gnu.org/git/auctex.git";
+      owner = "emacs-straight";
+      repo = "auctex";
+      type = "github";
     };
     avy = {
       flake = false;
