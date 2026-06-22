@@ -1,9 +1,3 @@
-[formatter.lychee]
-command = "lychee"
-options = ["--no-progress", "--config", "./lychee.toml"]
-includes = ["init.org"]
-priority = 1
-
 [formatter.typos]
 command = "typos"
 options = ["--write-changes"]

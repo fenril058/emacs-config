@@ -2,6 +2,11 @@
 _:
     @just --list
 
+# Kept out of `nix fmt` so a dead link or network blip never blocks commits.
+# Check external links in init.org with lychee (on demand; not run by hooks/CI).
+check-links:
+    lychee --no-progress --config ./lychee.toml init.org
+
 # Sync lock/flake.nix and lock/archive.lock with the current package set in
 # init.org, then run `nix flake lock` to add/remove entries in lock/flake.lock.
 # Does NOT update locked SHAs of existing git packages — use update-lock for that.

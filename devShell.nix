@@ -8,6 +8,7 @@ pkgs.mkShell {
     pinact
     zizmor
     ghalint
+    lychee # `just check-links` (no longer part of `nix fmt`)
   ];
 
   shellHook = ''
