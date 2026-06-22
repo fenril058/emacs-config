@@ -3,8 +3,16 @@ _:
     @just --list
 
 # Regenerate lock/flake.lock and lock/flake.nix. Never edit lock/ by hand.
+# Adds/removes packages but does NOT update locked SHAs of existing packages.
+# Use `just upgrade` to update SHAs.
 lock:
     nix run .\#lock --impure -L
+
+# Update locked SHAs of Emacs packages in lock/flake.lock.
+# No args: update all. With args: update named packages only.
+# e.g. just upgrade evil magit
+upgrade *pkgs:
+    cd lock && nix flake update {{pkgs}}
 
 # Refresh package registries (melpa, gnu-elpa, nongnu-elpa, epkgs).
 update-inputs:

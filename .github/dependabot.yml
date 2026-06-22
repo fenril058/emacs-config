@@ -29,3 +29,15 @@ updates:
       - dependency-name: "gnu-elpa"
       - dependency-name: "nongnu-elpa"
       - dependency-name: "epkgs"
+
+  # Monitor individual Emacs package SHAs in lock/flake.lock.
+  # These are updated manually via `just upgrade [pkg...]` or by this bot.
+  - package-ecosystem: "nix"
+    directory: "/lock"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "08:00"
+      timezone: "Asia/Tokyo"
+    cooldown:
+      default-days: 7
