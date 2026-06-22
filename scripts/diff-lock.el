@@ -83,7 +83,7 @@
          (names (seq-uniq (append (mapcar #'car old) (mapcar #'car new))))
          changed added removed)
     (dolist (name (sort names (lambda (a b) (string< (symbol-name a)
-                                                      (symbol-name b)))))
+                                                     (symbol-name b)))))
       (let ((o (alist-get name old))
             (n (alist-get name new)))
         (cond
