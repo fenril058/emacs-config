@@ -276,11 +276,11 @@
     "cmake-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1782014724,
-        "narHash": "sha256-iy9+pXW8vNXtKr4VyH3KO/vWUVaX1ANVub5mm9U8dwg=",
+        "lastModified": 1782101126,
+        "narHash": "sha256-fG7c+8u7dXKhlABbS4GC8Wdp0sDOf/0P4QRRA6tIyGM=",
         "ref": "refs/heads/master",
-        "rev": "088aef1e68528f82d8d850a6fb4d0524b8791a08",
-        "revCount": 76162,
+        "rev": "ee0198b4b268990b6b9c49e9190a82f9a3ca440b",
+        "revCount": 76163,
         "type": "git",
         "url": "https://gitlab.kitware.com/cmake/cmake.git"
       },
@@ -468,11 +468,11 @@
     "copilot": {
       "flake": false,
       "locked": {
-        "lastModified": 1781847594,
-        "narHash": "sha256-BZb6KKwg0+eSRw/u/RjG0p2AMu2s1DoTOVueSFfPnp4=",
+        "lastModified": 1782114076,
+        "narHash": "sha256-FwuPojCtCg5wxY6+N9BYljZRB60PQpVzBIpxo4VKvTA=",
         "owner": "copilot-emacs",
         "repo": "copilot.el",
-        "rev": "4870dac784b49fdcf2319d3b1eea9b643432f767",
+        "rev": "765ddf0a39bd3f7c38718d218679458541bcae21",
         "type": "github"
       },
       "original": {
@@ -868,11 +868,11 @@
     "envrc": {
       "flake": false,
       "locked": {
-        "lastModified": 1781872952,
-        "narHash": "sha256-tJ5vzZDiXhL+PLxUmgLFSdPPH7XcZCrUS6cgO/AJTlI=",
+        "lastModified": 1782122653,
+        "narHash": "sha256-KWQZjugzjKC+emQfxvskx9a6Oc+1h1tkUmKMRACqeoY=",
         "owner": "purcell",
         "repo": "envrc",
-        "rev": "a18aa67f4a2b93b2899e5945bb944257c80d0870",
+        "rev": "77e9dec1563bc204cc9e086cd8a7d3622196224c",
         "type": "github"
       },
       "original": {
@@ -884,11 +884,11 @@
     "erlang": {
       "flake": false,
       "locked": {
-        "lastModified": 1781879304,
-        "narHash": "sha256-u5tOwXVx0qasmuxXtnmsUBTFVR3l2cFaFhG6FWSWz2U=",
+        "lastModified": 1782133629,
+        "narHash": "sha256-w9mBtTMIjqTHU7jz7osgfwsjnGqclLvK3k6LYrEkXkM=",
         "owner": "erlang",
         "repo": "otp",
-        "rev": "f5d1255f46822345f19bbe664f63154561fadc3a",
+        "rev": "2e5042f84cf1ff6ea477412339cefc08e14e59eb",
         "type": "github"
       },
       "original": {
@@ -1269,11 +1269,11 @@
     "imaxima": {
       "flake": false,
       "locked": {
-        "lastModified": 1781958296,
-        "narHash": "sha256-gf2IVydoP2lriorY84zU+/u0Va3pLLkuEYW7J02PyrA=",
+        "lastModified": 1782118287,
+        "narHash": "sha256-mZI/GEZ+axPddpMnEnCRKpZ5CHKz+TlQRKAzS7X2I70=",
         "ref": "refs/heads/master",
-        "rev": "c85433ea11ed04ad23072079e12e796b84aa0f05",
-        "revCount": 21127,
+        "rev": "9ff1f714e9125bd1574d494eb12c479c1dbf3d42",
+        "revCount": 21131,
         "type": "git",
         "url": "https://git.code.sf.net/p/maxima/code"
       },
@@ -1528,11 +1528,11 @@
     "magit": {
       "flake": false,
       "locked": {
-        "lastModified": 1782046430,
-        "narHash": "sha256-KRHrMGKhLbq6qjlrqDXP4i1zj88iyPxNYxyRS0WvFs0=",
+        "lastModified": 1782122116,
+        "narHash": "sha256-jKOZ5pheOJCrF9f01Ns7JoJdz4Z+b7x3DSUu9CTVMHo=",
         "owner": "magit",
         "repo": "magit",
-        "rev": "20058311576bd47751681bdc2ae239da76dec2dc",
+        "rev": "453d067af84f3109a08ce5dc9ece84cfa20374b4",
         "type": "github"
       },
       "original": {
@@ -1560,11 +1560,11 @@
     "magit-section": {
       "flake": false,
       "locked": {
-        "lastModified": 1782046430,
-        "narHash": "sha256-KRHrMGKhLbq6qjlrqDXP4i1zj88iyPxNYxyRS0WvFs0=",
+        "lastModified": 1782122116,
+        "narHash": "sha256-jKOZ5pheOJCrF9f01Ns7JoJdz4Z+b7x3DSUu9CTVMHo=",
         "owner": "magit",
         "repo": "magit",
-        "rev": "20058311576bd47751681bdc2ae239da76dec2dc",
+        "rev": "453d067af84f3109a08ce5dc9ece84cfa20374b4",
         "type": "github"
       },
       "original": {
