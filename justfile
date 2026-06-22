@@ -5,34 +5,35 @@ _:
 # Sync lock/flake.nix and lock/archive.lock with the current package set in
 # init.org, then run `nix flake lock` to add/remove entries in lock/flake.lock.
 # Does NOT update locked SHAs of existing git packages — use update-lock for that.
+# Typical order: update-registries -> lock -> update-archive / update-lock -> diff-*
 lock:
     nix run .\#lock --impure -L
 
 # Update locked SHAs of git packages (MELPA/ELPA) in lock/flake.lock.
 # No args: update all. With args: update specific packages only.
-# e.g. just update-lock evil magit
+# Run after `just lock`. e.g. just update-lock evil magit
 update-lock *pkgs:
     cd lock && nix flake update {{pkgs}}
 
 # Update registry inputs (melpa, gnu-elpa, nongnu-elpa, epkgs) in flake.lock.
-# Needed before update-archive or lock when you want the latest registry metadata.
+# Run before `just lock` when you want the latest registry metadata.
 update-registries:
     nix flake update melpa gnu-elpa nongnu-elpa epkgs
 
 # Fetch latest versions from ELPA archives and write to lock/archive.lock.
-# Runs update-registries first.
+# Run after `just lock`. Run `just update-registries` separately beforehand if needed.
 # (In this repo all packages are git-sourced, so archive.lock stays empty for now.)
-update-archive: update-registries
+update-archive:
     nix run .\#update --impure -L
 
-# Review changes to lock/flake.lock (per-package compare links).
+# Show per-package compare links for changes in lock/flake.lock.
 # Run after `just lock` or `just update-lock`, before committing.
-review base="HEAD":
+diff-lock base="HEAD":
     emacs -Q --batch --script scripts/review-lock.el {{base}}
 
 # Show .el diffs for packages whose revisions changed in lock/flake.lock.
 # Fetches diffs via GitHub/GitLab API; falls back to bare git-clone.
-# Run after `just review`, before committing.
+# Run after `just diff-lock`, before committing.
 diff-el base="HEAD":
     emacs -Q --batch --script scripts/diff-el.el {{base}}
 
