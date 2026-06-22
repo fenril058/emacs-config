@@ -59,14 +59,14 @@ jobs:
 
           For `.el` file diffs, check out this branch and run locally:
           ```sh
-          just diff-el update/flake-inputs
+          just diff-el main
           ```
 
-          <details><summary>Changed packages (just review)</summary>
+          <details><summary>Changed packages (just diff-lock)</summary>
 
           ```
           HEADER
-            just review 2>/dev/null || echo '(review script failed)'
+            just diff-lock 2>/dev/null || echo '(diff-lock failed)'
             printf '```\n</details>\n'
           } > /tmp/pr-body.md
 

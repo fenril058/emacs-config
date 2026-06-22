@@ -28,13 +28,31 @@ update-archive:
 # Show per-package compare links for changes in lock/flake.lock.
 # Run after `just lock` or `just update-lock`, before committing.
 diff-lock base="HEAD":
-    emacs -Q --batch --script scripts/review-lock.el {{base}}
+    emacs -Q --batch --script scripts/diff-lock.el {{base}}
 
 # Show .el diffs for packages whose revisions changed in lock/flake.lock.
-# Fetches diffs via GitHub/GitLab API; falls back to bare git-clone.
+# Fetches diffs in parallel via GitHub/GitLab API; falls back to bare git-clone.
+# viewer=terminal (default): syntax-highlighted output in terminal via bat.
+# viewer=emacs: write Markdown to a temp file and open with emacsclient.
 # Run after `just diff-lock`, before committing.
-diff-el base="HEAD":
-    emacs -Q --batch --script scripts/diff-el.el {{base}}
+diff-el base="HEAD" viewer="terminal":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    case "{{viewer}}" in
+      emacs)
+        outfile=$(mktemp --suffix=.md /tmp/diff-el-XXXXXX)
+        bash scripts/diff-el.sh {{base}} md > "$outfile"
+        printf '→ %s\n' "$outfile"
+        emacsclient -n "$outfile"
+        ;;
+      *)
+        if command -v bat >/dev/null 2>&1; then
+          bash scripts/diff-el.sh {{base}} raw | bat --language=diff --paging=always
+        else
+          bash scripts/diff-el.sh {{base}} raw | less -R
+        fi
+        ;;
+    esac
 
 # Show derivation-level diff for native deps (poppler, vterm, etc.).
 # Run after `just lock` or `just update-lock` when native packages may have changed.
