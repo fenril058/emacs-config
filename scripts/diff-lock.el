@@ -1,11 +1,11 @@
-;;; review-lock.el --- Summarize what `just update` changed in the lock -*- lexical-binding: t; -*-
+;;; diff-lock.el --- Summarize what `just update` changed in the lock -*- lexical-binding: t; -*-
 
 ;; Compare two versions of lock/flake.lock and, for every package whose pinned
 ;; revision moved, print old->new revs together with an upstream "compare" URL
 ;; so the actual incoming commits can be eyeballed before committing.
 ;;
 ;; Usage (see the `review` recipe in justfile):
-;;     emacs -Q --batch --script scripts/review-lock.el [BASE]
+;;     emacs -Q --batch --script scripts/diff-lock.el [BASE]
 ;;
 ;; BASE is a git ref (default: HEAD). The "new" side is always the working-tree
 ;; copy of lock/flake.lock, i.e. the result of the most recent `just update'.
@@ -15,31 +15,31 @@
 (require 'json)
 (require 'subr-x)
 
-(defconst review-lock-file "lock/flake.lock"
+(defconst diff-lock--file "lock/flake.lock"
   "Lock file to inspect, relative to the repository root.")
 
-(defun review-lock--parse (string)
+(defun diff-lock--parse (string)
   "Parse JSON STRING into an alist with symbol keys."
   (json-parse-string string :object-type 'alist :array-type 'list))
 
-(defun review-lock--read-working ()
+(defun diff-lock--read-working ()
   "Parse the working-tree copy of the lock file."
-  (review-lock--parse
+  (diff-lock--parse
    (with-temp-buffer
-     (insert-file-contents review-lock-file)
+     (insert-file-contents diff-lock--file)
      (buffer-string))))
 
-(defun review-lock--read-ref (ref)
+(defun diff-lock--read-ref (ref)
   "Parse the lock file as it exists at git REF."
   (with-temp-buffer
     (let ((status (call-process "git" nil t nil
-                                "show" (format "%s:%s" ref review-lock-file))))
+                                "show" (format "%s:%s" ref diff-lock--file))))
       (unless (eq status 0)
         (error "Cannot read %s at %S:\n%s"
-               review-lock-file ref (buffer-string)))
-      (review-lock--parse (buffer-string)))))
+               diff-lock--file ref (buffer-string)))
+      (diff-lock--parse (buffer-string)))))
 
-(defun review-lock--locked-nodes (lock)
+(defun diff-lock--locked-nodes (lock)
   "Return an alist of (NAME . LOCKED-ALIST) for every locked node in LOCK."
   (let (result)
     (pcase-dolist (`(,name . ,node) (alist-get 'nodes lock))
@@ -47,11 +47,11 @@
         (push (cons name locked) result)))
     (nreverse result)))
 
-(defun review-lock--short (rev)
+(defun diff-lock--short (rev)
   "Abbreviate REV to a short hash."
   (if (and rev (>= (length rev) 9)) (substring rev 0 9) (or rev "?")))
 
-(defun review-lock--compare-url (loc old new)
+(defun diff-lock--compare-url (loc old new)
   "Build an upstream compare URL for LOC moving from OLD to NEW rev."
   (let ((type (alist-get 'type loc)))
     (pcase type
@@ -72,14 +72,14 @@
           ((string-search "gitlab.com" url)
            (format "%s/-/compare/%s...%s" url old new))
           (t (format "%s  (%s -> %s)" url
-                     (review-lock--short old) (review-lock--short new))))))
+                     (diff-lock--short old) (diff-lock--short new))))))
       (_ (format "(%s) %s -> %s" type
-                 (review-lock--short old) (review-lock--short new))))))
+                 (diff-lock--short old) (diff-lock--short new))))))
 
-(defun review-lock--run (base)
+(defun diff-lock--run (base)
   "Print the package revision changes between BASE and the working tree."
-  (let* ((old (review-lock--locked-nodes (review-lock--read-ref base)))
-         (new (review-lock--locked-nodes (review-lock--read-working)))
+  (let* ((old (diff-lock--locked-nodes (diff-lock--read-ref base)))
+         (new (diff-lock--locked-nodes (diff-lock--read-working)))
          (names (seq-uniq (append (mapcar #'car old) (mapcar #'car new))))
          changed added removed)
     (dolist (name (sort names (lambda (a b) (string< (symbol-name a)
@@ -102,16 +102,16 @@
         (pcase-dolist (`(,name ,o ,n) changed)
           (princ (format "%s: %s -> %s\n"
                          name
-                         (review-lock--short (alist-get 'rev o))
-                         (review-lock--short (alist-get 'rev n))))
+                         (diff-lock--short (alist-get 'rev o))
+                         (diff-lock--short (alist-get 'rev n))))
           (princ (format "    %s\n\n"
-                         (review-lock--compare-url
+                         (diff-lock--compare-url
                           n (alist-get 'rev o) (alist-get 'rev n))))))
       (when added
         (princ (format "# Added (%d)\n" (length added)))
         (pcase-dolist (`(,name . ,n) added)
           (princ (format "  + %s @ %s  [%s]\n"
-                         name (review-lock--short (alist-get 'rev n))
+                         name (diff-lock--short (alist-get 'rev n))
                          (alist-get 'type n))))
         (princ "\n"))
       (when removed
@@ -122,6 +122,6 @@
       (princ (format "Totals: %d changed, %d added, %d removed.\n"
                      (length changed) (length added) (length removed))))))
 
-(review-lock--run (or (car command-line-args-left) "HEAD"))
+(diff-lock--run (or (car command-line-args-left) "HEAD"))
 
-;;; review-lock.el ends here
+;;; diff-lock.el ends here
