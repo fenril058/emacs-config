@@ -13,7 +13,7 @@
     origin = {
       # git.savannah.gnu.org is unstable
       type = "github";
-      owner = "emacs-straight";
+      owner = "emacsmirror";
       repo = "auctex";
     };
   };

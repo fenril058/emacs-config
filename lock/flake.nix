@@ -27,7 +27,7 @@
     };
     auctex = {
       flake = false;
-      owner = "emacs-straight";
+      owner = "emacsmirror";
       repo = "auctex";
       type = "github";
     };
