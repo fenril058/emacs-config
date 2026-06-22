@@ -43,12 +43,10 @@ jobs:
           name: fenril058
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
+      # `nix flake check` already builds packages.x86_64-linux.default (and
+      # earlyInitEl, devShell, formatter), so cachix-action picks up and pushes
+      # the Emacs package closure from here — no separate build step needed.
+      # --accept-flake-config trusts the substituters declared in flake.nix;
+      # -L streams build logs so compile failures are visible.
       - name: nix flake check
-        run: nix flake check --accept-flake-config
-
-      # Build the Emacs package set so its closure gets pushed to Cachix.
-      # --accept-flake-config trusts the substituters declared in flake.nix.
-      - name: Build Emacs package set
-        run: |
-          system="$(nix eval --impure --raw --expr builtins.currentSystem)"
-          nix build ".#packages.$system.default" --accept-flake-config --print-build-logs
+        run: nix flake check --accept-flake-config -L
