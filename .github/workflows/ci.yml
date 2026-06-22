@@ -35,5 +35,20 @@ jobs:
           purge-last-accessed: P1DT12H
           purge-primary-key: never
 
+      # Auth to Cachix and push every store path built below. With this action
+      # active, paths realised during the build are pushed to fenril058.cachix.org,
+      # so `home-manager switch` can pull prebuilt binaries instead of compiling.
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: fenril058
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
       - name: nix flake check
-        run: nix flake check
+        run: nix flake check --accept-flake-config
+
+      # Build the Emacs package set so its closure gets pushed to Cachix.
+      # --accept-flake-config trusts the substituters declared in flake.nix.
+      - name: Build Emacs package set
+        run: |
+          system="$(nix eval --impure --raw --expr builtins.currentSystem)"
+          nix build ".#packages.$system.default" --accept-flake-config --print-build-logs

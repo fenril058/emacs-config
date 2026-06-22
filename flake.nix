@@ -34,6 +34,21 @@
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
+  # Binary cache. CI builds packages.default and pushes the closure to
+  # fenril058.cachix.org, so `home-manager switch` pulls prebuilt binaries
+  # instead of compiling locally. Trusting these substituters requires
+  # --accept-flake-config (or adding them to ~/.config/nix/nix.conf).
+  nixConfig = {
+    extra-substituters = [
+      "https://fenril058.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "fenril058.cachix.org-1:KRRO8ttyCYEZnuGV2pSHhaCGVtiA8iiREpdL2PUMpq0="
+    ];
+  };
+
   outputs =
     inputs@{
       self,
