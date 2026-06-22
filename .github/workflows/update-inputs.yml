@@ -5,18 +5,26 @@ on:
     - cron: '0 2 * * 1'  # Every Monday 02:00 UTC
   workflow_dispatch:       # Allow manual trigger from GitHub UI
 
-permissions: read-all
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
   update:
+    name: Update inputs
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # create-pull-request pushes the update/flake-inputs branch
+      pull-requests: write # create-pull-request opens the PR
       actions: write # cache-nix-action purge deletes old caches via the API
 
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - uses: nixbuild/nix-quick-install-action@2c9db80fb984ceb1bcaa77cdda3fdf8cfba92035 # v34
         with:
@@ -70,6 +78,8 @@ jobs:
             printf '```\n</details>\n'
           } > /tmp/pr-body.md
 
+      # The action also creates/updates the branch and computes the diff;
+      # `gh pr create` alone wouldn't replace it.
       - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -78,4 +88,4 @@ jobs:
           title: 'chore: update flake inputs'
           body-path: /tmp/pr-body.md
           labels: dependencies
-          delete-branch: true
+          delete-branch: true # zizmor: ignore[superfluous-actions]

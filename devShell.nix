@@ -10,8 +10,7 @@ pkgs.mkShell {
     ghalint
   ];
 
-  # https://nixos.org/manual/nixpkgs/stable/#javascript-packages-nixpkgs
-  postShellHook = ''
+  shellHook = ''
     git config core.hooksPath .githooks
   '';
 }
