@@ -2,40 +2,42 @@
 _:
     @just --list
 
-# Regenerate lock/flake.lock and lock/flake.nix. Never edit lock/ by hand.
-# Adds/removes packages but does NOT update locked SHAs of existing packages.
-# Use `just upgrade` to update SHAs.
+# Sync lock/flake.nix and lock/archive.lock with the current package set in
+# init.org, then run `nix flake lock` to add/remove entries in lock/flake.lock.
+# Does NOT update locked SHAs of existing git packages — use update-lock for that.
 lock:
     nix run .\#lock --impure -L
 
-# Update locked SHAs of Emacs packages in lock/flake.lock.
-# No args: update all. With args: update named packages only.
-# e.g. just upgrade evil magit
-upgrade *pkgs:
+# Update locked SHAs of git packages (MELPA/ELPA) in lock/flake.lock.
+# No args: update all. With args: update specific packages only.
+# e.g. just update-lock evil magit
+update-lock *pkgs:
     cd lock && nix flake update {{pkgs}}
 
-# Refresh package registries (melpa, gnu-elpa, nongnu-elpa, epkgs).
-update-inputs:
+# Update registry inputs (melpa, gnu-elpa, nongnu-elpa, epkgs) in flake.lock.
+# Needed before update-archive or lock when you want the latest registry metadata.
+update-registries:
     nix flake update melpa gnu-elpa nongnu-elpa epkgs
 
-# Refresh registries then update package metadata. Order: update -> lock -> review.
-update: update-inputs
+# Fetch latest versions from ELPA archives and write to lock/archive.lock.
+# Runs update-registries first.
+# (In this repo all packages are git-sourced, so archive.lock stays empty for now.)
+update-archive: update-registries
     nix run .\#update --impure -L
 
-# Review what `just lock` changed in lock/flake.lock (compare links per package).
-# Package pins move on `just lock` (not `just update`). Order: update -> lock -> review.
-# BASE defaults to HEAD: run after `just lock`, before committing.
+# Review changes to lock/flake.lock (per-package compare links).
+# Run after `just lock` or `just update-lock`, before committing.
 review base="HEAD":
     emacs -Q --batch --script scripts/review-lock.el {{base}}
 
-# Show actual .el file diffs for packages whose revisions changed.
-# Fetches diffs via GitHub/GitLab API; falls back to bare git-clone for others.
-# Order: update -> lock -> review -> diff-el -> commit.
+# Show .el diffs for packages whose revisions changed in lock/flake.lock.
+# Fetches diffs via GitHub/GitLab API; falls back to bare git-clone.
+# Run after `just review`, before committing.
 diff-el base="HEAD":
     emacs -Q --batch --script scripts/diff-el.el {{base}}
 
-# Show derivation-level diff for native deps (poppler, vterm, etc.) after `just lock`.
-# Order: update -> lock -> diff-drv -> diff-el -> commit.
+# Show derivation-level diff for native deps (poppler, vterm, etc.).
+# Run after `just lock` or `just update-lock` when native packages may have changed.
 diff-drv base="HEAD":
     #!/usr/bin/env bash
     set -euo pipefail
