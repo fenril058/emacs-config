@@ -78,9 +78,8 @@ jobs:
             printf '```\n</details>\n'
           } > /tmp/pr-body.md
 
-      # The action also creates/updates the branch and computes the diff;
-      # `gh pr create` alone wouldn't replace it.
-      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: update/flake-inputs
@@ -88,4 +87,6 @@ jobs:
           title: 'chore: update flake inputs'
           body-path: /tmp/pr-body.md
           labels: dependencies
+          # The action also commits, upserts the branch and the PR; gh pr
+          # create is not a drop-in replacement, so the audit is N/A here.
           delete-branch: true # zizmor: ignore[superfluous-actions]
