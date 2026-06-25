@@ -1744,6 +1744,7 @@ VERTical Interactive COmpletion. https://github.com/minad/vertico
      "DEL" vertico-directory-delete-char
      "M-DEL" vertico-directory-delete-word))
   (setup vertico-directory-tidy (:hook rfn-eshadow-update-overlay-hook)))
+
 #+end_src
 
 *** consult
@@ -3469,3 +3470,4 @@ This section introduces tools that were considered but not adopted.
 - [[https://github.com/company-mode/company-mode][company-mode/company-mode]] and [[https://github.com/auto-complete/auto-complete][auto-complete/auto-complete]]
 - [[https://www.gentei.org/~yuuji/software/windows.el][gentei.org/~yuuji/software/windows.el]]
 - [[https://www.yatex.org][YaTeX]]
+- [[https://github.com/tumashu/vertico-posframe][vertico-posframe]]
