@@ -1,82 +1,31 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Overview
 
-A personal Emacs configuration built with [emacs-twist](https://github.com/emacs-twist/twist.nix). Packages are pinned via Nix and the configuration is installed through home-manager. Target platform is WSL (Windows Subsystem for Linux).
+Personal Emacs configuration built with [emacs-twist](https://github.com/emacs-twist/twist.nix): packages pinned via Nix, installed through home-manager, targeting WSL. `README.org` is a symlink to `init.org`.
 
-`README.org` is a symlink to `init.org`.
+## init.org is the source of truth
 
-## Literate configuration: init.org is the source of truth
+The config is literate Org. **Do not edit the tangled `.el` files** — edit `init.org` / `early-init.org` and let the Nix build tangle them (`pkgs.tangleOrgBabelFile` in `flake.nix`). Keep the `** Section` structure and the `#+begin_src emacs-lisp` / `#+end_src` fences intact — tangling depends on them.
 
-The Emacs configuration is written as literate Org files. **Do not edit the tangled `.el` files** — edit the Org sources and let the Nix build tangle them.
+Config uses [`setup.el`](https://codeberg.org/pkal/setup.el), not use-package/leaf: `(setup (:package foo) (:opt …) …)`. Local macros are defined under the `** Setup.el` section — read it before using one. Notable: `:package` only fake-installs (the real install is Nix/twist), and `:nixpkgs` is documentation-only metadata that does nothing at runtime.
 
-- `init.org` → tangled to `init.el` at build time via `pkgs.tangleOrgBabelFile` (see `flake.nix`).
-- `early-init.org` → tangled to `early-init.el`.
-- The parser used is `inputs.twist.lib.parseSetup` because configuration uses `setup.el` blocks (not `use-package`).
+Gotcha: `early-init.org` aliases `setopt` → `setq` until `emacs-startup-hook`, so `(setopt …)` is effectively `setq` during init. Don't put `setopt`-specific config in `early-init.org`.
 
-When you need to add or change Emacs behavior, find the relevant `** Section` in `init.org` and edit the `#+begin_src emacs-lisp ... #+end_src` block there.
+## Adding / updating packages
 
-## Build / update commands
+- Add a package: add a `(setup (:package NAME) …)` block in the right `init.org` section, then `just lock`. If NAME isn't in the upstream registries, add a recipe under `recipes/<NAME>` (the local `custom` registry overrides upstream).
+- `lock/` is auto-generated — never edit by hand; regenerate with `just lock`.
+- Build/update commands live in the `justfile` (`just --list`). Intended refresh order: `update` → `lock` → `review` → `diff-el` → commit. Apply changes with `home-manager switch`.
 
-The justfile wraps the common Nix invocations:
+## Architecture map
 
-- `just lock` — regenerate `lock/flake.lock` and `lock/flake.nix` (the auto-generated package lock; never edit `lock/` by hand). Equivalent to `nix run .#lock --impure -L`.
-- `just update-inputs` — `nix flake update melpa gnu-elpa nongnu-elpa epkgs` (refresh the package registries).
-- `just update` — runs `update-inputs` then `nix run .#update --impure -L` to refresh package metadata.
-- `just review [BASE]` — review what `just lock` changed in `lock/flake.lock` (per-package compare links; runs `scripts/review-lock.el`). `BASE` defaults to `HEAD`.
-- `just diff-el [BASE]` — show the actual `.el` file diffs for packages whose revisions changed (`scripts/diff-el.el`).
-- `just diff-drv [BASE]` — show the derivation-level diff for native deps (poppler, vterm, …) via `nix-diff`.
-- The intended order after refreshing is: `update` → `lock` → `review` → `diff-el` → commit.
-- `nix flake show --all-systems` — list flake outputs (`packages`, `apps`, `formatter`, etc.).
-- `nix fmt` — format Nix files. Uses `treefmt` with `nixfmt`, configured in `treefmt.toml` (excludes `lock/**`).
-- `home-manager switch` — apply the configuration after pulling new commits / updating inputs.
-
-`--impure` is required for the `lock` and `update` apps because they read from the working tree.
-
-## Architecture
-
-### Nix layer
-
-- `flake.nix` — defines `homeModules.twist` (system-independent) and per-system `packages.default`, `apps`, `formatter`, plus `earlyInitEl`. The build calls `inputs.twist.lib.makeEnv` to produce a package set composed of `init.org`'s declared packages.
-- `home-module.nix` — the home-manager module surface (`programs.emacs-twist.enable`). Wires `emacsclient`, the init/manifest files, an XDG desktop entry, and copies `snippets/` and `insert/` into `~/.config/emacs/`.
-- `nix/registries.nix` — package sources (MELPA, GNU ELPA, NonGNU ELPA, emacsmirror gitmodules). A `custom` registry pointing to `./recipes` is prepended in `flake.nix` so local recipes override upstream.
-- `nix/inputs.nix` — per-package source/file/dependency overrides (e.g., pin `org` to `elpa-mirrors/org-mode#bugfix`, fork of `lispy`, strip `swiper`/`ace-window` deps).
-- `nix/overrides.nix` — derivation-level overrides for packages needing a special build (currently `auctex` and `pdf-tools`).
-- `lock/` — auto-generated lock data. Do not edit; regenerate with `just lock`.
-
-### Emacs configuration layer (`init.org`)
-
-- Uses [`setup.el`](https://codeberg.org/pkal/setup.el), not `use-package` or `leaf.el`. Per-package config looks like `(setup (:package foo) (:opt …) (:global-keymap …))`.
-- Custom `setup.el` local macros are defined under the `** Setup.el` section. Common ones:
-  - `:package` — fake-installs a package (real installation is done by Nix/twist, not Emacs).
-  - `:opt` — wraps `setopt` (deferred until after load).
-  - `:nixpkgs` — declarative marker: "this Emacs package expects these Nix executables on PATH." Does nothing at runtime; intended as documentation/metadata. Reference these when adding native dependencies.
-  - `:global-keymap` / `:keymap` / `:keymap-unset` / `:override-map` — keybinding helpers.
-  - `:defer` — `(run-with-timer SEC nil FN)` from `after-init-hook` for pseudo-async loading.
-  - `:key-chord`, `:blackout`, `:reformatter`, `:mode-repl`, `:mode-remap`, `:foreach`, `:auto-insert` — see the `** Setup.el` subsections.
-- `early-init.org` aliases `setopt` → `setq` for the duration of init (faster) and restores the real `setopt` from `emacs-startup-hook`. Keep this in mind when reading config: `(setopt …)` in `init.org` is effectively `setq` until startup completes.
-- Adding a package: pick the relevant section in `init.org`, add a `(setup (:package NAME) …)` block, then `just lock` to refresh `lock/flake.lock` so Nix can fetch it. If the package name is not in the upstream registries, add a recipe under `recipes/<NAME>`.
-
-### Local Emacs code
-
-- `site-lisp/` — Emacs Lisp utility code bundled as the local package `myutils` (declared in `flake.nix` under `localPackages`, scoped by `inputs.nix-filter` to the `site-lisp` directory). The recipe in `recipes/myutils` excludes `*-test.el`.
-- `recipes/` — MELPA-style recipe files for packages not on a registry, or to override upstream recipes (the `custom` registry is first in the registry list).
-- `snippets/` — yasnippet snippets, installed to `~/.config/emacs/snippets` by `home-module.nix`.
-- `insert/` — auto-insert templates, installed to `~/.config/emacs/insert`.
-
-### First-run interactive commands
-
-After installing for the first time, the user must run inside Emacs (noted in `init.org` Introduction):
-
-- `M-x treesit-auto-install-all`
-- `M-x nerd-icons-install-fonts`
-- `M-x eat-compile-terminfo`
+- `flake.nix` — homeModule + per-system packages/apps/formatter; calls `inputs.twist.lib.makeEnv`.
+- `home-module.nix` — home-manager surface (`programs.emacs-twist.enable`); installs init/manifest, `snippets/`, `insert/`.
+- `nix/registries.nix` / `nix/inputs.nix` / `nix/overrides.nix` — registry sources / per-package source & dep overrides / derivation-level build overrides.
+- `site-lisp/` — local package `myutils`.
 
 ## Conventions
 
-- Configuration text and prose in `init.org` is partly Japanese; preserve the existing language when editing nearby prose.
-- When editing `init.org`, keep section structure (`** Section / *** Subsection`) and the `#+begin_src emacs-lisp` / `#+end_src` fences intact — tangling depends on them.
-- Don't add `(setopt …)` to `early-init.org` expecting `setopt`-specific behavior during init; it's aliased to `setq` until startup completes (see `early-init.org`).
-- The repo history is append-only: don't rewrite published history with `git rebase -i` or force-push `main`. (This repo previously rebased history and told consumers to `git reset --hard origin/main`; that practice has been dropped.)
+- `init.org` prose is partly Japanese — preserve the existing language when editing nearby prose.
+- History is append-only: don't `git rebase -i` published history or force-push `main`.
