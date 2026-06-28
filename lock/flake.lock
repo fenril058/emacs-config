@@ -1078,15 +1078,15 @@
       "locked": {
         "lastModified": 1762520208,
         "narHash": "sha256-XQw02SYzY6v9gIueKTJ31wj8WVW0V8RVp5K9oO7sZCU=",
-        "ref": "refs/heads/main",
+        "owner": "emacsmirror",
+        "repo": "gdb-x",
         "rev": "7e03680f7b5a001341d1892daa69bc32fcf75113",
-        "revCount": 33,
-        "type": "git",
-        "url": "https://codeberg.org/pastor/gdb-x.git"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/pastor/gdb-x.git"
+        "owner": "emacsmirror",
+        "repo": "gdb-x",
+        "type": "github"
       }
     },
     "gnuplot": {
@@ -1158,15 +1158,15 @@
       "locked": {
         "lastModified": 1764872542,
         "narHash": "sha256-n+0R41nx3dvTJeMKXSM0oIiYoPnRa+ObWSJS7Akhykg=",
-        "ref": "refs/heads/main",
+        "owner": "emacsmirror",
+        "repo": "haskell-ts-mode",
         "rev": "bf143ee8382f09e0a68d775d80445065f32929c3",
-        "revCount": 192,
-        "type": "git",
-        "url": "https://codeberg.org/pranshu/haskell-ts-mode"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/pranshu/haskell-ts-mode"
+        "owner": "emacsmirror",
+        "repo": "haskell-ts-mode",
+        "type": "github"
       }
     },
     "highlight-indent-guides": {
@@ -2395,15 +2395,15 @@
       "locked": {
         "lastModified": 1761595148,
         "narHash": "sha256-lLeKsLFf1+Bjk6ETq+0Nncw6DPOVxE49cAexdLAr/5U=",
-        "ref": "refs/heads/master",
+        "owner": "emacsmirror",
+        "repo": "setup",
         "rev": "de9b86c6f29cf9888e911924ffc4ce47312320c3",
-        "revCount": 224,
-        "type": "git",
-        "url": "https://codeberg.org/pkal/setup.el"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/pkal/setup.el"
+        "owner": "emacsmirror",
+        "repo": "setup",
+        "type": "github"
       }
     },
     "shell-pop": {
@@ -2571,15 +2571,15 @@
       "locked": {
         "lastModified": 1772969483,
         "narHash": "sha256-NDaPei4hm9i8sj/Df62gxqn2J8npFlfM9vHFSXphpt8=",
-        "ref": "refs/heads/main",
+        "owner": "emacsmirror",
+        "repo": "undo-fu",
         "rev": "5684ef2aef5f60176472916b21869cf221e018cc",
-        "revCount": 111,
-        "type": "git",
-        "url": "https://codeberg.org/ideasman42/emacs-undo-fu.git"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/ideasman42/emacs-undo-fu.git"
+        "owner": "emacsmirror",
+        "repo": "undo-fu",
+        "type": "github"
       }
     },
     "unicode-inspector": {

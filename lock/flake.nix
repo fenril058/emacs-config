@@ -403,8 +403,9 @@
     };
     gdb-x = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/pastor/gdb-x.git";
+      owner = "emacsmirror";
+      repo = "gdb-x";
+      type = "github";
     };
     gnuplot = {
       flake = false;
@@ -432,8 +433,9 @@
     };
     haskell-ts-mode = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/pranshu/haskell-ts-mode";
+      owner = "emacsmirror";
+      repo = "haskell-ts-mode";
+      type = "github";
     };
     highlight-indent-guides = {
       flake = false;
@@ -834,8 +836,9 @@
     };
     setup = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/pkal/setup.el";
+      owner = "emacsmirror";
+      repo = "setup";
+      type = "github";
     };
     shell-pop = {
       flake = false;
@@ -899,8 +902,9 @@
     };
     undo-fu = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/ideasman42/emacs-undo-fu.git";
+      owner = "emacsmirror";
+      repo = "undo-fu";
+      type = "github";
     };
     unicode-inspector = {
       flake = false;
