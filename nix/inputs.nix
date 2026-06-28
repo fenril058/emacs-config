@@ -60,6 +60,37 @@
     };
   };
 
+  # akib's packages live only on codeberg and have no usable emacsmirror mirror,
+  # so we self-host a mirror under fenril058/*. The `master` branch of each
+  # mirror tracks upstream verbatim (force-synced from codeberg by a workflow on
+  # the repo's default `mirror` branch); track that `master` here.
+  eat = _: _: {
+    origin = {
+      type = "github";
+      owner = "fenril058";
+      repo = "emacs-eat";
+      ref = "master";
+    };
+  };
+
+  corfu-terminal = _: _: {
+    origin = {
+      type = "github";
+      owner = "fenril058";
+      repo = "emacs-corfu-terminal";
+      ref = "master";
+    };
+  };
+
+  popon = _: _: {
+    origin = {
+      type = "github";
+      owner = "fenril058";
+      repo = "emacs-popon";
+      ref = "master";
+    };
+  };
+
   async = _: super: {
     files = builtins.removeAttrs super.files [
       "tests/test-async.el"
