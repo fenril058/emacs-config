@@ -189,8 +189,10 @@
     };
     corfu-terminal = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/akib/emacs-corfu-terminal";
+      owner = "fenril058";
+      ref = "master";
+      repo = "emacs-corfu-terminal";
+      type = "github";
     };
     cowsay = {
       flake = false;
@@ -266,8 +268,10 @@
     };
     eat = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/akib/emacs-eat";
+      owner = "fenril058";
+      ref = "master";
+      repo = "emacs-eat";
+      type = "github";
     };
     ebnf-mode = {
       flake = false;
@@ -745,8 +749,10 @@
     };
     popon = {
       flake = false;
-      type = "git";
-      url = "https://codeberg.org/akib/emacs-popon";
+      owner = "fenril058";
+      ref = "master";
+      repo = "emacs-popon";
+      type = "github";
     };
     posframe = {
       flake = false;
