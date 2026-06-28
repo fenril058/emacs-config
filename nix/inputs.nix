@@ -26,6 +26,40 @@
     };
   };
 
+  # codeberg.org is unstable in CI; these emacsmirror mirrors track upstream
+  # and (as of this change) their default branch points at the same revision.
+  undo-fu = _: _: {
+    origin = {
+      type = "github";
+      owner = "emacsmirror";
+      repo = "undo-fu";
+    };
+  };
+
+  setup = _: _: {
+    origin = {
+      type = "github";
+      owner = "emacsmirror";
+      repo = "setup";
+    };
+  };
+
+  gdb-x = _: _: {
+    origin = {
+      type = "github";
+      owner = "emacsmirror";
+      repo = "gdb-x";
+    };
+  };
+
+  haskell-ts-mode = _: _: {
+    origin = {
+      type = "github";
+      owner = "emacsmirror";
+      repo = "haskell-ts-mode";
+    };
+  };
+
   async = _: super: {
     files = builtins.removeAttrs super.files [
       "tests/test-async.el"
