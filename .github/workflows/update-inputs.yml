@@ -52,12 +52,16 @@ jobs:
             "github:NixOS/nixpkgs/${NIXPKGS_REV}#just" \
             "github:NixOS/nixpkgs/${NIXPKGS_REV}#emacs-nox"
 
-      # `just update-registries` refreshes the package registries (melpa, gnu-elpa, …)
-      # and regenerates lock/flake.nix; `just lock` pins individual package revs.
-      # Both commands internally pass --impure to read from the working tree.
+      # update-registries: refreshes registry inputs (melpa, gnu-elpa, …) in flake.lock
+      # lock:             regenerates lock/flake.nix, adds/removes package entries
+      # update-lock:      bumps SHA pins for git packages in lock/flake.lock
+      # update-archive:   refreshes ELPA archive metadata in lock/archive.lock
       - name: Update inputs and regenerate lock
-        run: just update-registries && just lock \
-               && just update-lock && just update-archive
+        run: |
+          just update-registries
+          just lock
+          just update-lock
+          just update-archive
 
       # Build the PR body: static header + `just diff-lock` output (compare URLs)
       - name: Generate PR body
