@@ -43,18 +43,36 @@ jobs:
           purge-last-accessed: P1DT12H
           purge-primary-key: never
 
-      # Auth to Cachix and push every store path built below. With this action
-      # active, paths realised during the build are pushed to fenril058.cachix.org,
-      # so `home-manager switch` can pull prebuilt binaries instead of compiling.
+      # Auth to Cachix (cachix use + authtoken) but do NOT let the daemon do the
+      # pushing: skipPush keeps it from watching the store. The daemon only pushes
+      # paths Nix *builds* during the run, but cache-nix-action above restores the
+      # whole store first, so almost nothing is rebuilt and almost nothing would be
+      # pushed. We push the full closure explicitly below instead.
       - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: fenril058
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
 
-      # `nix flake check` already builds packages.x86_64-linux.default (and
-      # earlyInitEl, devShell, formatter), so cachix-action picks up and pushes
-      # the Emacs package closure from here — no separate build step needed.
-      # --accept-flake-config trusts the substituters declared in flake.nix;
-      # -L streams build logs so compile failures are visible.
+      # `nix flake check` builds packages.x86_64-linux.default (the Emacs env) and
+      # earlyInitEl. --accept-flake-config trusts the substituters declared in
+      # flake.nix; -L streams build logs so compile failures are visible.
       - name: nix flake check
         run: nix flake check --accept-flake-config -L
+
+      # Explicitly push the full closure of the built outputs to Cachix. Unlike the
+      # cachix daemon, `cachix push` uploads the entire closure of the given paths
+      # regardless of whether they were built this run or restored from the store
+      # cache — so `home-manager switch` finds every package prebuilt. The token is
+      # empty on PRs from forks and Dependabot (secrets denied); skip cleanly then.
+      - name: Push closure to Cachix
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          if [ -z "$CACHIX_AUTH_TOKEN" ]; then
+            echo "No Cachix auth token (fork/Dependabot PR); skipping push."
+            exit 0
+          fi
+          nix build --accept-flake-config --no-link --print-out-paths \
+            .#default .#earlyInitEl \
+            | cachix push fenril058
