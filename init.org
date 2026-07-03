@@ -50,6 +50,7 @@ Lists the exported flake outputs (=packages=, =apps=, =formatter=, etc.).
 
 *** Tips for home-manager integration
 An example =flake.nix= is shown below:
+
 #+BEGIN_SRC nix
 {
   inputs = {
@@ -58,9 +59,13 @@ An example =flake.nix= is shown below:
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Keep emacs-config's own nixpkgs so its prebuilt artifacts can be
+    # substituted from fenril058.cachix.org. Configure the Cachix cache
+    # instead of making this input follow the top-level nixpkgs.
     emacs-config = {
       url = "github:fenril058/emacs-config"; # or "path:local_path_to_repo"
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
