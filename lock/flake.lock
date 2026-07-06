@@ -67,11 +67,11 @@
     "auctex": {
       "flake": false,
       "locked": {
-        "lastModified": 1782239888,
-        "narHash": "sha256-dx+taZzwhXLChaSxUdAkbPUvnmLJJ3/WSBtas17e8Y8=",
+        "lastModified": 1783241243,
+        "narHash": "sha256-L3YlooZP5jIZkkdfqfcakHJhOaXGgGiLnC2DGJDpNUI=",
         "owner": "emacsmirror",
         "repo": "auctex",
-        "rev": "69aa7cdd8a929995456e04f35bd23712797a1b18",
+        "rev": "7c4d522678e855444c30cdefc68e51bbcd69bb50",
         "type": "github"
       },
       "original": {
@@ -276,11 +276,11 @@
     "cmake-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1783137902,
-        "narHash": "sha256-WPfEwLGnNMLHU31jVcsYwxQbMr3ASB0nC504MUvtYJU=",
+        "lastModified": 1783310709,
+        "narHash": "sha256-qfd+CiDr2OsPzstRBIE4n8KOGFEAWVSeysp/PuZq4Ag=",
         "ref": "refs/heads/master",
-        "rev": "40277a12b8e0eba8df0c67527efa73da0a2b002a",
-        "revCount": 76328,
+        "rev": "b20e5a8661dd34d4751e4e70eeb05442e2f2c1fa",
+        "revCount": 76330,
         "type": "git",
         "url": "https://gitlab.kitware.com/cmake/cmake.git"
       },
@@ -292,11 +292,11 @@
     "compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1782922790,
-        "narHash": "sha256-62Y+pE0YSjattswmh/EavZbl8K66jHqXQeAJlzLveb0=",
+        "lastModified": 1783099192,
+        "narHash": "sha256-xVJJiUZO+VKPxed/CdFOWKyqmwpns/nALQqyD9bN1Gc=",
         "owner": "emacs-compat",
         "repo": "compat",
-        "rev": "076dce861a56d683043ccee28d34eb55c2e27eac",
+        "rev": "dd66b81feed6fc3f250d3b979fb56d9117014f8c",
         "type": "github"
       },
       "original": {
@@ -468,11 +468,11 @@
     "copilot": {
       "flake": false,
       "locked": {
-        "lastModified": 1782796320,
-        "narHash": "sha256-Sa44SN0cKLKkUXhS4fhcu91ExdMUdXXVUygulJvVyvs=",
+        "lastModified": 1783258869,
+        "narHash": "sha256-FTydOt3Bw4nG1SKUoAZNeItjT0Ern9qmkszzx3hKRiY=",
         "owner": "copilot-emacs",
         "repo": "copilot.el",
-        "rev": "4a558d12ca73aef6731fe87099a5838a774fd341",
+        "rev": "4b18586c975900ebf7eb88fcaebdf44f43074772",
         "type": "github"
       },
       "original": {
@@ -884,11 +884,11 @@
     "erlang": {
       "flake": false,
       "locked": {
-        "lastModified": 1783003758,
-        "narHash": "sha256-NwQiCnvzTjBJtBevP9U1oZSqp+RW3ls6r2Jd4xOG1CA=",
+        "lastModified": 1783081381,
+        "narHash": "sha256-GbndKzs11ICnwY/brMcjlNo7evRr1B0tsD85Nl+OKek=",
         "owner": "erlang",
         "repo": "otp",
-        "rev": "51a9da0d2ef356925382d59069fe6c44a8583d27",
+        "rev": "ba022e0d2ccd88436b3766e5484fc57987e93a61",
         "type": "github"
       },
       "original": {
@@ -1269,11 +1269,11 @@
     "imaxima": {
       "flake": false,
       "locked": {
-        "lastModified": 1783056749,
-        "narHash": "sha256-/WmXIDTIOCfi2KHO/hRCG4Q0qp9qk1oDu6/DOe8qKdQ=",
+        "lastModified": 1783278855,
+        "narHash": "sha256-hGtDSaB4rVnT1XjsiOpO3AVcs1JL5tUBkQC1lrNRcPU=",
         "ref": "refs/heads/master",
-        "rev": "9c630cf037cc6410860f2ea229f9209f6d81c437",
-        "revCount": 21164,
+        "rev": "895b58d6d1702ebaf7146cd2a1b1e14caf2295f8",
+        "revCount": 21168,
         "type": "git",
         "url": "https://git.code.sf.net/p/maxima/code"
       },
@@ -1656,11 +1656,11 @@
     "mozc": {
       "flake": false,
       "locked": {
-        "lastModified": 1783009215,
-        "narHash": "sha256-2h+JLpwTAOIHYbI2l34HC8ZpfcLTvXCoGwRxq78s4ik=",
+        "lastModified": 1783172208,
+        "narHash": "sha256-Eu+jgu+zvFLDD+VqaGxK/4o8K98vQ7k8D+HPOlELekU=",
         "owner": "google",
         "repo": "mozc",
-        "rev": "9d2a86d93909d0b6739e321083d98880e010f927",
+        "rev": "7979e66db32137d7f973f08867ea4bca9ccaec0e",
         "type": "github"
       },
       "original": {
@@ -1752,11 +1752,11 @@
     "nix-ts-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1782925123,
-        "narHash": "sha256-XvT3arZcDERrOypPmMa/o6cDR+ObNpO6vj+ETlD5nsI=",
+        "lastModified": 1783267219,
+        "narHash": "sha256-7oKVJYDqyu1zKB5dtrikiMd5TldssQoBez1k5K94Jy8=",
         "owner": "nix-community",
         "repo": "nix-ts-mode",
-        "rev": "dcc3948afb8fa56060e63da294e78ede199c1d5d",
+        "rev": "3b69aeb8d2403ea52b60a46fa452965b7b37a50e",
         "type": "github"
       },
       "original": {
@@ -1833,11 +1833,11 @@
     "org": {
       "flake": false,
       "locked": {
-        "lastModified": 1782570523,
-        "narHash": "sha256-iuevCjKhg86zPYfBz6BIM+wzv3n05rtnsOGxqxKzjC8=",
+        "lastModified": 1783143268,
+        "narHash": "sha256-7ZmwAkVjEf+a8I9zBE9IMdGdvTdDwM8DXFkG+f1oHZo=",
         "owner": "elpa-mirrors",
         "repo": "org-mode",
-        "rev": "114cd49f6b4d55ea01409f1cea1fa6aa30c7929f",
+        "rev": "cdc16898fd46a30d7187c0a5830b2b898ffbd2de",
         "type": "github"
       },
       "original": {
@@ -2473,11 +2473,11 @@
     "tempel": {
       "flake": false,
       "locked": {
-        "lastModified": 1782652916,
-        "narHash": "sha256-6kJmVCcyy/ZAEh2mv1lbXzVCPpTzKsQCOYEKmny2NRg=",
+        "lastModified": 1783256316,
+        "narHash": "sha256-II/JaEMQgTia+0cEwTIH4JM/1tqicogJMR3+m0Mcxe8=",
         "owner": "minad",
         "repo": "tempel",
-        "rev": "6f974483549316b9bd44921691a0b272109f99ce",
+        "rev": "c5fdc3806b486d9d86a54c50efac3d4a141e789d",
         "type": "github"
       },
       "original": {
