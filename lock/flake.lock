@@ -276,11 +276,11 @@
     "cmake-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1783310709,
-        "narHash": "sha256-qfd+CiDr2OsPzstRBIE4n8KOGFEAWVSeysp/PuZq4Ag=",
+        "lastModified": 1783742734,
+        "narHash": "sha256-chwsImvsnq9KlZfqwWpsBZ7IhAqBW6YH2PHACsRYbcg=",
         "ref": "refs/heads/master",
-        "rev": "b20e5a8661dd34d4751e4e70eeb05442e2f2c1fa",
-        "revCount": 76330,
+        "rev": "5bdf88eaa1a605b108d3b89dfb2fdf3d073990f5",
+        "revCount": 76409,
         "type": "git",
         "url": "https://gitlab.kitware.com/cmake/cmake.git"
       },
