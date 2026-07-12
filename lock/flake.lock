@@ -1269,11 +1269,11 @@
     "imaxima": {
       "flake": false,
       "locked": {
-        "lastModified": 1783278855,
-        "narHash": "sha256-hGtDSaB4rVnT1XjsiOpO3AVcs1JL5tUBkQC1lrNRcPU=",
+        "lastModified": 1783797204,
+        "narHash": "sha256-Z/M+SSruc6SvE8Iv1pneGUO0UzCi9bIhahor4+1MfJI=",
         "ref": "refs/heads/master",
-        "rev": "895b58d6d1702ebaf7146cd2a1b1e14caf2295f8",
-        "revCount": 21168,
+        "rev": "75a890df36727284d2b609fdc8fab701256cf783",
+        "revCount": 21181,
         "type": "git",
         "url": "https://git.code.sf.net/p/maxima/code"
       },
