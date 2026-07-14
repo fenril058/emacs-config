@@ -502,15 +502,16 @@
       "locked": {
         "lastModified": 1691633196,
         "narHash": "sha256-0qdSsuPE2s+DVu6yuqebMEt/29ypRlvb7TbvWEMHsjU=",
-        "ref": "refs/heads/master",
+        "owner": "fenril058",
+        "repo": "emacs-corfu-terminal",
         "rev": "501548c3d51f926c687e8cd838c5865ec45d03cc",
-        "revCount": 48,
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-corfu-terminal"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-corfu-terminal"
+        "owner": "fenril058",
+        "ref": "master",
+        "repo": "emacs-corfu-terminal",
+        "type": "github"
       }
     },
     "cowsay": {
@@ -710,15 +711,16 @@
       "locked": {
         "lastModified": 1738802687,
         "narHash": "sha256-9xG2rMlaMFY77JzUQ3JFrc7XKILZSL8TbP/BkzvBvMk=",
-        "ref": "refs/heads/master",
+        "owner": "fenril058",
+        "repo": "emacs-eat",
         "rev": "c8d54d649872bfe7b2b9f49ae5c2addbf12d3b99",
-        "revCount": 249,
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-eat"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-eat"
+        "owner": "fenril058",
+        "ref": "master",
+        "repo": "emacs-eat",
+        "type": "github"
       }
     },
     "ebnf-mode": {
@@ -1981,15 +1983,16 @@
       "locked": {
         "lastModified": 1688372833,
         "narHash": "sha256-stiwCre9Ih6GwKjVQ7iFmMPGbkiQHx8hNgy8PHRE1BA=",
-        "ref": "refs/heads/master",
+        "owner": "fenril058",
+        "repo": "emacs-popon",
         "rev": "bf8174cb7e6e8fe0fe91afe6b01b6562c4dc39da",
-        "revCount": 52,
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-popon"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://codeberg.org/akib/emacs-popon"
+        "owner": "fenril058",
+        "ref": "master",
+        "repo": "emacs-popon",
+        "type": "github"
       }
     },
     "posframe": {
