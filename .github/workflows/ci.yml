@@ -28,6 +28,7 @@ jobs:
       - uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
         with:
           nix_conf: |
+            max-jobs = auto
             keep-env-derivations = true
             keep-outputs = true
 
