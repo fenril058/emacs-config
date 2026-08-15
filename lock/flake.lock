@@ -1658,11 +1658,11 @@
     "mozc": {
       "flake": false,
       "locked": {
-        "lastModified": 1784278471,
-        "narHash": "sha256-oMXRoLjMrL0Oi1Ykd/7CiEE9/eIG/FZsbLwaQeD7Pms=",
+        "lastModified": 1786690015,
+        "narHash": "sha256-k6PmFrWFEeszUJeoS5t8f+TnnQEV1bIqZZuNntzZPP0=",
         "owner": "google",
         "repo": "mozc",
-        "rev": "3f235b4eb6fcff7d14ef5f0fb8ee56de7ee4c732",
+        "rev": "851c3fe33060d2a6090363e4d7ec44fafde2c03d",
         "type": "github"
       },
       "original": {
