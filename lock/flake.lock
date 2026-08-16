@@ -67,11 +67,11 @@
     "auctex": {
       "flake": false,
       "locked": {
-        "lastModified": 1784297278,
-        "narHash": "sha256-T2dsfJzvEeJP2gqtKthReINVB+WELZz12q2SDcZv+f8=",
+        "lastModified": 1786715323,
+        "narHash": "sha256-Ist7FHUavUYIb1wawBo+OcWep9ImScAnG3eed9ndB/c=",
         "owner": "emacsmirror",
         "repo": "auctex",
-        "rev": "752f54f849bf068f41d1b40156512f795214b2f8",
+        "rev": "3ad2a0a8e7349641685cdd0e81c3d11d56eedf65",
         "type": "github"
       },
       "original": {
