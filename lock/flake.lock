@@ -1142,11 +1142,11 @@
     "haskell-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1781870337,
-        "narHash": "sha256-U4IjiK6xbBeuNvSpyWj97TbQB5T8gNdMyKfeenINZjI=",
+        "lastModified": 1787102159,
+        "narHash": "sha256-kfbj2cKoHlvNODxqxxsrSW2klWU5863cAlCsZgY3LBo=",
         "owner": "haskell",
         "repo": "haskell-mode",
-        "rev": "781e4669a0e0917fa8c532371cbfb1eb5b03b645",
+        "rev": "6fbebb033de8a3e325c33d9c90a5b1dae9c5a01e",
         "type": "github"
       },
       "original": {
