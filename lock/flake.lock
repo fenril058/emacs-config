@@ -1642,11 +1642,11 @@
     "mistty": {
       "flake": false,
       "locked": {
-        "lastModified": 1784138986,
-        "narHash": "sha256-VAgTEB/ed9iZyyUNrQnguD+rWobuO09V3MD3xpwROsY=",
+        "lastModified": 1788031535,
+        "narHash": "sha256-QsaPlo5hYZJuqj92FsTVnbuOPUK03toErJZFMm001QI=",
         "owner": "szermatt",
         "repo": "mistty",
-        "rev": "4d32106dc2a60183c0df8716502ed4048a45d50f",
+        "rev": "ee1cc05fe1370f292f3ecb39d7cd346e742b45c3",
         "type": "github"
       },
       "original": {
