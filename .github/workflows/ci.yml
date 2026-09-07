@@ -49,7 +49,7 @@ jobs:
       # paths Nix *builds* during the run, but cache-nix-action above restores the
       # whole store first, so almost nothing is rebuilt and almost nothing would be
       # pushed. We push the full closure explicitly below instead.
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+      - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
         with:
           name: fenril058
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
