@@ -918,11 +918,11 @@
     "expreg": {
       "flake": false,
       "locked": {
-        "lastModified": 1781921147,
-        "narHash": "sha256-lo/jloHPmv4yWBhhQD4Vwx0f4HP61VRSVOWGQl5IAtU=",
+        "lastModified": 1758258553,
+        "narHash": "sha256-ee/G180fgxPzA73/K/faReF2Mgr1fD3/UN9qa8cUo60=",
         "owner": "casouri",
         "repo": "expreg",
-        "rev": "d3ac3703e3e0aa66dc1ac6f8110b1862206beb20",
+        "rev": "53fd5a4812b77e49d3ab45fc16bb2998abaf1d86",
         "type": "github"
       },
       "original": {
