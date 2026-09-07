@@ -2540,11 +2540,11 @@
     "treesit-auto": {
       "flake": false,
       "locked": {
-        "lastModified": 1786971865,
-        "narHash": "sha256-+MIqYnvSBHJYy9e+P5ajfteW37FRkbGRm8h5PDA3Qow=",
+        "lastModified": 1787683840,
+        "narHash": "sha256-rs8L6rjxaAX4kYLMAGbz474FqMraaws3Wup2UKvo86w=",
         "owner": "renzmann",
         "repo": "treesit-auto",
-        "rev": "c227806dddd4b413009a453c450285d1123e7d72",
+        "rev": "9b349d0c801e3148c04d31a35a0e91f43b549302",
         "type": "github"
       },
       "original": {
