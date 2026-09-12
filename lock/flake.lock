@@ -565,11 +565,11 @@
     "diff-hl": {
       "flake": false,
       "locked": {
-        "lastModified": 1788098404,
-        "narHash": "sha256-qDSXLyFKGbeNpvBNA2pbVziysaA3twtTKSy7HtkZ12Q=",
+        "lastModified": 1788556466,
+        "narHash": "sha256-hVCHbWXE5Os39/g1UbkLfAePzGvhFX1TPo+5PMw+CAk=",
         "owner": "dgutov",
         "repo": "diff-hl",
-        "rev": "3d9552c575fd14ac98ac97bf3c19cdef39f79305",
+        "rev": "83fbcb4f878a55996ce38ad31d32ee477e65634b",
         "type": "github"
       },
       "original": {
