@@ -1158,11 +1158,11 @@
     "haskell-ts-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1764872542,
-        "narHash": "sha256-n+0R41nx3dvTJeMKXSM0oIiYoPnRa+ObWSJS7Akhykg=",
+        "lastModified": 1788524112,
+        "narHash": "sha256-CkC+z8vG7UwZKNf6/VWmenv0x4OZTqmPXyQrlop5oNY=",
         "owner": "emacsmirror",
         "repo": "haskell-ts-mode",
-        "rev": "bf143ee8382f09e0a68d775d80445065f32929c3",
+        "rev": "673c27eb86ced050c6b3f46920d081fcb257fee4",
         "type": "github"
       },
       "original": {
