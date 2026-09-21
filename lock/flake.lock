@@ -886,11 +886,11 @@
     "erlang": {
       "flake": false,
       "locked": {
-        "lastModified": 1789113706,
-        "narHash": "sha256-bvi8ERqKu+9YgSl43RDceYqIRPmlpNRVpPbIfsSzp8Y=",
+        "lastModified": 1789133299,
+        "narHash": "sha256-NCTVU387t2qczMUzNCsr/MH6nO4YL+X+PjNG+VP7OQI=",
         "owner": "erlang",
         "repo": "otp",
-        "rev": "43170a2e5eaf15b927d28467a3dcfceaeadefdac",
+        "rev": "d1a9a747b7a6a319f38c98467fd66e477b6d43aa",
         "type": "github"
       },
       "original": {
