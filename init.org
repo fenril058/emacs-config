@@ -927,8 +927,7 @@ Nix3.el integration for Magit.  [[https://github.com/emacs-twist/nix3.el]]
                              " - GNU Emacs " emacs-version " [%s]"))
 
 (setup display-line-numbers
-  (:with-hook emacs-startup-hook
-    (:hook (lambda () (global-display-line-numbers-mode +1)))))
+  (:hook-into text-mode-hook prog-mode-hook))
 
 #+end_src
 
