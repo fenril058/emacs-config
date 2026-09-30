@@ -50,6 +50,7 @@ Lists the exported flake outputs (=packages=, =apps=, =formatter=, etc.).
 
 *** Tips for home-manager integration
 An example =flake.nix= is shown below:
+
 #+BEGIN_SRC nix
 {
   inputs = {
@@ -58,9 +59,12 @@ An example =flake.nix= is shown below:
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Keep emacs-config's own nixpkgs to use the prebuilt cache from
+    # fenril058.cachix.org.
     emacs-config = {
       url = "github:fenril058/emacs-config"; # or "path:local_path_to_repo"
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -86,6 +90,30 @@ An example =flake.nix= is shown below:
 #+BEGIN_SRC sh
 nix flake update emacs-config && home-manager switch
 #+END_SRC
+
+**** Using the prebuilt cache
+
+To download prebuilt packages instead of building them locally, configure the
+Cachix cache:
+
+#+BEGIN_SRC sh
+cachix use fenril058
+#+END_SRC
+
+or add the following to your Nix configuration:
+
+#+BEGIN_SRC nix
+substituters = [
+  "https://cache.nixos.org"
+  "https://fenril058.cachix.org"
+];
+
+trusted-public-keys = [
+  "fenril058.cachix.org-1:fenril058.cachix.org-1:KRRO8ttyCYEZnuGV2pSHhaCGVtiA8iiREpdL2PUMpq0="
+];
+#+END_SRC
+
+Without this cache configured, Nix will build the Emacs environment locally.
 
 *** Reference
 - [[https://zenn.dev/kyre/articles/b1959567edfc15][Twist.nix で再現性のある Emacs 設定を作る (Zenn)]]
@@ -899,8 +927,7 @@ Nix3.el integration for Magit.  [[https://github.com/emacs-twist/nix3.el]]
                              " - GNU Emacs " emacs-version " [%s]"))
 
 (setup display-line-numbers
-  (:with-hook emacs-startup-hook
-    (:hook (lambda () (global-display-line-numbers-mode +1)))))
+  (:hook-into text-mode-hook prog-mode-hook))
 
 #+end_src
 
