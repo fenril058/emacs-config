@@ -30,14 +30,5 @@ updates:
       - dependency-name: "nongnu-elpa"
       - dependency-name: "epkgs"
 
-  # Monitor individual Emacs package SHAs in lock/flake.lock.
-  # These are updated manually via `just upgrade [pkg...]` or by this bot.
-  - package-ecosystem: "nix"
-    directory: "/lock"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "08:00"
-      timezone: "Asia/Tokyo"
-    cooldown:
-      default-days: 7
+  # update-inputs.yml is the sole automated updater for lock/flake.lock.
+  # Keeping /lock out of Dependabot avoids concurrent updates to the same file.
