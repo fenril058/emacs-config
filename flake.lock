@@ -21,11 +21,11 @@
     "epkgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1790580780,
-        "narHash": "sha256-X3QT4UKHUx2gJGZ9HfaZIw0p6ik+bLlOd4MdRjM8KT0=",
+        "lastModified": 1791151750,
+        "narHash": "sha256-GrB+g0OJ90lZSSctxWbEuXx13S5AAterrJJs1Y33R1Y=",
         "owner": "emacsmirror",
         "repo": "epkgs",
-        "rev": "d3db51b809f6bbf5e7ff19fe22e45702d1a626ad",
+        "rev": "6c77c4ff6b20f46982c29a686ef3f5dca58674b2",
         "type": "github"
       },
       "original": {
@@ -87,11 +87,11 @@
     "melpa": {
       "flake": false,
       "locked": {
-        "lastModified": 1790536887,
-        "narHash": "sha256-jEhJl9M6cOpRJh9ytHdbEYkVL4yXdY88vnvMlNgQVDA=",
+        "lastModified": 1791138666,
+        "narHash": "sha256-Z33LCmGEfsTNjR0dCVFf7zXuuWS17LEDvHk1rD4Bio8=",
         "owner": "melpa",
         "repo": "melpa",
-        "rev": "612c0b45ae514919ee2df8a242f7d8b7bef795b6",
+        "rev": "9e4a6027d860e0d820062c847e6f765118a8bae6",
         "type": "github"
       },
       "original": {
@@ -131,11 +131,11 @@
     "nongnu-elpa": {
       "flake": false,
       "locked": {
-        "lastModified": 1790264327,
-        "narHash": "sha256-z7VXjrb6NAQ7U+gAkJGALzbz5p6cJLCSTPM4ZM2/tg8=",
+        "lastModified": 1791045825,
+        "narHash": "sha256-wYD6eJoAiN+h+gesksyJQdC2DudeMx2xFOLu6Wr+Ogk=",
         "owner": "elpa-mirrors",
         "repo": "nongnu",
-        "rev": "29142e0d10c03940490685f5741bad18c6bdf38b",
+        "rev": "9d843abdf81662e45ff010398209524064e6814c",
         "type": "github"
       },
       "original": {
