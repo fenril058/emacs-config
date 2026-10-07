@@ -2346,11 +2346,11 @@
     "savekill": {
       "flake": false,
       "locked": {
-        "lastModified": 1741364769,
-        "narHash": "sha256-Lw9BHlyFPtaBZz7jAzFYKyJOfB63G59wueJHI8cNliU=",
+        "lastModified": 1791397653,
+        "narHash": "sha256-hiSFfqdLOapes0TghmjpNpm442xBoWAKfFBI+ib8Puo=",
         "owner": "fenril058",
         "repo": "savekill",
-        "rev": "b9de9ca579abe78f24635c6f45faa30a7ec1eb8e",
+        "rev": "b4bac54d6e84bcb5c30b1d355e48523cd6f71283",
         "type": "github"
       },
       "original": {
