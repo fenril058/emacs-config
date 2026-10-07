@@ -9,14 +9,12 @@
 (defvar my-blog-url "https://chisono.web.fc2.com/blog/"
   "URL of my blog")
 
-;;;###autoload
 (transient-define-suffix my-blog-new (title)
   :key "n"
   :description "作成"
   (interactive "sWrite article title: ")
   (create-blog-article title))
 
-;;;###autoload
 (transient-define-suffix my-blog-search-this-year ()
   :key "s"
   :description "タイトル検索（今年のみ）"
@@ -25,7 +23,6 @@
         (vertico-count 50))
     (consult-ripgrep (concat my-blog-directory (format-time-string "%Y")) "^#\\+TITLE:")))
 
-;;;###autoload
 (transient-define-suffix my-blog-search ()
   :key "S"
   :description "タイトル検索"
@@ -35,21 +32,18 @@
         (vertico-grid-mode t))
     (consult-ripgrep my-blog-directory "^#\\+TITLE:")))
 
-;;;###autoload
 (transient-define-suffix my-blog-dired ()
   :key "d"
   :description "Dired"
   (interactive)
   (dired (concat my-blog-directory (format-time-string "%Y"))))
 
-;;;###autoload
 (transient-define-suffix my-blog-git-save ()
   :key "u"
   :description "Save & Push"
   (interactive)
   (async-shell-command (format "cd %s && git add -A; git now; git push" my-blog-directory)))
 
-;;;###autoload
 (transient-define-suffix my-blog-current-open ()
   :key "o"
   :description "サイトを開く"
@@ -57,7 +51,7 @@
   (let ((open-cmd (if is-wsl "wslstart" "open")))
     (shell-command (format "%s %s" open-cmd my-blog-url))))
 
-;;;###autoload
+;;;###autoload (autoload 'my-blog-menu "my-blog-utils" nil t)
 (transient-define-prefix my-blog-menu ()
   "Blog"
   [["Basic"
