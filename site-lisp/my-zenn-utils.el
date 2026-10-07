@@ -9,7 +9,6 @@
 (defvar my-zenn-dir "~/ghq/github.com/fenril058/zenn-content/"
   "zenn-content directory")
 
-;;;###autoload
 (transient-define-suffix my-zenn-article-new (slug)
   :key "n"
   :description "新規記事"
@@ -60,7 +59,6 @@
     (find-file (format "%sarticles/%s.md" my-zenn-dir slug))
     (goto-char (point-max))))
 
-;;;###autoload
 (transient-define-suffix my-zenn-search ()
   :key "s"
   :description "題名検索"
@@ -69,14 +67,12 @@
         (vertico-count 50))
     (consult-ripgrep my-zenn-dir "^title: ")))
 
-;;;###autoload
 (transient-define-suffix my-zenn-dired ()
   :key "d"
   :description "Open by dired"
   (interactive)
   (dired my-zenn-dir))
 
-;;;###autoload
 (transient-define-suffix my-zenn-current-open ()
   :key "o"
   :description (lambda ()
@@ -94,7 +90,6 @@
         (browse-url url))
     (user-error "Not in zenn-content directory.")))
 
-;;;###autoload
 (transient-define-suffix my-zenn-current-preview ()
   :key "p"
   :description (lambda ()
@@ -112,7 +107,6 @@
         (browse-url url))
     (user-error "Not in zenn-content directory.")))
 
-;;;###autoload
 (transient-define-suffix my-zenn-preview-start ()
   :key "1"
   :description "プレビュー起動"
@@ -132,7 +126,7 @@
     (delete-process "zenn")
     (message "Zenn Preview terminated.")))
 
-;;;###autoload
+;;;###autoload (autoload 'my-zenn-menu "my-zenn-utils" nil t)
 (transient-define-prefix my-zenn-menu ()
   "Zenn"
   [["Basic"
