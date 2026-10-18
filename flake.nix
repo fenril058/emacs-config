@@ -1,5 +1,9 @@
 {
   inputs = {
+    # Explicit so that Dependabot (nix ecosystem) can track it; an implicit
+    # registry input is locked as a tarball and is not picked up.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
 
