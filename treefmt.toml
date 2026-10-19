@@ -2,6 +2,8 @@
 command = "typos"
 options = ["--write-changes"]
 includes = ["*.org", "*.nix", "*.el", "*.md", "*.toml"]
+# Generated list of Emacs library names; typos would "fix" some of them
+excludes = ["nix/emacs-builtins.nix"]
 priority = 2
 
 [formatter.nixfmt]
