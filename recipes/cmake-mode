@@ -1,0 +1,2 @@
+(cmake-mode :fetcher github
+            :repo "emacsmirror/cmake-mode")

@@ -274,7 +274,7 @@
     "meta": {
       "description": "major-mode for editing CMake sources"
     },
-    "narHash": "sha256-kLYmCP2eVumUbv4LlKzLDyUivce9T2iRDNeIRyiiQCc=",
+    "narHash": "sha256-Fo1iok8ADccZtfmiGB6m+5RxoVY0tvzrzKB/nj5T1yY=",
     "packageRequires": {
       "emacs": "24.1"
     },

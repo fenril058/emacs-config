@@ -98,6 +98,16 @@
           # initFiles を readFile すると IFD になるので、tangle した文字列を直接パースする
           initReader =
             _: profile.initParser (inputs.org-babel.lib.tangleOrgBabel { } (builtins.readFile ./init.org));
+          # 組み込みライブラリ一覧を twist に評価中にビルドさせない (IFD 回避)。
+          # Emacs のバージョンが変わったら `just builtins` で再生成する
+          initialLibraries =
+            let
+              builtinsData = import ./nix/emacs-builtins.nix;
+            in
+            if builtinsData.version == profile.emacsPackage.version then
+              builtinsData.libraries
+            else
+              pkgs.lib.warn "nix/emacs-builtins.nix is for Emacs ${builtinsData.version}, not ${profile.emacsPackage.version}; run `just builtins`" null;
         };
 
         package =
@@ -110,6 +120,7 @@
               extraPackages
               initParser
               initReader
+              initialLibraries
               ;
             registries = [
               {

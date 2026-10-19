@@ -106,8 +106,9 @@
     };
     cmake-mode = {
       flake = false;
-      type = "git";
-      url = "https://gitlab.kitware.com/cmake/cmake.git";
+      owner = "emacsmirror";
+      repo = "cmake-mode";
+      type = "github";
     };
     compat = {
       flake = false;
