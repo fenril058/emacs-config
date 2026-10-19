@@ -701,7 +701,7 @@
     };
     ox-rss = {
       flake = false;
-      owner = "bhw-foss";
+      owner = "bhwdev";
       repo = "ox-rss";
       type = "github";
     };
@@ -964,8 +964,8 @@
     };
     which-key = {
       flake = false;
-      owner = "justbur";
-      repo = "emacs-which-key";
+      owner = "emacsattic";
+      repo = "which-key";
       type = "github";
     };
     with-editor = {
