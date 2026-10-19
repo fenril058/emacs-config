@@ -116,8 +116,12 @@
             ]
             ++ (import ./nix/registries.nix inputs);
             exportManifest = true;
+            persistMetadata = true;
             inputOverrides = (import ./nix/inputs.nix) // {
               myutils = _: _: {
+                # nix-filter の src は metadata.json の narHash と照合できないので、
+                # ヘッダを IFD なしで読ませる（myutils.el は ASCII のみ）
+                mainIsAscii = true;
                 src = inputs.nix-filter.lib {
                   root = inputs.self;
                   include = [ "site-lisp" ];

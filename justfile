@@ -17,6 +17,9 @@ lock:
 # Update locked SHAs of git packages (MELPA/ELPA) in lock/flake.lock.
 # No args: update all. With args: update specific packages only.
 # Run after `just lock`. e.g. just update-lock evil magit
+# Re-run `just lock` (or `just update-archive`) afterwards: they regenerate
+# lock/metadata.json, which otherwise goes stale for the bumped packages and
+# silently falls back to IFD on evaluation.
 update-lock *pkgs:
     cd lock && nix flake update {{pkgs}}
 
