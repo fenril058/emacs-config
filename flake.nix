@@ -95,6 +95,9 @@
           initParser = inputs.twist.lib.parseSetup { inherit (inputs.nixpkgs) lib; } { }; # for setup.el
           earlyInitFile = pkgs.tangleOrgBabelFile "early-init.el" ./early-init.org { };
           initFiles = [ (pkgs.tangleOrgBabelFile "init.el" ./init.org { }) ];
+          # initFiles を readFile すると IFD になるので、tangle した文字列を直接パースする
+          initReader =
+            _: profile.initParser (inputs.org-babel.lib.tangleOrgBabel { } (builtins.readFile ./init.org));
         };
 
         package =
@@ -106,6 +109,7 @@
               initFiles
               extraPackages
               initParser
+              initReader
               ;
             registries = [
               {
