@@ -16,6 +16,7 @@ Gotcha: `early-init.org` aliases `setopt` → `setq` until `emacs-startup-hook`,
 
 - Add a package: add a `(setup (:package NAME) …)` block in the right `init.org` section, then `just lock`. If NAME isn't in the upstream registries, add a recipe under `recipes/<NAME>` (the local `custom` registry overrides upstream).
 - `lock/` is auto-generated — never edit by hand; regenerate with `just lock`.
+- `lock/metadata.json` (from `persistMetadata = true`) caches package headers so evaluation needs no IFD. It is keyed by narHash: after `just update-lock`, re-run `just lock` (or `just update-archive`) to refresh it, or the bumped packages silently fall back to IFD.
 - Build/update commands live in the `justfile` (`just --list`). Intended refresh order: `update` → `lock` → `review` → `diff-el` → commit. Apply changes with `home-manager switch`.
 
 ## Architecture map
