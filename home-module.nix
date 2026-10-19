@@ -7,6 +7,18 @@
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
+
+  # flake inputs を推移的に集める（評価時に fetch されるソース）
+  collectInputs =
+    inputs:
+    lib.concatMap (input: [ input.outPath ] ++ collectInputs (input.inputs or { })) (
+      lib.attrValues inputs
+    );
+
+  # 各パッケージの src（lock/flake.lock や archive.lock から評価時に fetch される）
+  packageSources = lib.concatMap (p: lib.optional (p ? src) "${p.src}") (
+    lib.attrValues flake.packages.${system}.default.packageInputs
+  );
 in
 {
   config = lib.mkIf config.programs.emacs-twist.enable {
@@ -57,6 +69,9 @@ in
       # tree-sitter
       # nixfmt
     ];
+
+    # 評価に使うソースを世代の閉包に入れ、GC 後の再ダウンロードを防ぐ
+    home.extraDependencies = lib.unique (collectInputs flake.inputs ++ packageSources);
 
     home.file = {
       ".config/emacs/snippets".source = ./snippets;
