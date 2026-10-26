@@ -856,12 +856,12 @@
     "meta": {
       "description": "Buffer-local `direnv' support with choice of sync/async"
     },
-    "narHash": "sha256-s4dfpsWw605feZQsMukOXDvZ3oDEjCq8NRFOq3jU4Hg=",
+    "narHash": "sha256-/5NJOesoPiTF5BE99/WtqTq7H8Oskinx+u7R0jGb71A=",
     "packageRequires": {
       "emacs": "28.1",
       "inheritenv": "0.1"
     },
-    "version": "0.15"
+    "version": "0.16"
   },
   "erlang": {
     "author": "Anders Lindgren",
@@ -878,7 +878,7 @@
         "url": "https://spdx.org/licenses/Apache-2.0.html"
       }
     },
-    "narHash": "sha256-0ZQ4cqE42s70yLnRlfUvJ0KJ/13NP0KZTnSI/laDt8Q=",
+    "narHash": "sha256-/tkFQqKyTYEgxOyOaEcsmgqBbObHbZ46eDJRuUIIlzo=",
     "packageRequires": {
       "emacs": "27.1"
     },
@@ -942,7 +942,7 @@
         "Bozhidar Batsov <bozhidar@batsov.dev>"
       ]
     },
-    "narHash": "sha256-oiL7ACSoGBy/998H2R5BjSbg98svPjPoASTJrKkLpzA=",
+    "narHash": "sha256-rxUinDLdbpuRBqKd0sw3R7jSorN3Jo44eCLJ7mefTOQ=",
     "packageRequires": {
       "emacs": "28.1",
       "seq": "2.24"
@@ -1227,7 +1227,7 @@
   "imaxima": {
     "author": null,
     "meta": {},
-    "narHash": "sha256-gtgauJjGNhcmkkFl1Sejz5frXwUurPUoSlwdkKLj7SE=",
+    "narHash": "sha256-PtoFX5Ds8AC4FImG+DzUhqs/L4OMYZM9ZkbW++P3kLI=",
     "packageRequires": {},
     "version": null
   },
@@ -1401,7 +1401,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-B5AIrJYQtTuAHdefoM0l6+GHn6SK03iGqJKlihmHxY0=",
+    "narHash": "sha256-usqGNd5O/NA4S+Vi8kZkVU3vPpoP3gzaXk3lRZtl3oQ=",
     "packageRequires": {
       "compat": "29.1",
       "emacs": "28.1",
@@ -1468,7 +1468,7 @@
         "Kyle Meyer <kyle@kyleam.com>"
       ]
     },
-    "narHash": "sha256-5tVP5+ZWJscxbYq8ocQ12/UJcMLfVQlh6hAaTHAOkfE=",
+    "narHash": "sha256-2YsKkSxInEDb5p9TuWD2n2dg0EbEqQGhMxhxCR9Jew8=",
     "packageRequires": {
       "compat": "31.0",
       "cond-let": "1.1",
@@ -1513,7 +1513,7 @@
         "Jonas Bernoulli <emacs.magit@jonas.bernoulli.dev>"
       ]
     },
-    "narHash": "sha256-5tVP5+ZWJscxbYq8ocQ12/UJcMLfVQlh6hAaTHAOkfE=",
+    "narHash": "sha256-2YsKkSxInEDb5p9TuWD2n2dg0EbEqQGhMxhxCR9Jew8=",
     "packageRequires": {
       "compat": "31.0",
       "cond-let": "1.1",
@@ -1548,7 +1548,7 @@
         "Jason R. Blevins <jblevins@xbeta.org>"
       ]
     },
-    "narHash": "sha256-Mpresiod3WdcBfDbtD0otuykrDFFfGjnLM4BYeOjbUM=",
+    "narHash": "sha256-HQgBlx8seRHv4nxc4TdxtsQxrY3IMRVVmEjqKJrHIo0=",
     "packageRequires": {
       "emacs": "28.1"
     },
@@ -1593,18 +1593,18 @@
       "description": "Shell/Comint alternative based on term.el",
       "homepage": "http://github.com/szermatt/mistty"
     },
-    "narHash": "sha256-0RuBVvhMRrcEUi+Tw9aurbMuxMtXIuKCA6UT/cnEn6o=",
+    "narHash": "sha256-mV1XVV8pK6UlJh5dVpWbFcOyX64FIqxQYxrFG9tYz7o=",
     "packageRequires": {
       "emacs": "29.1"
     },
-    "version": "2.2.0"
+    "version": "2.2.1"
   },
   "mozc": {
     "author": null,
     "meta": {
       "description": "minor mode to input Japanese with Mozc"
     },
-    "narHash": "sha256-T7+DhHAH07ZY/AzQkth75A+Gy5oarMHKtG3l3XPYu6s=",
+    "narHash": "sha256-hTRLTY+HLMnzoLZF/1Ua7dmvlzr3SI5ylI02UHSkEjc=",
     "packageRequires": {
       "emacs": "24.3"
     },
@@ -1756,7 +1756,7 @@
         "Ihor Radchenko <yantar92@posteo.net>"
       ]
     },
-    "narHash": "sha256-1aghPu96zgkqDMIDieOsNGn8YscWpXsP3BbVnIrCrvs=",
+    "narHash": "sha256-ayyURFZXm1/uwnqsKgIl5AMw7bivTJrpHzKtFt3kf1g=",
     "packageRequires": {
       "emacs": "28.2"
     },
@@ -1796,7 +1796,7 @@
       "description": "Zenn flavored markdown backend for org export engine",
       "homepage": "https://github.com/conao3/ox-zenn.el"
     },
-    "narHash": "sha256-HW1A0eRxBSxE3lV16RU+82m1uPL+YN+B1+zRp5hDL1c=",
+    "narHash": "sha256-3riHuETCqW1aulAHEiK45D0NixMXM6/bSiZ93jjls5I=",
     "packageRequires": {
       "emacs": "27.1",
       "org": "9.0"
@@ -1900,11 +1900,11 @@
         "Feng Shu <tumashu@163.com>"
       ]
     },
-    "narHash": "sha256-dZr3/Gm5AIGlPS/GgrlhPG8/OE6qIj4oMKFDhE/tgPE=",
+    "narHash": "sha256-p9suhIs5XlpUh6oAwm+lmghQ8x1XdSRbsdcBkuGW7F4=",
     "packageRequires": {
       "emacs": "26.1"
     },
-    "version": "1.5.3"
+    "version": "1.5.4"
   },
   "powershell": {
     "author": "Frédéric Perrin <frederic (dot) perrin (arobas) resel (dot) fr>",
@@ -2217,7 +2217,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-Y6+WCOfvttZjj8vb7SOKn2M6hTkUvXfkbelP4p3PQuk=",
+    "narHash": "sha256-JmFboBInvXn3tnbEAgACGhmwCAUgcw2PWUXiG7OAuo4=",
     "packageRequires": {
       "compat": "31.0",
       "cond-let": "1.1",
@@ -2267,7 +2267,7 @@
         "url": "https://spdx.org/licenses/GPL-2.0-or-later.html"
       }
     },
-    "narHash": "sha256-WwKHiuLooTDJof3V7al0kbSOPIl2f2CvVjSUVa20PE0=",
+    "narHash": "sha256-o8a1fsKIKzplTeGMoAI5Ey+WBfT5uch+ioEVEKCJkqM=",
     "packageRequires": {
       "emacs": "25.1"
     },
@@ -2353,7 +2353,7 @@
         "Boris Buliga <boris@d12frosted.io>"
       ]
     },
-    "narHash": "sha256-J5vTT94f4Te5xB2ows3ZGDa/j4GL2PN2fwckdvPAVl4=",
+    "narHash": "sha256-nNjHNoxS8iOq9cb5CbWLFxWmhXipHHKnk/RdEoUJ8R8=",
     "packageRequires": {
       "emacs": "29.1"
     },
@@ -2415,7 +2415,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-kiVpVOcBhcBvhsfUJCMQzjq6g61gtRQTUUhtJGklF0k=",
+    "narHash": "sha256-B4dMLLuSapTUOB3NkL5MB4ukN4Mrf7jyMcQzpQiE858=",
     "packageRequires": {
       "compat": "31.0",
       "cond-let": "1.1",
