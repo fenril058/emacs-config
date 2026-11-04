@@ -791,6 +791,12 @@
       repo = "rainbow-mode";
       type = "github";
     };
+    refactor = {
+      flake = false;
+      owner = "emacs-straight";
+      repo = "refactor";
+      type = "github";
+    };
     reformatter = {
       flake = false;
       owner = "purcell";

@@ -754,18 +754,19 @@
         "João Távora <joaotavora@gmail.com>"
       ]
     },
-    "narHash": "sha256-Xl6M8MgaFbr76LMFnEQAnhMC6OaKlsiFyNJ/ro4JT0M=",
+    "narHash": "sha256-+7FFTiQOVzms4im6ccI5u8PaG18/aAHYG7Kr3VeMitc=",
     "packageRequires": {
       "eldoc": "1.16.0",
       "emacs": "26.3",
       "external-completion": "0.1",
-      "flymake": "1.4.5",
-      "jsonrpc": "1.0.29",
+      "flymake": "1.4.8",
+      "jsonrpc": "1.0.30",
       "project": "0.11.2",
+      "refactor": "0.1.1",
       "seq": "2.23",
-      "xref": "1.7.0"
+      "xref": "1.8.0"
     },
-    "version": "1.24"
+    "version": "1.26"
   },
   "eldoc": {
     "author": "Noah Friedman <friedman@splode.com>",
@@ -1970,6 +1971,18 @@
     "narHash": "sha256-0AWgpSwYAiYezHaIs57h2iDT2+2F8s2lA3y750gFINw=",
     "packageRequires": {},
     "version": "1.0.7"
+  },
+  "refactor": {
+    "author": "João Távora <joaotavora@gmail.com>",
+    "meta": {
+      "description": "Language-agnostic refactoring interface"
+    },
+    "narHash": "sha256-sc2pgEtendXWEnLhgI3+LQ+8e5DQ2y3nqm8AbN+Z0qY=",
+    "packageRequires": {
+      "eldoc": "1.14.0",
+      "emacs": "26.3"
+    },
+    "version": "0.1.1"
   },
   "reformatter": {
     "author": "Steve Purcell <steve@sanityinc.com>",

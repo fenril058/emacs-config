@@ -774,11 +774,11 @@
     "eglot": {
       "flake": false,
       "locked": {
-        "lastModified": 1791936664,
-        "narHash": "sha256-Xl6M8MgaFbr76LMFnEQAnhMC6OaKlsiFyNJ/ro4JT0M=",
+        "lastModified": 1793578275,
+        "narHash": "sha256-+7FFTiQOVzms4im6ccI5u8PaG18/aAHYG7Kr3VeMitc=",
         "owner": "emacs-straight",
         "repo": "eglot",
-        "rev": "c79f727797247e1d3d6cbe73c0dff107e326ab2c",
+        "rev": "e21a9a3ed7ecf3280e8adb927d986642f5ce382a",
         "type": "github"
       },
       "original": {
@@ -2091,6 +2091,22 @@
         "type": "github"
       }
     },
+    "refactor": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793578282,
+        "narHash": "sha256-sc2pgEtendXWEnLhgI3+LQ+8e5DQ2y3nqm8AbN+Z0qY=",
+        "owner": "emacs-straight",
+        "repo": "refactor",
+        "rev": "0a862099d44b87a394f6d5a08388ce91e28cf4d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emacs-straight",
+        "repo": "refactor",
+        "type": "github"
+      }
+    },
     "reformatter": {
       "flake": false,
       "locked": {
@@ -2271,6 +2287,7 @@
         "puni": "puni",
         "rainbow-delimiters": "rainbow-delimiters",
         "rainbow-mode": "rainbow-mode",
+        "refactor": "refactor",
         "reformatter": "reformatter",
         "repl-toggle": "repl-toggle",
         "rfc-mode": "rfc-mode",

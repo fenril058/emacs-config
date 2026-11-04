@@ -1,0 +1,2 @@
+(refactor :fetcher github
+          :repo "emacs-straight/refactor")
