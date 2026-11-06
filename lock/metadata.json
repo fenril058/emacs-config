@@ -2329,10 +2329,12 @@
     "author": "rubikitch <rubikitch@ruby-lang.org>",
     "meta": {
       "description": "View-mode extension",
-      "homepage": "http://github.com/rubikitch/viewer/"
+      "homepage": "https://github.com/rubikitch/viewer/"
     },
-    "narHash": "sha256-VNlyX7fOPb7Q3GiwfI7ERYJOx2ai8xQjfeG05djFGkI=",
-    "packageRequires": {},
+    "narHash": "sha256-GTgDZOK9JUZenKjLDzyy5FCHsMkL97lRLnkd7Nw8ONE=",
+    "packageRequires": {
+      "emacs": "27.1"
+    },
     "version": null
   },
   "vterm": {

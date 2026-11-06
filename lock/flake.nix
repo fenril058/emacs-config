@@ -451,7 +451,7 @@
     hiwin = {
       flake = false;
       owner = "fenril058";
-      ref = "develop";
+      ref = "main";
       repo = "hiwin-mode";
       type = "github";
     };
