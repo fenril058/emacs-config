@@ -2653,16 +2653,16 @@
     "viewer": {
       "flake": false,
       "locked": {
-        "lastModified": 1741018652,
-        "narHash": "sha256-VNlyX7fOPb7Q3GiwfI7ERYJOx2ai8xQjfeG05djFGkI=",
+        "lastModified": 1793954773,
+        "narHash": "sha256-GTgDZOK9JUZenKjLDzyy5FCHsMkL97lRLnkd7Nw8ONE=",
         "owner": "fenril058",
         "repo": "viewer",
-        "rev": "44131aea9d85141c1772f707c4c2f4d8248bf327",
+        "rev": "ae23687829c79482b4ef17646c95fa3134dfd08c",
         "type": "github"
       },
       "original": {
         "owner": "fenril058",
-        "ref": "develop",
+        "ref": "master",
         "repo": "viewer",
         "type": "github"
       }

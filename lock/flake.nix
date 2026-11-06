@@ -940,7 +940,7 @@
     viewer = {
       flake = false;
       owner = "fenril058";
-      ref = "develop";
+      ref = "master";
       repo = "viewer";
       type = "github";
     };
