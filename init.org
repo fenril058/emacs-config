@@ -897,6 +897,34 @@ Nix3.el integration for Magit.  [[https://github.com/emacs-twist/nix3.el]]
 
 #+end_src
 
+*** display-buffer-alist
+#+begin_src emacs-lisp
+;; Do not display the *compilation* buffer initially (run in the background)
+(add-to-list 'display-buffer-alist
+             '("\\`\\*compilation\\*\\'" . (display-buffer-no-window)))
+
+;; Control window visibility based on major-mode and build result upon completion
+(add-hook 'compilation-finish-functions
+          (lambda (buf str)
+            ;; Get the major-mode of the buffer where compilation was initiated
+            (let ((orig-mode (with-current-buffer buf
+                               (buffer-local-value 'major-mode compilation-last-buffer)))
+                  (is-error (string-match "exited abnormally" str)))
+              (cond
+               ;; [Case A] C/C++: Always display the buffer regardless of success or failure
+               ((memq orig-mode '(c-mode c++-mode c-ts-mode c++-ts-mode))
+                (display-buffer buf))
+
+               ;; [Case B] Others: Display at the bottom (25% height) only if an error occurs
+               (t
+                (when is-error
+                  (display-buffer buf '(display-buffer-in-direction
+                                        (direction . bottom)
+                                        (window-height . 0.25)))))))))
+
+#+end_src
+
+
 *** hiwin-mode
 #+begin_src emacs-lisp
 (setup (:package hiwin)
@@ -3193,14 +3221,16 @@ This setting is inspired by [[https://qiita.com/atsisy/items/1b7249bf3cd6046b568
      "J" View-scroll-line-forward
      "K" View-scroll-line-backward
      "q" kill-buffer))
-  (setopt view-read-only t
-          viewer-modeline-color-unwritable "tomato"
-          viewer-modeline-color-view "orange"
-          view-mode-by-default-regexp "\\.log$")
+  (setopt view-read-only t)
   (:with-hook view-mode-hook
-    (:hook viewer-change-modeline-color-setup))
-  (:with-hook read-only-mode-hook
-    (:hook viewer-stay-in-setup)))
+    (:hook #'viewer-setup))
+  (:with-hook find-file-hook
+    (:hook
+     (lambda ()
+       (when (and buffer-file-name
+                  (string-match-p "\\.log\\'" buffer-file-name))
+         (read-only-mode 1))))))
+
 #+end_src
 
 *** rfc-mode
