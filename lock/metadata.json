@@ -1166,11 +1166,14 @@
   "hiwin": {
     "author": "k.sugita",
     "meta": {
-      "description": "Visible active window mode."
+      "description": "Visible active window mode.",
+      "homepage": "https://github.com/fenril058/hiwin-mode"
     },
-    "narHash": "sha256-tNpDlKexui/3yn4+LvnBUy8eJG+AsX3nfRqCLY4BACo=",
-    "packageRequires": {},
-    "version": "2.2.2"
+    "narHash": "sha256-7quQjZxWmxDwa1dmUWAgFtpNrOm3J37wRXoTLxyutQM=",
+    "packageRequires": {
+      "emacs": "27.1"
+    },
+    "version": "2.3.2"
   },
   "howm": {
     "author": null,
