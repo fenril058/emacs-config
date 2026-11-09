@@ -1169,11 +1169,11 @@
       "description": "Visible active window mode.",
       "homepage": "https://github.com/fenril058/hiwin-mode"
     },
-    "narHash": "sha256-7quQjZxWmxDwa1dmUWAgFtpNrOm3J37wRXoTLxyutQM=",
+    "narHash": "sha256-0JjadV4JejsVydrnT6vGIrNx/b9yaks7hi0PSl5oxWY=",
     "packageRequires": {
       "emacs": "27.1"
     },
-    "version": "2.3.2"
+    "version": "2.3.3"
   },
   "howm": {
     "author": null,

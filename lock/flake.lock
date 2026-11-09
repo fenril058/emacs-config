@@ -1190,11 +1190,11 @@
     "hiwin": {
       "flake": false,
       "locked": {
-        "lastModified": 1794152664,
-        "narHash": "sha256-7quQjZxWmxDwa1dmUWAgFtpNrOm3J37wRXoTLxyutQM=",
+        "lastModified": 1794186428,
+        "narHash": "sha256-0JjadV4JejsVydrnT6vGIrNx/b9yaks7hi0PSl5oxWY=",
         "owner": "fenril058",
         "repo": "hiwin-mode",
-        "rev": "2c1fbb90c1ec58029610f81854ee7ccd58864385",
+        "rev": "ac1a33013fb17763a93e497f8f67ccc0a636ec73",
         "type": "github"
       },
       "original": {
