@@ -310,7 +310,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-inLkQtu8Fue6zBLbwwi89En2me07Znm2x4rYuCIaqLA=",
+    "narHash": "sha256-KyhgU1VMcR4AGwDbnh7g8ZStG2fv0ZF86TXocunA1KA=",
     "packageRequires": {
       "emacs": "28.1"
     },
@@ -754,7 +754,7 @@
         "João Távora <joaotavora@gmail.com>"
       ]
     },
-    "narHash": "sha256-+7FFTiQOVzms4im6ccI5u8PaG18/aAHYG7Kr3VeMitc=",
+    "narHash": "sha256-EezwIW+9AdrnFWuttoePxX+9iYqMYLaj2uHRIMQcI1k=",
     "packageRequires": {
       "eldoc": "1.16.0",
       "emacs": "26.3",
@@ -879,7 +879,7 @@
         "url": "https://spdx.org/licenses/Apache-2.0.html"
       }
     },
-    "narHash": "sha256-pS4w8ydEYEs2cmDqxSuVuit4kfDn0U0Ux49uPkuIB9o=",
+    "narHash": "sha256-sWWsaXEtp0W2UJhetELyablHU8Ro0tRxSWl1XXr6jBA=",
     "packageRequires": {
       "emacs": "27.1"
     },
@@ -1231,7 +1231,7 @@
   "imaxima": {
     "author": null,
     "meta": {},
-    "narHash": "sha256-uFZmcK6tkT4GE2dJivwdVZU9IgcaIpvc2Ah1YQtSwQ8=",
+    "narHash": "sha256-DdA52dyATUsToVflB7ZDH98xUX8Tt/oTQT0KPe4EnKQ=",
     "packageRequires": {},
     "version": null
   },
@@ -1296,7 +1296,7 @@
     "meta": {
       "description": "JSON-RPC library"
     },
-    "narHash": "sha256-ARRBH88hiR69HzgKZRZPPmwu9eF8PQ8fcTLEdR1ygeg=",
+    "narHash": "sha256-8iZFOECly6vMgCDClXqefkh5UmAaddMvE4hd9w3D3Ss=",
     "packageRequires": {
       "emacs": "25.2"
     },
@@ -1405,7 +1405,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-BsYDZ8f5YVjDFTOqq/bzuabfFGczmDNwGKvF7FsuHc0=",
+    "narHash": "sha256-9D/AzWxvIryit+/b7F/ya2pfSWjl+jHv7aF/FMDBgDo=",
     "packageRequires": {
       "compat": "29.1",
       "emacs": "28.1",
@@ -1472,7 +1472,7 @@
         "Kyle Meyer <kyle@kyleam.com>"
       ]
     },
-    "narHash": "sha256-ylfJeTtkQ+oXe7jF5G3wa4CJ57nVK+EeAZiVwzaBar4=",
+    "narHash": "sha256-laE0EKF5a5gWhj0+HEjKnBRnvncfnJEtmQrWBykua6c=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
@@ -1491,7 +1491,7 @@
       "description": "Nix3.el integration for Magit",
       "homepage": "https://github.com/emacs-twist/nix3.el"
     },
-    "narHash": "sha256-1/8fZFe7MMkK/oQxPytN3j68k3h/kgs7+sc3Tg1sLQ4=",
+    "narHash": "sha256-gOljmtLbqX5uMvIVl18dfjAhYnlNyBHk8d6jcRYcRjM=",
     "packageRequires": {
       "emacs": "29.1",
       "nix3": "0.1",
@@ -1517,7 +1517,7 @@
         "Jonas Bernoulli <emacs.magit@jonas.bernoulli.dev>"
       ]
     },
-    "narHash": "sha256-ylfJeTtkQ+oXe7jF5G3wa4CJ57nVK+EeAZiVwzaBar4=",
+    "narHash": "sha256-laE0EKF5a5gWhj0+HEjKnBRnvncfnJEtmQrWBykua6c=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
@@ -1608,7 +1608,7 @@
     "meta": {
       "description": "minor mode to input Japanese with Mozc"
     },
-    "narHash": "sha256-Emlv1x43h5t3xqZJbFAfjFk6t3prfIdALzDkVYk05oA=",
+    "narHash": "sha256-+R7LQYgQohyyq3ofw55yiMYv5gFkBj/iXQRAn0TwECM=",
     "packageRequires": {
       "emacs": "24.3"
     },
@@ -1705,7 +1705,7 @@
       "description": "Frontend to experimental commands of Nix",
       "homepage": "https://github.com/emacs-twist/nix3.el"
     },
-    "narHash": "sha256-1/8fZFe7MMkK/oQxPytN3j68k3h/kgs7+sc3Tg1sLQ4=",
+    "narHash": "sha256-gOljmtLbqX5uMvIVl18dfjAhYnlNyBHk8d6jcRYcRjM=",
     "packageRequires": {
       "compat": "29.1",
       "emacs": "29.1",
@@ -1760,11 +1760,11 @@
         "Ihor Radchenko <yantar92@posteo.net>"
       ]
     },
-    "narHash": "sha256-GBUAYBBxTGqbcp9hY/d6du/KBMATvnbpld2wpYoDUL8=",
+    "narHash": "sha256-F/AymaBmBQiR6v3hcbCZvB71GZGX+P3Dq615e1MgEkQ=",
     "packageRequires": {
       "emacs": "28.2"
     },
-    "version": "9.8.12"
+    "version": "9.8.13"
   },
   "ox-rss": {
     "author": "Bastien Guerry <bzg@gnu.org>",
@@ -1800,7 +1800,7 @@
       "description": "Zenn flavored markdown backend for org export engine",
       "homepage": "https://github.com/conao3/ox-zenn.el"
     },
-    "narHash": "sha256-D8P914I47/8a9LOhFpnTeUEOq3hOPM5ONb7j6H7/l6A=",
+    "narHash": "sha256-3sRygNVF0rSMgGQ0mNlfjyNGHfEIJjk8BqtJyu+lXuQ=",
     "packageRequires": {
       "emacs": "29.1",
       "org": "9.0"
@@ -2233,7 +2233,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-8ZXBJ4DHSoB1SQR+apnPQmtfwA3/9142G2XuQM1CtzA=",
+    "narHash": "sha256-TwGFa+Cp1b8VJkMDvBnW2tT10S2aDrOFNHrvz8ZF26Q=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
@@ -2371,7 +2371,7 @@
         "Boris Buliga <boris@d12frosted.io>"
       ]
     },
-    "narHash": "sha256-t14nEnDdieDOaGYN6spWYHyak/WwFXkgLg69uGnpo0s=",
+    "narHash": "sha256-FLJlMNcDUViQ3PASs8L5gi/d5ipKVmzqIdp9576SU/8=",
     "packageRequires": {
       "emacs": "29.1"
     },
@@ -2433,7 +2433,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-4XOY61t9j91tQjQxUkPI/GHv7VVcjg9XleTRczZvel0=",
+    "narHash": "sha256-vUhRVtHV0pkGxhUr9cPkVyVmmQ6RqvKQ2HymO2DB6SA=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
