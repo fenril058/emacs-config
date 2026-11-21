@@ -197,11 +197,11 @@
         "elisp-helpers": "elisp-helpers"
       },
       "locked": {
-        "lastModified": 1793115761,
-        "narHash": "sha256-1ojVo/iRHW89SJqdcSfwOUDdH+zIKsrHAamLexXourM=",
+        "lastModified": 1794628322,
+        "narHash": "sha256-zYBdYZ0D0WNpKSSMGu8P5qiIOfN/djV4w1pBF3vW43w=",
         "owner": "fenril058",
         "repo": "twist.nix",
-        "rev": "b87a78751e8b3abd1eea278109eb325f84237b16",
+        "rev": "ccf542d84e62e1fe62d93854330c1a5ea2798c6a",
         "type": "github"
       },
       "original": {
