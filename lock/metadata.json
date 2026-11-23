@@ -75,7 +75,7 @@
         "auctex-devel@gnu.org"
       ]
     },
-    "narHash": "sha256-DPDbAKCma1EUcWHLq52fiDvqCda6HNY6XIgBBpD4BJ0=",
+    "narHash": "sha256-ixhWyRSXS5reoXit2XgzuiUArCuilcbOEa2w4gCZCEc=",
     "packageRequires": {
       "emacs": "28.1"
     },
@@ -563,7 +563,7 @@
       "description": "Highlight uncommitted changes using VC",
       "homepage": "https://github.com/dgutov/diff-hl"
     },
-    "narHash": "sha256-Z0HBuwnB3f9AstZqSGxZiJWT85+Bp/XELqiZlRszhPk=",
+    "narHash": "sha256-aBUMnVML0I6JIMuqyXup7jv+Zy/OWI2qJIEVgXrQD8k=",
     "packageRequires": {
       "cl-lib": "0.2",
       "emacs": "27.1"
@@ -575,7 +575,7 @@
     "meta": {
       "description": "Wrapper for difftastic"
     },
-    "narHash": "sha256-x/TC+6LdJRuKKcCRkQzki6GIg+FDuKfJWoS3QblssTc=",
+    "narHash": "sha256-gXHjaBNuTIvKT5lb4GYK864ZFbcDOzgCV0ZFTjg90s4=",
     "packageRequires": {
       "compat": "29.1.4.2",
       "emacs": "28.1",
@@ -807,7 +807,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-wcjmJTW/YNOMHhWq1YeRBu0aTFp9snlKFNbILDeZdTg=",
+    "narHash": "sha256-Idce0GZbMDZCpWspntjISqv2Vsu4fb6toyRYmUsT/Ys=",
     "packageRequires": {
       "compat": "29.1",
       "emacs": "28.1",
@@ -816,7 +816,7 @@
       "transient": "0.7",
       "yaml": "1.2.3"
     },
-    "version": "1.33.1"
+    "version": "1.33.2"
   },
   "embark": {
     "author": "Omar Antolín Camarena <omar@matem.unam.mx>",
@@ -879,7 +879,7 @@
         "url": "https://spdx.org/licenses/Apache-2.0.html"
       }
     },
-    "narHash": "sha256-sWWsaXEtp0W2UJhetELyablHU8Ro0tRxSWl1XXr6jBA=",
+    "narHash": "sha256-Gbw5QVkMpWvBei0sh50dnfkNnptNOEbteFSXHgy6/bs=",
     "packageRequires": {
       "emacs": "27.1"
     },
@@ -1231,7 +1231,7 @@
   "imaxima": {
     "author": null,
     "meta": {},
-    "narHash": "sha256-DdA52dyATUsToVflB7ZDH98xUX8Tt/oTQT0KPe4EnKQ=",
+    "narHash": "sha256-1znIa5jS7d/AWfdEF+TCZ63vhgjQ4mh9KRS3FjiycBc=",
     "packageRequires": {},
     "version": null
   },
@@ -1405,7 +1405,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-9D/AzWxvIryit+/b7F/ya2pfSWjl+jHv7aF/FMDBgDo=",
+    "narHash": "sha256-J5nDhRojQNBYLXD/QPuAzkmCmNFCgBj/gABLb4c7dE8=",
     "packageRequires": {
       "compat": "29.1",
       "emacs": "28.1",
@@ -1472,7 +1472,7 @@
         "Kyle Meyer <kyle@kyleam.com>"
       ]
     },
-    "narHash": "sha256-laE0EKF5a5gWhj0+HEjKnBRnvncfnJEtmQrWBykua6c=",
+    "narHash": "sha256-+D46nS1pM0c4iJ5ppC7pOugaCatnaHYT4U5BImnDM0c=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
@@ -1517,7 +1517,7 @@
         "Jonas Bernoulli <emacs.magit@jonas.bernoulli.dev>"
       ]
     },
-    "narHash": "sha256-laE0EKF5a5gWhj0+HEjKnBRnvncfnJEtmQrWBykua6c=",
+    "narHash": "sha256-+D46nS1pM0c4iJ5ppC7pOugaCatnaHYT4U5BImnDM0c=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
@@ -1597,18 +1597,18 @@
       "description": "Shell/Comint alternative based on term.el",
       "homepage": "http://github.com/szermatt/mistty"
     },
-    "narHash": "sha256-XEY+Y+bV4XlKVqOhdhlwtts5cZaL/6nI6h8nyRLvf1E=",
+    "narHash": "sha256-ynGLAUMpMf/rC836ixOBMlKkk6K/X3Vz1f8YcVFGxuw=",
     "packageRequires": {
       "emacs": "29.1"
     },
-    "version": "2.2.1"
+    "version": "2.3.2snapshot"
   },
   "mozc": {
     "author": null,
     "meta": {
       "description": "minor mode to input Japanese with Mozc"
     },
-    "narHash": "sha256-+R7LQYgQohyyq3ofw55yiMYv5gFkBj/iXQRAn0TwECM=",
+    "narHash": "sha256-Ia3UAKD2+05BwGrZlvMc7TCT9/PSPRIjWoZNyiewNzY=",
     "packageRequires": {
       "emacs": "24.3"
     },
@@ -1635,7 +1635,7 @@
       "description": "Emacs Nerd Font Icons Library",
       "homepage": "https://github.com/rainstormstudio/nerd-icons.el"
     },
-    "narHash": "sha256-RA5u8Eb+EhPRLLSsQ08+9R0qpBcMj9m/cVpgzCTovaM=",
+    "narHash": "sha256-TKUzkCNoKBUZyGCbgjmXAgFSSEgpCdwlFvGuJbDgsKk=",
     "packageRequires": {
       "emacs": "25.1"
     },
@@ -1647,7 +1647,7 @@
       "description": "Add icons to completion candidates",
       "homepage": "https://github.com/rainstormstudio/nerd-icons-completion"
     },
-    "narHash": "sha256-DoQ3k+k/D7HXYGBQNFGyEWEb/p0ETJ444x3j320doI0=",
+    "narHash": "sha256-pRMNTtfl6yC3bk6D8eEix9ErF5/Q8cySJMkuJCfvpQ0=",
     "packageRequires": {
       "compat": "30",
       "emacs": "25.1",
@@ -1800,7 +1800,7 @@
       "description": "Zenn flavored markdown backend for org export engine",
       "homepage": "https://github.com/conao3/ox-zenn.el"
     },
-    "narHash": "sha256-3sRygNVF0rSMgGQ0mNlfjyNGHfEIJjk8BqtJyu+lXuQ=",
+    "narHash": "sha256-KV2W90vdqvkJPc/zOY5Y6QBkhrBlxXxF/lnu5KI8ydo=",
     "packageRequires": {
       "emacs": "29.1",
       "org": "9.0"
@@ -2114,11 +2114,11 @@
         "Philip Kaludercic <philipk@posteo.net>"
       ]
     },
-    "narHash": "sha256-lLeKsLFf1+Bjk6ETq+0Nncw6DPOVxE49cAexdLAr/5U=",
+    "narHash": "sha256-MlQUokifh4S4xsA2UsKy4ZT6YfIl/UTg+xFpCgovvHk=",
     "packageRequires": {
       "emacs": "26.1"
     },
-    "version": "1.5.0"
+    "version": "1.5.1"
   },
   "shell-pop": {
     "author": "Kazuo YAGI <kazuo.yagi@gmail.com>",
@@ -2233,7 +2233,7 @@
         "url": "https://spdx.org/licenses/GPL-3.0-or-later.html"
       }
     },
-    "narHash": "sha256-TwGFa+Cp1b8VJkMDvBnW2tT10S2aDrOFNHrvz8ZF26Q=",
+    "narHash": "sha256-6kRGJkYmRwHXQkjFqSHA1UUrrQ+Ljqcjjqs/O7/WKkI=",
     "packageRequires": {
       "compat": "31.1",
       "cond-let": "1.1",
@@ -2371,7 +2371,7 @@
         "Boris Buliga <boris@d12frosted.io>"
       ]
     },
-    "narHash": "sha256-FLJlMNcDUViQ3PASs8L5gi/d5ipKVmzqIdp9576SU/8=",
+    "narHash": "sha256-VEtKQmlHAlUw6BRm76MatlZKGn0sj+fYevc3Ve1sG1s=",
     "packageRequires": {
       "emacs": "29.1"
     },
